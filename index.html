@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.7)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.8)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v5.7%22,
+        %22short_name%22: %22Currículo v5.8%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -20,6 +20,10 @@
     }">
     <style>
         @media print {
+            @page {
+                size: A4;
+                margin: 8mm;
+            }
             body { background: white !important; color: #0f172a !important; padding: 0 !important; margin: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .print-hidden, #tela-login, #modal-ia, #word-toolbar, .fixed, button { display: none !important; }
             
@@ -68,46 +72,49 @@
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD COM ROLAGEM HORIZONTAL -->
-    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-1.5 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v5.7:</span>
-        
-        <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tipo de Letra">
-            <option value="Arial">Arial</option>
-            <option value="Calibri">Calibri</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Courier New">Courier New</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Verdana">Verdana</option>
-        </select>
+    <!-- BARRA DE FERRAMENTAS ESTILO WORD EM DUAS LINHAS (SEM SCROLL) -->
+    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex flex-wrap items-center justify-center gap-1.5 border-b border-slate-700 text-xs">
+        <div class="flex items-center gap-1.5 flex-wrap justify-center w-full">
+            <span class="font-bold text-blue-400">✏️ Editor v5.8:</span>
+            
+            <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tipo de Letra">
+                <option value="Arial">Arial</option>
+                <option value="Calibri">Calibri</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Verdana">Verdana</option>
+            </select>
 
-        <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tamanho">
-            <option value="3">Normal</option>
-            <option value="2">Médio-Pequeno</option>
-            <option value="4">Médio-Grande</option>
-            <option value="5">Grande</option>
-            <option value="6">Muito Grande</option>
-        </select>
+            <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tamanho">
+                <option value="3">Normal</option>
+                <option value="2">Pequeno</option>
+                <option value="4">Médio</option>
+                <option value="5">Grande</option>
+                <option value="6">Muito Grande</option>
+            </select>
 
-        <!-- SELETOR DE COR COM OK -->
-        <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
-            <span class="text-[10px] text-slate-300">🎨</span>
-            <input type="color" id="cor-picker" value="#2563eb" class="h-4 w-5 bg-transparent border-0 cursor-pointer" title="Cor">
-            <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
+            <!-- SELETOR DE COR COM OK -->
+            <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700">
+                <span class="text-[10px] text-slate-300">🎨</span>
+                <input type="color" id="cor-picker" value="#2563eb" class="h-4 w-5 bg-transparent border-0 cursor-pointer" title="Cor">
+                <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
+            </div>
+
+            <button onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold" title="Negrito"><b>B</b></button>
+            <button onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic" title="Itálico"><i>I</i></button>
+            <button onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline" title="Sublinhado"><u>U</u></button>
         </div>
 
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <button onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0"><b>B</b></button>
-        <button onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0"><i>I</i></button>
-        <button onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0"><u>U</u></button>
-        
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-        
-        <button onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
-        <button onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
-        <button onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
-        <button onclick="execCmd('justifyFull')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Just</button>
+        <div class="flex items-center gap-1.5 flex-wrap justify-center w-full pt-1 border-t border-slate-800">
+            <span class="text-[10px] text-slate-400">Alinhamento:</span>
+            <select onchange="execCmd(this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs">
+                <option value="justifyLeft">Esquerda</option>
+                <option value="justifyCenter">Centro</option>
+                <option value="justifyRight">Direita</option>
+                <option value="justifyFull">Justificar</option>
+            </select>
+        </div>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -115,7 +122,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.7)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.8)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -138,9 +145,9 @@
     </div>
 
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
-    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-14 space-y-6">
+    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-20 space-y-6">
         
-        <!-- FOLHA DO CURRÍCULO COM COLUNAS AMPLIADAS (5 / 7) -->
+        <!-- FOLHA DO CURRÍCULO COM BORDA SÓLIDA E SUAVE -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
             <!-- BARRA LATERAL (ESQUERDA - 5 COLUNAS) -->
@@ -221,33 +228,33 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v5.7
+                    Gestor Pessoal v5.8
                 </div>
             </div>
 
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
             <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
                 
-                <!-- NOME EM LINHA ÚNICA NO TOPO -->
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group overflow-hidden">
+                <!-- NOME EM LINHA ÚNICA NO TOPO COM ESPAÇAMENTO SEGURO -->
+                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1 z-10">
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-xl sm:text-2xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide pr-24 outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-xl sm:text-2xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide pr-28 outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
                 </div>
 
                 <!-- TÍTULO PRINCIPAL / CARGO -->
                 <div class="pb-2 relative group">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide pr-24 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide pr-28 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
                 </div>
 
                 <!-- RESUMO PROFISSIONAL -->
@@ -290,7 +297,6 @@
                             <div>
                                 <span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span>
                             </div>
-                            <!-- CALCULADOR COMPACTO EM LINHA -->
                             <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
@@ -612,7 +618,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v5.7)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v5.8)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -662,7 +668,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.7</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.8</span>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 💾 Salvar
             </button>
@@ -675,7 +681,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V5.7 -->
+    <!-- SCRIPT DE CONTROLO V5.8 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -939,15 +945,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.8') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v5.7', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v5.8', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.8') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -972,7 +978,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.8') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -982,9 +988,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.8') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v5.7', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v5.8', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
