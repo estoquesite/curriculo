@@ -64,29 +64,22 @@
         .drag-handle:active { cursor: grabbing; }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none" onclick="ativarContextoTexto(event)">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD (FIXA NO TOPO) -->
+    <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-4 py-2 shadow-lg flex flex-wrap items-center justify-between gap-2 border-b border-slate-700 text-xs">
         <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-blue-400">📝 Estilo Word:</span>
+            <span class="font-bold text-blue-400">✏️ Editor Estilo Word:</span>
             <button onclick="execCmd('bold')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold" title="Negrito"><b>B</b></button>
             <button onclick="execCmd('italic')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded italic" title="Itálico"><i>I</i></button>
             <button onclick="execCmd('underline')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded underline" title="Sublinhado"><u>U</u></button>
             <div class="h-4 w-px bg-slate-700"></div>
-            <button onclick="execCmd('justifyLeft')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded" title="Alinhar à Esquerda">Esquerda</button>
-            <button onclick="execCmd('justifyCenter')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded" title="Centralizar">Centro</button>
-            <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded" title="Alinhar à Direita">Direita</button>
-            <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded" title="Justificar">Justificar</button>
-            <div class="h-4 w-px bg-slate-700"></div>
-            <select onchange="execCmd('fontSize', this.value); this.value='3';" class="bg-slate-800 text-white p-1 rounded border border-slate-700 text-xs">
-                <option value="3">Tamanho Padrão</option>
-                <option value="2">Pequeno</option>
-                <option value="4">Médio</option>
-                <option value="5">Grande</option>
-            </select>
+            <button onclick="execCmd('justifyLeft')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Esquerda</button>
+            <button onclick="execCmd('justifyCenter')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Centro</button>
+            <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Direita</button>
+            <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Justificar</button>
         </div>
-        <div class="text-[10px] text-slate-400">Clique em qualquer texto para formatar</div>
+        <div class="text-[10px] text-yellow-400 font-semibold">💡 Dica: Seleciona as datas nos campos de cada cargo e clica em calcular para somar o tempo!</div>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -122,12 +115,12 @@
         <!-- BARRA DE CONTROLO E AÇÕES (NÃO SAI NA IMPRESSÃO) -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-3">
             <div>
-                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Gestor de Currículo Profissional (v2.9)</h1>
-                <p class="text-[11px] text-slate-500">Formatação estilo Word e criação dinâmica de caixas.</p>
+                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Gestor de Currículo Profissional (v3.1)</h1>
+                <p class="text-[11px] text-slate-500">Calculadora automática de tempo de serviço e arrastar universal (⠿).</p>
             </div>
             <div class="flex flex-wrap gap-2">
-                <button onclick="adicionarCaixaLivre()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
-                    📦 + Adicionar Nova Caixa
+                <button onclick="adicionarExperiencia()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
+                    ➕ Nova Experiência
                 </button>
                 <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
                     🤖 Assistente IA
@@ -147,14 +140,16 @@
             <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) -->
             <div class="sidebar-print md:col-span-4 bg-slate-900 text-slate-100 p-6 sm:p-8 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
-                    <!-- NOME / CARGO -->
+                    <!-- NOME / CARGO COM LÁPIS -->
                     <div class="border-b border-slate-800 pb-4 relative group">
+                        <span class="print-hidden absolute -top-2 right-0 text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">✏️ Editar</span>
                         <h2 contenteditable="true" id="c-nome" class="text-xl font-black text-white uppercase tracking-wider">Mariana Cruz</h2>
                         <p contenteditable="true" id="c-cargo-lateral" class="text-xs text-blue-400 font-semibold mt-1">Engenheira Mecânica & Confiabilidade</p>
                     </div>
 
                     <!-- CONTACTOS -->
-                    <div class="space-y-2">
+                    <div class="space-y-2 relative group">
+                        <span class="print-hidden absolute -top-2 right-0 text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">✏️ Editar</span>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
                         <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5">
                             <p>📱 21 99035-4416</p>
@@ -167,7 +162,7 @@
                     <!-- PRINCIPAIS COMPETÊNCIAS -->
                     <div class="space-y-2">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
+                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências ✏️</h3>
                             <button onclick="adicionarItemSidebar('container-competencias')" class="print-hidden text-[10px] bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
                         </div>
                         <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5">
@@ -202,7 +197,7 @@
                     <!-- CERTIFICAÇÕES -->
                     <div class="space-y-2">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
+                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações ✏️</h3>
                             <button onclick="adicionarItemSidebar('container-certificacoes')" class="print-hidden text-[10px] bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
                         </div>
                         <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5">
@@ -216,64 +211,101 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v2.9
+                    Gestor Pessoal v3.1
                 </div>
             </div>
 
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
             <div class="main-print md:col-span-8 p-6 sm:p-10 space-y-6">
                 
-                <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO -->
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative">
+                <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO COM LÁPIS -->
+                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
+                    <span class="print-hidden absolute -top-3 right-0 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold">✏️ Clique para editar</span>
                     <p contenteditable="true" id="c-cargo" class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
                 </div>
 
-                <!-- RESUMO PROFISSIONAL -->
-                <section class="space-y-2">
+                <!-- RESUMO PROFISSIONAL COM LÁPIS -->
+                <section class="space-y-2 relative group">
+                    <span class="print-hidden absolute -top-3 right-0 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold">✏️ Resumo Editável</span>
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI.
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
                     </p>
                 </section>
 
-                <!-- CONTAINER DINÂMICO PARA CAIXAS E EXPERIÊNCIAS -->
-                <div id="container-caixas-dinamicas" class="space-y-6">
+                <!-- EXPERIÊNCIA PROFISSIONAL (COM CÁLCULO DE DATAS E DRAG-AND-DROP) -->
+                <section class="space-y-4">
+                    <div class="flex justify-between items-center border-b pb-1">
+                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional (Arraste ⠿ ou use os calculadores de data)</h2>
+                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Adicionar Experiência</button>
+                    </div>
                     
-                    <!-- EXPERIÊNCIA PROFISSIONAL -->
-                    <section class="space-y-4">
-                        <div class="flex justify-between items-center border-b pb-1">
-                            <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                            <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Adicionar Experiência</button>
-                        </div>
-                        
-                        <div id="container-experiencias" class="space-y-4">
-                            <!-- Vale 1 -->
-                            <div class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                                <button onclick="removerItemExp(this)" class="print-hidden absolute right-2 top-2 bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
-                                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-16">
-                                    <span contenteditable="true" class="exp-titulo">Vale — Engenheira de Gestão de Ativos</span>
-                                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">dezembro de 2025 - Present (10 meses)</span>
-                                </div>
-                                <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
-                                    Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
-                                </p>
+                    <div id="container-experiencias" class="space-y-4">
+                        <!-- Vale 1 -->
+                        <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 cursor-move">
+                            <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
+                                <span class="drag-handle text-slate-400 font-bold px-1 text-sm" title="Arraste para mover">⠿</span>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
                             </div>
-
-                            <!-- Vale 2 -->
-                            <div class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                                <button onclick="removerItemExp(this)" class="print-hidden absolute right-2 top-2 bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
-                                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-16">
-                                    <span contenteditable="true" class="exp-titulo">Vale — Especialista Gestão de Ativos</span>
-                                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
-                                </div>
-                                <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
-                                    Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
-                                </p>
+                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-24">
+                                <span contenteditable="true" class="exp-titulo">Vale — Engenheira de Gestão de Ativos</span>
+                                <span contenteditable="true" class="exp-data text-slate-400 font-normal">dezembro de 2025 - Present (10 meses)</span>
                             </div>
+                            <!-- Calculador de Datas Integrado -->
+                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
+                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2025-12"></span>
+                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2026-09"></span>
+                                <label><input type="checkbox" class="chk-atual" checked> Presente</label>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            </div>
+                            <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
+                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
+                            </p>
                         </div>
-                    </section>
 
-                </div>
+                        <!-- Vale 2 -->
+                        <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 cursor-move">
+                            <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
+                                <span class="drag-handle text-slate-400 font-bold px-1 text-sm" title="Arraste para mover">⠿</span>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
+                            </div>
+                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-24">
+                                <span contenteditable="true" class="exp-titulo">Vale — Especialista Gestão de Ativos</span>
+                                <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
+                            </div>
+                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
+                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2022-11"></span>
+                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2025-12"></span>
+                                <label><input type="checkbox" class="chk-atual"> Presente</label>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            </div>
+                            <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
+                                Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
+                            </p>
+                        </div>
+
+                        <!-- Vale 3 -->
+                        <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 cursor-move">
+                            <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
+                                <span class="drag-handle text-slate-400 font-bold px-1 text-sm" title="Arraste para mover">⠿</span>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
+                            </div>
+                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-24">
+                                <span contenteditable="true" class="exp-titulo">Vale — Analista de Mecânica SR</span>
+                                <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil</span>
+                            </div>
+                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
+                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2020-11"></span>
+                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2022-11"></span>
+                                <label><input type="checkbox" class="chk-atual"> Presente</label>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            </div>
+                            <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
+                                Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Experiência na identificação de oportunidades de otimização de processos, redução de riscos operacionais e aumento da eficiência produtiva, por meio da integração, consolidação e análise de dados estratégicos para suporte à tomada de decisão. Administração de sistemas de Operação e Manutenção (O&M), monitorando o desempenho dos processos e prestando suporte aos usuários. Acompanhamento de planos de manutenção, projetos de melhoria, reforços operacionais e gestão do ciclo de vida dos ativos, em parceria com as áreas de Operação, Engenharia e Manutenção. Gestão e monitoramento de indicadores de estoque de sobressalentes, calibração e manutenção de instrumentos, além da elaboração de procedimentos, fluxogramas e padrões operacionais relacionados à Gestão de Ativos. Participação em projetos estratégicos corporativos, contribuindo para a geração de valor do negócio e alcance das metas organizacionais. Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA). Atuação na identificação de perdas de produção associadas a falhas mecânicas, proponando soluções técnicas para minimizar impactos operacionais e aumentar a disponibilidade dos ativos. Definição, acompanhamento e análise de indicadores de desempenho, como MTBF (Tempo Médio Entre Falhas), MTTR (Tempo Médio para Reparo), Disponibilidade Operacional, com foco na eliminação de falhas recorrentes, aumento da vida útil dos equipamentos, confiabilidade operacional e excelência dos processos.
+                            </p>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- FORMAÇÃO ACADÊMICA -->
                 <section class="space-y-2">
@@ -343,10 +375,11 @@
         </button>
     </div>
 
-    <!-- SCRIPT DE CONTROLO E FORMATAÇÃO WORD -->
+    <!-- SCRIPT DE CONTROLO, DRAG AND DROP E CÁLCULO DE DATAS -->
     <script>
         const PIN_CORRETO = "1510";
         let draggedItem = null;
+        const mesesNomes = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
@@ -400,16 +433,12 @@
             document.execCommand(command, false, value);
         }
 
-        function ativarContextoTexto(e) {
-            // Mantém foco se necessário
-        }
-
-        // DRAG AND DROP PARA A BARRA LATERAL
-        function drag(e) { draggedItem = e.target; }
+        // DRAG AND DROP UNIVERSAL
+        function drag(e) { draggedItem = e.target.closest('.exp-item, [draggable="true"]'); }
         function allowDrop(e) { e.preventDefault(); }
         function drop(e) {
             e.preventDefault();
-            let target = e.target.closest('[draggable="true"]');
+            let target = e.target.closest('.exp-item, [draggable="true"]');
             if (target && draggedItem !== target) {
                 let parent = target.parentNode;
                 let all = Array.from(parent.children);
@@ -421,6 +450,58 @@
                     parent.insertBefore(draggedItem, target);
                 }
             }
+        }
+
+        // CALCULADOR AUTOMÁTICO DE TEMPO DE SERVIÇO
+        function calcularTempoServico(btn) {
+            const card = btn.closest('.exp-item');
+            const inputInicio = card.querySelector('.input-inicio').value;
+            const inputFim = card.querySelector('.input-fim').value;
+            const chkAtual = card.querySelector('.chk-atual').checked;
+            const spanData = card.querySelector('.exp-data');
+
+            if (!inputInicio) return alert("Por favor, selecione a data de início.");
+
+            let dataInicio = new Date(inputInicio + "-01");
+            let dataFim = chkAtual ? new Date() : (inputFim ? new Date(inputFim + "-01") : new Date());
+
+            let anos = dataFim.getFullYear() - dataInicio.getFullYear();
+            let meses = dataFim.getMonth() - dataInicio.getMonth();
+
+            if (meses < 0) {
+                anos--;
+                meses += 12;
+            }
+
+            // Se for no mesmo mês e ano, conta como 1 mês ou zero dependendo
+            let totalMeses = (anos * 12) + meses + 1;
+            let anosCalc = Math.floor(totalMeses / 12);
+            let mesesCalc = totalMeses % 12;
+
+            let textoDuracao = "";
+            if (anosCalc > 0) {
+                textoDuracao += `${anosCalc} ano${anosCalc > 1 ? 's' : ''}`;
+            }
+            if (mesesCalc > 0) {
+                if (textoDuracao) textoDuracao += " ";
+                textoDuracao += `${mesesCalc} mes${mesesCalc > 1 ? 'es' : 'e'}`;
+            }
+            if (!textoDuracao) textoDuracao = "menos de 1 mês";
+
+            let mesIniNome = mesesNomes[dataInicio.getMonth()];
+            let anoIni = dataInicio.getFullYear();
+
+            let stringFinal = "";
+            if (chkAtual) {
+                stringFinal = `${mesIniNome} de ${anoIni} - Present (${textoDuracao})`;
+            } else {
+                let mesFimNome = mesesNomes[dataFim.getMonth()];
+                let anoFim = dataFim.getFullYear();
+                stringFinal = `${mesIniNome} de ${anoIni} - ${mesFimNome} de ${anoFim} (${textoDuracao})`;
+            }
+
+            spanData.innerText = stringFinal;
+            alert(`✅ Duração calculada e atualizada: ${textoDuracao}`);
         }
 
         function adicionarItemSidebar(containerId) {
@@ -439,29 +520,28 @@
             container.appendChild(div);
         }
 
-        function adicionarCaixaLivre() {
-            const container = document.getElementById('container-caixas-dinamicas');
-            const sec = document.createElement('section');
-            sec.className = "space-y-2 relative group bg-slate-50/80 dark:bg-slate-900/40 p-4 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700";
-            sec.innerHTML = `
-                <button onclick="this.closest('section').remove()" class="print-hidden absolute right-2 top-2 bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar Caixa</button>
-                <h2 contenteditable="true" class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider outline-none">NOVA SECÇÃO / CAIXA</h2>
-                <p contenteditable="true" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 outline-none">
-                    Clique aqui para escrever o conteúdo livremente nesta nova caixa...
-                </p>
-            `;
-            container.appendChild(sec);
-        }
-
         function adicionarExperiencia() {
             const container = document.getElementById('container-experiencias');
             const div = document.createElement('div');
-            div.className = "space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800";
+            div.draggable = true;
+            div.ondragstart = drag;
+            div.ondragover = allowDrop;
+            div.ondrop = drop;
+            div.className = "space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 cursor-move";
             div.innerHTML = `
-                <button onclick="removerItemExp(this)" class="print-hidden absolute right-2 top-2 bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
-                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-16">
+                <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
+                    <span class="drag-handle text-slate-400 font-bold px-1 text-sm" title="Arraste para mover">⠿</span>
+                    <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-0.5 rounded text-[10px] font-bold">✕ Apagar</button>
+                </div>
+                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-24">
                     <span contenteditable="true" class="exp-titulo">Nova Empresa — Cargo</span>
-                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">Período</span>
+                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">mês de ano - mês de ano (X anos Y meses)</span>
+                </div>
+                <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
+                    <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs"></span>
+                    <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs"></span>
+                    <label><input type="checkbox" class="chk-atual"> Presente</label>
+                    <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
                 </div>
                 <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
                     Descreva as suas atividades e realizações profissionais...
@@ -500,18 +580,18 @@
                 cargo: document.getElementById('c-cargo').innerHTML,
                 resumo: document.getElementById('c-resumo').innerHTML,
                 formacao: document.getElementById('container-formacao').innerHTML,
-                htmlCaixasDinamicas: document.getElementById('container-caixas-dinamicas').innerHTML
+                htmlExperiencias: document.getElementById('container-experiencias').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.1') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v2.9', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v3.1', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.1') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -536,7 +616,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.1') || '{}');
             let dados = versoes[val];
             if(dados) {
                 document.getElementById('c-nome').innerHTML = dados.nome;
@@ -546,7 +626,7 @@
                 document.getElementById('container-certificacoes').innerHTML = dados.certificacoes;
                 document.getElementById('c-cargo').innerHTML = dados.cargo;
                 document.getElementById('c-resumo').innerHTML = dados.resumo;
-                document.getElementById('container-caixas-dinamicas').innerHTML = dados.htmlCaixasDinamicas;
+                document.getElementById('container-experiencias').innerHTML = dados.htmlExperiencias;
                 document.getElementById('container-formacao').innerHTML = dados.formacao;
                 alert(`Versão "${val}" carregada com sucesso!`);
             }
@@ -554,9 +634,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Tem certeza que deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.9') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.1') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v2.9', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v3.1', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
