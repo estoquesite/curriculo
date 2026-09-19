@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
-    <!-- Manifesto PWA para Instalar como App -->
+    <!-- Manifesto PWA -->
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo%22,
         %22short_name%22: %22Currículo%22,
@@ -21,43 +21,19 @@
     }">
     <style>
         @media print {
-            body { background: white !important; color: #1e293b !important; padding: 0 !important; margin: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .print-hidden, #tela-login, .fixed, button { display: none !important; }
-            
-            /* Força o layout de 2 colunas exato na impressão */
-            .resume-container { 
-                box-shadow: none !important; 
-                border: none !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                width: 100% !important; 
-                max-width: 100% !important; 
-                display: grid !important; 
-                grid-template-columns: repeat(12, minmax(0, 1fr)) !important; 
-            }
-            .sidebar-print { 
-                background-color: #0f172a !important; 
-                color: #f8fafc !important; 
-                grid-column: span 4 / span 4 !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
-            }
-            .main-print { 
-                grid-column: span 8 / span 8 !important; 
-                background-color: #ffffff !important;
-            }
+            body { background: white !important; color: #0f172a !important; padding: 0 !important; margin: 0 !important; }
+            .print-hidden, #tela-login, #modal-ia, .fixed, button { display: none !important; }
+            .resume-container { box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; max-width: 100% !important; }
             [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; outline: none !important; }
         }
-
         [contenteditable="true"]:hover {
             outline: 2px dashed #3b82f6;
-            background-color: rgba(59, 130, 246, 0.05);
+            background-color: rgba(59, 130, 246, 0.03);
             border-radius: 4px;
         }
         [contenteditable="true"]:focus {
             outline: 2px solid #2563eb;
             background-color: white;
-            color: #0f172a;
             border-radius: 4px;
             padding: 2px;
         }
@@ -71,7 +47,7 @@
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
                 <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Pessoal</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
             <form onsubmit="verificarLogin(event)" class="space-y-3 text-left">
@@ -84,7 +60,6 @@
                 </button>
             </form>
 
-            <!-- BOTÃO DE BIOMETRIA -->
             <button type="button" onclick="entrarComBiometria()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm flex items-center justify-center gap-2">
                 <span>🔐</span> Entrar com Biometria
             </button>
@@ -94,259 +69,253 @@
     </div>
 
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
-    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-4 sm:p-8">
+    <div id="conteudo-site" class="hidden max-w-4xl mx-auto p-4 sm:p-8 space-y-4">
         
-        <!-- BARRA DE AÇÕES RÁPIDAS (NÃO SAI NA IMPRESSÃO) -->
-        <div class="print-hidden flex flex-wrap justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6 gap-3">
+        <!-- BARRA DE CONTROLO E VERSÕES (NÃO SAI NA IMPRESSÃO) -->
+        <div class="print-hidden bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-3">
             <div>
-                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Gestor de Currículo — Layout Fiel à Tela</h1>
-                <p class="text-[11px] text-slate-500">Edite livremente. A impressão agora respeitará exatamente as colunas.</p>
+                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Gestor de Currículo Profissional (v2.1)</h1>
+                <p class="text-[11px] text-slate-500">Edição total sem limites de caracteres.</p>
             </div>
             <div class="flex flex-wrap gap-2">
-                <button onclick="salvarAlteracoes()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">
-                    💾 Salvar
+                <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
+                    🤖 Assistente IA
                 </button>
-                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">
+                <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm">
+                    💾 Salvar Versão
+                </button>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm">
                     🖨️ Imprimir / PDF
-                </button>
-                <button onclick="restaurarPadrao()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition" title="Restaurar dados originais">
-                    🔄 Restaurar
                 </button>
             </div>
         </div>
 
-        <!-- FOLHA DO CURRÍCULO (ESTILO DUAS COLUNAS / BARRA LATERAL) -->
-        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        <!-- GESTOR DE VERSÕES SALVAS -->
+        <div class="print-hidden bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Versões Salvas:</span>
+            <select id="selectVersoes" onchange="carregarVersaoSelecionada()" class="flex-1 text-xs p-1.5 bg-slate-50 dark:bg-slate-900 border rounded-lg dark:text-white font-medium">
+                <option value="padrao">Padrão Original (PDF)</option>
+            </select>
+            <button onclick="apagarVersao()" class="bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 px-2.5 py-1.5 rounded-lg text-xs font-bold">🗑️ Apagar Versão</button>
+        </div>
+
+        <!-- FOLHA DO CURRÍCULO -->
+        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-6">
             
-            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) -->
-            <div class="sidebar-print md:col-span-4 bg-slate-900 text-slate-100 p-6 sm:p-8 space-y-6 flex flex-col justify-between">
-                <div class="space-y-6">
-                    <!-- NOME / CARGO -->
-                    <div class="border-b border-slate-800 pb-4">
-                        <h2 contenteditable="true" id="c-nome" class="text-xl font-black text-white uppercase tracking-wider">Mariana Cruz</h2>
-                        <p contenteditable="true" id="c-cargo-lateral" class="text-xs text-blue-400 font-semibold mt-1">Engenheira Mecânica & Confiabilidade</p>
-                    </div>
-
-                    <!-- CONTACTOS -->
-                    <div class="space-y-2">
-                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
-                        <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5">
-                            <p>📱 21 99035-4416</p>
-                            <p>✉️ marianna_adm@yahoo.com.br</p>
-                            <p>📍 Rio de Janeiro, Brasil</p>
-                            <p>🔗 linkedin.com/in/marianapcruz</p>
-                        </div>
-                    </div>
-
-                    <!-- PRINCIPAIS COMPETÊNCIAS -->
-                    <div class="space-y-2">
-                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
-                        <div contenteditable="true" id="c-competencias" class="text-xs text-slate-300 space-y-1">
-                            <p>• Rastreamento de Ativos[cite: 2]</p>
-                            <p>• Módulo SAP PM[cite: 2]</p>
-                            <p>• Melhoria Contínua[cite: 2]</p>
-                            <p>• Gestão de Ativos & Confiabilidade</p>
-                            <p>• Gestão de Projetos</p>
-                            <p>• CAPEX e OPEX[cite: 2]</p>
-                            <p>• Análise de Causa Raiz (RCA / FMEA)</p>
-                        </div>
-                    </div>
-
-                    <!-- CERTIFICAÇÕES -->
-                    <div class="space-y-2">
-                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
-                        <div contenteditable="true" id="c-certificacoes" class="text-xs text-slate-300 space-y-1">
-                            <p>• Engenheira Mecânica - CREA-RJ Ativo[cite: 2]</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v1.3
+            <!-- CABEÇALHO -->
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-6 space-y-2">
+                <h1 contenteditable="true" id="c-nome" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Mariana Cruz</h1>
+                <p contenteditable="true" id="c-cargo" class="text-xs font-bold text-blue-600 dark:text-blue-400 leading-relaxed">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
+                <div contenteditable="true" id="c-contato" class="text-xs text-slate-500 dark:text-slate-400 flex flex-wrap gap-4 pt-1">
+                    <span>21990354416 (Mobile)</span>
+                    <span>marianna_adm@yahoo.com.br</span>
+                    <span>www.linkedin.com/in/marianapcruz</span>
+                    <span>Rio de Janeiro, Brasil</span>
                 </div>
             </div>
 
-            <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
-            <div class="main-print md:col-span-8 p-6 sm:p-10 space-y-6">
-                
-                <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO -->
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
-                    <p contenteditable="true" id="c-cargo" class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+            <!-- RESUMO -->
+            <section class="space-y-1.5">
+                <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider border-b pb-1">Resumo</h2>
+                <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
+                    Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
+                </p>
+            </section>
+
+            <!-- PRINCIPAIS COMPETÊNCIAS -->
+            <section class="space-y-1.5">
+                <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider border-b pb-1">Principais Competências</h2>
+                <div contenteditable="true" id="c-competencias" class="text-xs text-slate-700 dark:text-slate-300 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    <div>• Rastreamento de ativos</div>
+                    <div>• Módulo SAP PM</div>
+                    <div>• Melhoria continua</div>
+                    <div>• Gestão de Ativos & Confiabilidade</div>
+                    <div>• Gestão de Projetos</div>
+                    <div>• CAPEX e OPEX</div>
                 </div>
+            </section>
 
-                <!-- RESUMO PROFISSIONAL -->
-                <section class="space-y-2">
-                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                    <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás[cite: 2]. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional[cite: 2]. Especialista em SAP (módulos PM, MM e FI) e Power BI[cite: 2].
-                    </p>
-                </section>
+            <!-- CERTIFICAÇÕES -->
+            <section class="space-y-1.5">
+                <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider border-b pb-1">Certificações</h2>
+                <div contenteditable="true" id="c-certificacoes" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                    <p>• Engenheira Mecânica - CREA-RJ Ativo</p>
+                </div>
+            </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL -->
-                <section class="space-y-4">
-                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                    
+            <!-- EXPERIÊNCIA PROFISSIONAL -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center border-b pb-1">
+                    <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Experiência Profissional</h2>
+                    <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Adicionar Experiência</button>
+                </div>
+                
+                <div id="container-experiencias" class="space-y-4">
                     <!-- Vale 1 -->
-                    <div id="c-exp1" class="space-y-1 text-xs">
+                    <div class="space-y-1 text-xs exp-item">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp1-titulo">Vale — Engenheira de Gestão de Ativos</span>
-                            <span contenteditable="true" id="c-exp1-data" class="text-slate-400 font-normal">dez 2025 - Presente[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Vale — Engenheira de Gestão de Ativos</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">dezembro de 2025 - Present (10 meses)</span>
                         </div>
-                        <p contenteditable="true" id="c-exp1-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Desenvolver e gerenciar o monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade; Elaborar indicadores de gestão de ativos e planos de ação[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
                         </p>
                     </div>
 
                     <!-- Vale 2 -->
-                    <div id="c-exp2" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp2-titulo">Vale — Especialista Gestão de Ativos</span>
-                            <span contenteditable="true" id="c-exp2-data" class="text-slate-400 font-normal">nov 2022 - dez 2025[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Vale — Especialista Gestão de Ativos</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
                         </div>
-                        <p contenteditable="true" id="c-exp2-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Estratégias para aumento da confiabilidade de equipamentos rotativos críticos. Condução de análises de falhas (RCA, FMEA/FMECA, RCM)[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
                         </p>
                     </div>
 
                     <!-- Vale 3 -->
-                    <div id="c-exp3" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp3-titulo">Vale — Analista de Mecânica SR</span>
-                            <span contenteditable="true" id="c-exp3-data" class="text-slate-400 font-normal">nov 2020 - nov 2022[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Vale — Analista de Mecânica SR</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil</span>
                         </div>
-                        <p contenteditable="true" id="c-exp3-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Gestão e monitoramento das condições dos ativos, focando na preservação, disponibilidade e confiabilidade operacional[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Experiência na identificação de oportunidades de otimização de processos, redução de riscos operacionais e aumento da eficiência produtiva, por meio da integração, consolidação e análise de dados estratégicos para suporte à tomada de decisão. Administração de sistemas de Operação e Manutenção (O&M), monitorando o desempenho dos processos e prestando suporte aos usuários. Acompanhamento de planos de manutenção, projetos de melhoria, reforços operacionais e gestão do ciclo de vida dos ativos, em parceria com as áreas de Operação, Engenharia e Manutenção. Gestão e monitoramento de indicadores de estoque de sobressalentes, calibração e manutenção de instrumentos, além da elaboração de procedimentos, fluxogramas e padrões operacionais relacionados à Gestão de Ativos. Participação em projetos estratégicos corporativos, contribuindo para a geração de valor do negócio e alcance das metas organizacionais. Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA). Atuação na identificação de perdas de produção associadas a falhas mecânicas, propondo soluções técnicas para minimizar impactos operacionais e aumentar a disponibilidade dos ativos. Definição, acompanhamento e análise de indicadores de desempenho, como MTBF (Tempo Médio Entre Falhas), MTTR (Tempo Médio para Reparo), Disponibilidade Operacional, com foco na eliminação de falhas recorrentes, aumento da vida útil dos equipamentos, confiabilidade operacional e excelência dos processos.
                         </p>
                     </div>
 
-                    <!-- Yara International -->
-                    <div id="c-exp4" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <!-- Yara -->
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp4-titulo">Yara International — Analista de PCM SR</span>
-                            <span contenteditable="true" id="c-exp4-data" class="text-slate-400 font-normal">fev 2020 - out 2020[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Yara International — Analista de PCM SR</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office</span>
                         </div>
-                        <p contenteditable="true" id="c-exp4-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Cumprimento das metas de planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva, reposição de peças da unidade, visando alcançar as metas de rendimento e disponibilidade dos equipamentos; Garantir o atendimento de todas políticas e diretrizes da empresa; Assegurar a manutenção do histórico e cadastro de equipamentos no Sistema de Gestão de Manutenção, gerando informações confiáveis para tomadas de decisões; Planejar as atividades de manutenção, definindo as prioridades com as partes envolvidas e atribuindo recursos adequados, transformando-as em "ordem de serviço"; Garantir a gestão das "ordens de serviços", controlando o backlog em patamares adequados, inclusive de serviços executados por terceiros; Definir prioridades de execução de manutenção e negociar os recursos com as demais áreas; Processar solicitação de alterações de estoque, emitir requisições de compra de serviços e materiais, para garantir a execução das atividades previamente planejadas. Verificar a assertividade do planejamento junto aos executantes e tomar medidas corretivas para os desvios, de forma a garantir os KPIS de manutenção dentro das metas estabelecidas. Garantir a inserção dos dados no sistema de manutenção para emissão de informações gerenciais no modelo de KPIs de manutenção (MTTF, MTBF, Paradas, Custos, Backlog etc.) e análise das informações com propostas de ações para mitigar/solucionar os desvios apontados. Planejamento dos serviços para grandes intervenções, com emissão de cronograma de execução e indicação dos caminhos críticos e responsabilidades. Assegurar a execução das paradas programadas conforme planejado, através de análise crítica de ordens de manutenção, acompanhamento dos preparativos e execução dos serviços. Participar das reuniões diárias de programação e coordenar reunião de programação semanal. Atender aos requisitos de Segurança, Qualidade e Meio Ambiente, através do cumprimento das diretrizes estabelecidas pela empresa.
                         </p>
                     </div>
 
                     <!-- White Martins -->
-                    <div id="c-exp5" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp5-titulo">White Martins — Analista de PCM SR</span>
-                            <span contenteditable="true" id="c-exp5-data" class="text-slate-400 font-normal">out 2017 - nov 2019[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">White Martins — Analista de PCM SR</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">outubro de 2017 - novembro de 2019 (2 anos 2 meses) — Rio de Janeiro e Região</span>
                         </div>
-                        <p contenteditable="true" id="c-exp5-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Planeamento e programação de manutenções corretivas, preventivas e preditivas utilizando sistemas informatizados[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados, para garantir a execução eficiente e dentro dos prazos estabelecidos. Analisar e gerenciar Ordens de Serviço finalizadas e abertas, verificando recursos utilizados, baixas no sistema e pendências, visando manter o controle e a rastreabilidade total das atividades de manutenção. Realizar o levantamento de necessidades de materiais, ferramentas e peças junto aos Supervisores de Manutenção, avaliando condições do ambiente, disponibilidade de mão de obra e qualificação da equipe para garantir planejamento adequado das intervenções. Elaborar e acompanhar solicitações de compras e cadastros no sistema, seguindo fluxos internos, para assegurar disponibilidade de insumos para a área de manutenção. Verificar o cumprimento dos fluxos de manutenção por meio da conferência de documentos, registros e homologações, garantindo padronização e aderência às normas internas. Analisar processos e resultados de manutenção, propondo melhorias, revisões de projetos, instruções de trabalho e otimização dos tempos e métodos, contribuindo para aumento da produtividade dos ativos. Paradas programadas de manutenção, assegurando alinhamento das atividades, alocação de recursos e cumprimento do cronograma. Controlar, programar e solicitar manutenções periódicas obrigatórias, garantindo cumprimento dos requisitos legais, normativos e internos relacionados aos ativos. Registrar e acompanhar a utilização de peças e serviços nas Ordens de Serviço, para garantir rastreabilidade e subsidiar decisões de melhoria contínua e controle de custos.
                         </p>
                     </div>
 
                     <!-- Light -->
-                    <div id="c-exp6" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp6-titulo">Light — Analista de PCM</span>
-                            <span contenteditable="true" id="c-exp6-data" class="text-slate-400 font-normal">jun 2015 - set 2017[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Light — Analista de PCM</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">junho de 2015 - setembro de 2017 (2 anos 4 meses) — Rio de Janeiro e Região</span>
                         </div>
-                        <p contenteditable="true" id="c-exp6-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Planeamento e programação de atividades de manutenção corretiva, preventiva e preditiva; controlo de ordens de serviço[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Elaborar e acompanhar ordens de serviço, considerando recursos, materiais, ferramentas e mão de obra necessários; Elaborar e controlar os cronogramas semanais e mensais das equipes técnicas; Acompanhar o cumprimento das programações e identificar necessidades de ajustes; Controlar o estoque de peças críticas e materiais sobressalentes necessários às atividades de manutenção; Acompanhar indicadores de desempenho da manutenção, como MTBF, MTTR e disponibilidade dos ativos; Gerenciar e manter atualizados os registros no sistema de manutenção/ERP; Alinhar a programação das atividades de manutenção com as equipes de produção e operação; Apoiar análises de falhas e identificar oportunidades de melhoria nos processos de manutenção; Elaborar relatórios de custos, desempenho, indicadores e informações gerenciais para acompanhamento da gestão; Acompanhar os recursos necessários para execução das atividades, buscando otimizar custos, prazos e disponibilidade dos equipamentos.
                         </p>
                     </div>
 
                     <!-- TechnipFMC -->
-                    <div id="c-exp7" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp7-titulo">TechnipFMC — Analista de PCM</span>
-                            <span contenteditable="true" id="c-exp7-data" class="text-slate-400 font-normal">abr 2012 - mai 2015[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">TechnipFMC — Analista de PCM</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">abril de 2012 - maio de 2015 (3 anos 2 meses)</span>
                         </div>
-                        <p contenteditable="true" id="c-exp7-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Programação diária e semanal de equipes de campo, controlo de backlog, OSs vencidas e prazos[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Planejar e programar atividades de manutenção preventiva e corretiva. Elaborar a programação diária e semanal das equipes de campo. Acompanhar o cumprimento da programação. Controlar backlog, OSs vencidas, prioridades e prazos. Acompanhar SLA e produtividade das equipes. Atualizar e garantir a qualidade das informações nos sistemas. Acompanhar as OSs desde a programação até o encerramento. Controlar materiais e recursos necessários para execução. Elaborar e acompanhar cronogramas. Cobrar justificativas e nova programação para atividades não executadas. Conferir registros e evidências para fechamento das OSS. Elaborar relatórios de programação, execução, backlog e produtividade. Manter comunicação com cliente e operação sobre andamento, prioridades e pendências. Identificar reincidências, desvios e situações críticas e sinalizar à gestão. Planejamento e controle de manutenção, faciliteis ou serviços de campo. Conhecimento de manutenção preventiva e corretiva.
                         </p>
                     </div>
 
                     <!-- Michelin -->
-                    <div id="c-exp8" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp8-titulo">Michelin — Estagiária de Administração</span>
-                            <span contenteditable="true" id="c-exp8-data" class="text-slate-400 font-normal">jan 2010 - dez 2011[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">Michelin — Estagiária de Administração</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">janeiro de 2010 - dezembro de 2011 (2 anos)</span>
                         </div>
-                        <p contenteditable="true" id="c-exp8-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Controlo de pontos de estoque fabris e elaboração de relatórios de divergências[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Auxiliar nos procedimentos de controle de pontos de estoque fabris; ajudar na elaboração de relatórios sobre diferenças de estoques, analisar as principais na realização de inventários físicos; ajudar nos processos de tratamento de notas fiscais; Auxiliar nos trabalhos de implementação dos projetos estoques JDE e PILIER 2.
                         </p>
                     </div>
 
                     <!-- SICPA -->
-                    <div id="c-exp9" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="space-y-1 text-xs exp-item pt-2 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span contenteditable="true" id="c-exp9-titulo">SICPA — Estagiária Técnico Administrativa</span>
-                            <span contenteditable="true" id="c-exp9-data" class="text-slate-400 font-normal">jan 2009 - dez 2009[cite: 2]</span>
+                            <span contenteditable="true" class="exp-titulo">SICPA — Estagiária na técnico Administrativa</span>
+                            <span contenteditable="true" class="exp-data text-slate-400 font-normal">janeiro de 2009 - dezembro de 2009 (1 ano)</span>
                         </div>
-                        <p contenteditable="true" id="c-exp9-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Acompanhamento de pedidos de compras, rotinas de pagamentos e suporte gerencial[cite: 2].
+                        <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Acompanhamento dos Pedidos de compras; Rotinas de liberação de notas para pagamentos; Acompanhamento de demanda do pessoal junto ao Laboratório; Organização e controle de arquivo; Interagir com almoxarifado; Suporte a área Gerencial da empresa, apoio, rotinas administrativas, contato com fornecedores, atendimento telefônico, organização de eventos, Elaboração de Planilha.
                         </p>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <!-- FORMAÇÃO ACADÊMICA -->
-                <section class="space-y-2">
-                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
-                    <div contenteditable="true" id="c-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                        <p>• <b>UTFPR</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)[cite: 2]</p>
-                        <p>• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)[cite: 2]</p>
-                        <p>• <b>Estácio</b> — Graduação em Engenharia Mecânica (fevereiro de 2020 - dezembro de 2025)[cite: 2]</p>
-                        <p>• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)[cite: 2]</p>
-                    </div>
-                </section>
-
-            </div>
+            <!-- FORMAÇÃO ACADÊMICA E CURSOS -->
+            <section class="space-y-2">
+                <div class="flex justify-between items-center border-b pb-1">
+                    <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Formação acadêmica e Cursos</h2>
+                    <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Adicionar Curso / Formação</button>
+                </div>
+                <div contenteditable="true" id="c-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                    <p>• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação, Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
+                    <p>• <b>PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
+                    <p>• <b>Estácio</b> — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)</p>
+                    <p>• <b>Estácio</b> — Graduação, Administração de Empresas (2010 - 2014)</p>
+                </div>
+            </section>
 
         </div>
     </div>
 
-    <!-- BARRA INFERIOR COM BOTÃO DE INSTALAR APP E BLOQUEIO -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center max-w-5xl mx-auto rounded-t-2xl shadow-lg">
+    <!-- MODAL DO ASSISTENTE DE IA -->
+    <div id="modal-ia" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
+            <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">🤖 Assistente de IA para Currículo</h3>
+                <button onclick="fecharModalIA()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <p class="text-slate-500">Descreva o que queres melhorar (ex: focar mais em confiabilidade, encurtar texto, etc.):</p>
+                <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo para focar em Gestão de Ativos..." class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
+                <button onclick="gerarSugestaoIA()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">
+                    ✨ Gerar Sugestão Profissional
+                </button>
+                <div id="ia-resposta" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
+            </div>
+            <button onclick="fecharModalIA()" class="w-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- BARRA INFERIOR -->
+    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center max-w-4xl mx-auto rounded-t-2xl shadow-lg">
         <div class="flex items-center gap-2">
-            <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1" title="Instalar App no Celular">
+            <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1">
                 📱 Instalar App
             </button>
-            <span class="text-[10px] font-bold text-slate-400 ml-1">v1.3</span>
         </div>
         <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 hover:bg-red-50 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-xl text-xs font-semibold transition">
             🔒 Bloquear / Sair
         </button>
     </div>
 
-    <!-- SCRIPT DE CONTROLO, BIOMETRIA E PWA -->
+    <!-- SCRIPT DE CONTROLO -->
     <script>
         const PIN_CORRETO = "1510";
-        let deferredPrompt = null;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function instalarApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            } else {
-                alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
-            }
-        }
 
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
                 liberarSistema();
             }
-            carregarDadosSalvos();
+            atualizarListaVersoes();
         });
 
         function verificarLogin(e) {
             e.preventDefault();
-            const senha = document.getElementById('input-senha').value;
-            if (senha === PIN_CORRETO) {
+            if (document.getElementById('input-senha').value === PIN_CORRETO) {
                 sessionStorage.setItem('curriculo_autenticado', 'true');
                 liberarSistema();
             } else {
@@ -355,55 +324,22 @@
             }
         }
 
-        // AUTENTICAÇÃO BIOMÉTRICA (WebAuthn)
         async function entrarComBiometria() {
-            if (!window.PublicKeyCredential) {
-                alert("O seu navegador não suporta autenticação biométrica.");
-                return;
-            }
             try {
-                const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-                if (!available) {
-                    alert("Nenhum leitor biométrico encontrado neste aparelho.");
-                    return;
-                }
-
-                const challenge = new Uint8Array(32);
-                window.crypto.getRandomValues(challenge);
-                const userId = new Uint8Array(16);
-                window.crypto.getRandomValues(userId);
-
-                const createCredentialOptions = {
-                    challenge: challenge,
-                    rp: { name: "Gestor de Currículo", id: window.location.hostname },
-                    user: { id: userId, name: "mariana@curriculo.local", displayName: "Mariana" },
-                    pubKeyCredParams: [{ alg: -7, type: "public-key" }, { alg: -257, type: "public-key" }],
-                    authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "preferred" },
-                    timeout: 60000
-                };
-
-                let cred;
-                const credentialIdStr = localStorage.getItem('biometria_cred_id_curriculo');
-
-                if (credentialIdStr) {
-                    try {
-                        const rawId = Uint8Array.from(atob(credentialIdStr), c => c.charCodeAt(0));
-                        cred = await navigator.credentials.get({ challenge, allowCredentials: [{ id: rawId, type: "public-key" }], userVerification: "required", timeout: 60000 });
-                    } catch (err) {
-                        cred = await navigator.credentials.create({ publicKey: createCredentialOptions });
-                        localStorage.setItem('biometria_cred_id_curriculo', btoa(String.fromCharCode.apply(null, new Uint8Array(cred.rawId))));
+                const cred = await navigator.credentials.create({
+                    publicKey: {
+                        challenge: new Uint8Array(32),
+                        rp: { name: "Gestor de Currículo", id: window.location.hostname },
+                        user: { id: new Uint8Array(16), name: "mariana@curriculo.local", displayName: "Mariana" },
+                        pubKeyCredParams: [{ alg: -7, type: "public-key" }]
                     }
-                } else {
-                    cred = await navigator.credentials.create({ publicKey: createCredentialOptions });
-                    localStorage.setItem('biometria_cred_id_curriculo', btoa(String.fromCharCode.apply(null, new Uint8Array(cred.rawId))));
-                }
-
-                if (cred) {
+                });
+                if(cred) {
                     sessionStorage.setItem('curriculo_autenticado', 'true');
                     liberarSistema();
                 }
-            } catch (error) {
-                alert("Biometria cancelada ou não configurada. Podes usar a senha PIN (1510).");
+            } catch(e) {
+                alert("Use o PIN 1510 para entrar.");
             }
         }
 
@@ -417,75 +353,116 @@
             location.reload();
         }
 
-        function salvarAlteracoes() {
+        function adicionarExperiencia() {
+            const container = document.getElementById('container-experiencias');
+            const div = document.createElement('div');
+            div.className = "space-y-1 text-xs exp-item pt-2 border-t border-dashed border-slate-300 dark:border-slate-700";
+            div.innerHTML = `
+                <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                    <span contenteditable="true" class="exp-titulo">Nova Empresa — Cargo</span>
+                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">Mês Ano - Mês Ano</span>
+                </div>
+                <p contenteditable="true" class="exp-texto text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Descreva as atividades e realizações nesta nova experiência...
+                </p>
+            `;
+            container.prepend(div);
+        }
+
+        function adicionarFormacao() {
+            const formacaoEl = document.getElementById('c-formacao');
+            const p = document.createElement('p');
+            p.innerHTML = `• <b contenteditable="true">Instituição / Curso</b> — <span contenteditable="true">Descrição ou Detalhes (Ano)</span>`;
+            formacaoEl.appendChild(p);
+        }
+
+        function salvarVersao() {
+            let nomeVersao = prompt("Nome para esta versão (ex: Versão Engenharia de Confiabilidade):", "Versão " + new Date().toLocaleDateString());
+            if(!nomeVersao) return;
+
             const dados = {
                 nome: document.getElementById('c-nome').innerHTML,
-                cargoLateral: document.getElementById('c-cargo-lateral').innerHTML,
+                cargo: document.getElementById('c-cargo').innerHTML,
                 contato: document.getElementById('c-contato').innerHTML,
+                resumo: document.getElementById('c-resumo').innerHTML,
                 competencias: document.getElementById('c-competencias').innerHTML,
                 certificacoes: document.getElementById('c-certificacoes').innerHTML,
-                cargo: document.getElementById('c-cargo').innerHTML,
-                resumo: document.getElementById('c-resumo').innerHTML,
-                
-                exp1Titulo: document.getElementById('c-exp1-titulo').innerHTML,
-                exp1Data: document.getElementById('c-exp1-data').innerHTML,
-                exp1Texto: document.getElementById('c-exp1-texto').innerHTML,
-                exp2Titulo: document.getElementById('c-exp2-titulo').innerHTML,
-                exp2Data: document.getElementById('c-exp2-data').innerHTML,
-                exp2Texto: document.getElementById('c-exp2-texto').innerHTML,
-                exp3Titulo: document.getElementById('c-exp3-titulo').innerHTML,
-                exp3Data: document.getElementById('c-exp3-data').innerHTML,
-                exp3Texto: document.getElementById('c-exp3-texto').innerHTML,
-                exp4Titulo: document.getElementById('c-exp4-titulo').innerHTML,
-                exp4Data: document.getElementById('c-exp4-data').innerHTML,
-                exp4Texto: document.getElementById('c-exp4-texto').innerHTML,
-                exp5Titulo: document.getElementById('c-exp5-titulo').innerHTML,
-                exp5Data: document.getElementById('c-exp5-data').innerHTML,
-                exp5Texto: document.getElementById('c-exp5-texto').innerHTML,
-                exp6Titulo: document.getElementById('c-exp6-titulo').innerHTML,
-                exp6Data: document.getElementById('c-exp6-data').innerHTML,
-                exp6Texto: document.getElementById('c-exp6-texto').innerHTML,
-                exp7Titulo: document.getElementById('c-exp7-titulo').innerHTML,
-                exp7Data: document.getElementById('c-exp7-data').innerHTML,
-                exp7Texto: document.getElementById('c-exp7-texto').innerHTML,
-                exp8Titulo: document.getElementById('c-exp8-titulo').innerHTML,
-                exp8Data: document.getElementById('c-exp8-data').innerHTML,
-                exp8Texto: document.getElementById('c-exp8-texto').innerHTML,
-                exp9Titulo: document.getElementById('c-exp9-titulo').innerHTML,
-                exp9Data: document.getElementById('c-exp9-data').innerHTML,
-                exp9Texto: document.getElementById('c-exp9-texto').innerHTML,
-                
                 formacao: document.getElementById('c-formacao').innerHTML,
+                htmlExperiencias: document.getElementById('container-experiencias').innerHTML
             };
-            localStorage.setItem('curriculo_personalizado_mariana_v1.3', JSON.stringify(dados));
-            alert("💾 Alterações salvas com sucesso!");
+
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.1') || '{}');
+            versoes[nomeVersao] = dados;
+            localStorage.setItem('curriculo_versoes_mariana_v2.1', JSON.stringify(versoes));
+            atualizarListaVersoes();
+            alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
-        function carregarDadosSalvos() {
-            const salvos = JSON.parse(localStorage.getItem('curriculo_personalizado_mariana_v1.3'));
-            if (salvos) {
-                document.getElementById('c-nome').innerHTML = salvos.nome;
-                document.getElementById('c-cargo-lateral').innerHTML = salvos.cargoLateral;
-                document.getElementById('c-contato').innerHTML = salvos.contato;
-                document.getElementById('c-competencias').innerHTML = salvos.competencias;
-                if(salvos.certificacoes) document.getElementById('c-certificacoes').innerHTML = salvos.certificacoes;
-                document.getElementById('c-cargo').innerHTML = salvos.cargo;
-                document.getElementById('c-resumo').innerHTML = salvos.resumo;
-                
-                for(let i=1; i<=9; i++) {
-                    if(salvos[`exp${i}Titulo`]) document.getElementById(`c-exp${i}-titulo`).innerHTML = salvos[`exp${i}Titulo`];
-                    if(salvos[`exp${i}Data`]) document.getElementById(`c-exp${i}-data`).innerHTML = salvos[`exp${i}Data`];
-                    if(salvos[`exp${i}Texto`]) document.getElementById(`c-exp${i}-texto`).innerHTML = salvos[`exp${i}Texto`];
+        function atualizarListaVersoes() {
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.1') || '{}');
+            const select = document.getElementById('selectVersoes');
+            select.innerHTML = '<option value="padrao">Padrão Original (PDF)</option>';
+            Object.keys(versoes).forEach(v => {
+                let opt = document.createElement('option');
+                opt.value = v;
+                opt.innerText = v;
+                select.appendChild(opt);
+            });
+        }
+
+        function carregarVersaoSelecionada() {
+            let val = document.getElementById('selectVersoes').value;
+            if(val === 'padrao') {
+                if(confirm("Deseja recarregar o padrão original?")) {
+                    location.reload();
                 }
-                document.getElementById('c-formacao').innerHTML = salvos.formacao;
+                return;
+            }
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.1') || '{}');
+            let dados = versoes[val];
+            if(dados) {
+                document.getElementById('c-nome').innerHTML = dados.nome;
+                document.getElementById('c-cargo').innerHTML = dados.cargo;
+                document.getElementById('c-contato').innerHTML = dados.contato;
+                document.getElementById('c-resumo').innerHTML = dados.resumo;
+                document.getElementById('c-competencias').innerHTML = dados.competencias;
+                document.getElementById('c-certificacoes').innerHTML = dados.certificacoes;
+                document.getElementById('container-experiencias').innerHTML = dados.htmlExperiencias;
+                document.getElementById('c-formacao').innerHTML = dados.formacao;
+                alert(`Versão "${val}" carregada com sucesso!`);
             }
         }
 
-        function restaurarPadrao() {
-            if (confirm("Deseja restaurar os dados originais do currículo?")) {
-                localStorage.removeItem('curriculo_personalizado_mariana_v1.3');
-                location.reload();
+        function apagarVersao() {
+            let val = document.getElementById('selectVersoes').value;
+            if(val === 'padrao') return alert("Não é possível apagar o padrão.");
+            if(confirm(`Tem certeza que deseja apagar a versão "${val}"?`)) {
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v2.1') || '{}');
+                delete versoes[val];
+                localStorage.setItem('curriculo_versoes_mariana_v2.1', JSON.stringify(versoes));
+                atualizarListaVersoes();
+                alert("Versão apagada.");
             }
+        }
+
+        function abrirModalIA() { document.getElementById('modal-ia').classList.remove('hidden'); }
+        function fecharModalIA() { document.getElementById('modal-ia').classList.add('hidden'); }
+
+        function gerarSugestaoIA() {
+            const promptTexto = document.getElementById('ia-prompt').value;
+            const respEl = document.getElementById('ia-resposta');
+            if(!promptTexto) return alert("Digite um pedido para o assistente.");
+            
+            respEl.classList.remove('hidden');
+            respEl.innerHTML = "⏳ A processar sugestão profissional...";
+            
+            setTimeout(() => {
+                respEl.innerHTML = `<b>Sugestão da IA:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, redução de indisponibilidade e liderança em projetos de melhoria contínua com metodologias ágeis e SAP PM."</i>`;
+            }, 1000);
+        }
+
+        function instalarApp() {
+            alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
         }
     </script>
 </body>
