@@ -78,7 +78,7 @@
             <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Direita</button>
             <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Justificar</button>
         </div>
-        <div class="text-[10px] text-yellow-400 font-semibold">💡 Arraste com (⠿) e exclua com (✕) o que não precisar!</div>
+        <div class="text-[10px] text-yellow-400 font-semibold">💡 Arraste com (⠿), edite com (✏️) e apague com (✕)!</div>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -114,12 +114,12 @@
         <!-- BARRA DE CONTROLO E AÇÕES -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-3">
             <div>
-                <h1 class="text-sm font-bold text-slate-900 dark:text-white">📄 Gestor de Currículo Profissional (v3.3)</h1>
-                <p class="text-[11px] text-slate-500">Adicione novas caixas, arraste e delete qualquer elemento.</p>
+                <h1 class="text-sm font-bold text-slate-900 dark:text-white">📄 Gestor de Currículo Profissional (v3.4)</h1>
+                <p class="text-[11px] text-slate-500">Instalação automática PWA, caixas livres e controlo total.</p>
             </div>
             <div class="flex flex-wrap gap-2">
-                <button onclick="baixarArquivoApp()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
-                    📥 Baixar App Currículo
+                <button onclick="instalarApp()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1" title="Instalar como Aplicação no Aparelho">
+                    📱 Instalar App
                 </button>
                 <button onclick="adicionarCaixaLivre()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
                     ➕ Adicionar Nova Caixa de Edição
@@ -231,7 +231,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v3.3
+                    Gestor Pessoal v3.4
                 </div>
             </div>
 
@@ -255,7 +255,7 @@
                             <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                             <span class="text-slate-400 text-xs">✏️</span>
                         </div>
-                        <button onclick="this.closest('section').remove()" class="print-hidden bg-red-100 text-red-600 hover:bg-red-200 px-1 rounded text-[10px] font-bold">✕</button>
+                        <button onclick="this.closest('section').remove()" class="print-hidden bg-red-100 text-red-600 hover:bg-red-200 px-1 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
                     <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
                         Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
@@ -432,11 +432,28 @@
         </button>
     </div>
 
-    <!-- SCRIPT DE CONTROLO, DRAG AND DROP E CÁLCULO DE DATAS -->
+    <!-- SCRIPT DE CONTROLO, DRAG AND DROP E PWA -->
     <script>
         const PIN_CORRETO = "1510";
+        let deferredPrompt = null;
         let draggedItem = null;
         const mesesNomes = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function instalarApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
@@ -485,20 +502,6 @@
             location.reload();
         }
 
-        function baixarArquivoApp() {
-            const htmlContent = document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Curriculo_Mariana_Cruz.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            alert("📄 Ficheiro do App baixado com sucesso!");
-        }
-
         function execCmd(command, value = null) {
             document.execCommand(command, false, value);
         }
@@ -522,7 +525,7 @@
             }
         }
 
-        // CÁLCULO DE TEMPO
+        // CÁLCULO DE TEMPO DE SERVIÇO
         function calcularTempoServico(btn) {
             const card = btn.closest('.exp-item, section');
             const inputInicio = card.querySelector('.input-inicio').value;
@@ -571,7 +574,7 @@
             alert(`✅ Duração calculada: ${textoDuracao}`);
         }
 
-        // ADICIONAR CAIXA LIVRE NO CONTEÚDO
+        // ADICIONAR CAIXA LIVRE NO CONTEÚDO PRINCIPAL
         function adicionarCaixaLivre() {
             const container = document.getElementById('container-principal-conteudo');
             const sec = document.createElement('section');
@@ -592,7 +595,7 @@
                 <div class="space-y-1">
                     <div class="flex justify-between font-bold text-slate-900 dark:text-white">
                         <span contenteditable="true" class="outline-none">Título do Item</span>
-                        <span contenteditable="true" class="exp-data text-slate-400 font-normal outline-none">Data / Período</span>
+                        <span contenteditable="true" class="exp-data text-slate-400 font-normal outline-none">Período</span>
                     </div>
                     <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
                         <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs"></span>
@@ -601,7 +604,7 @@
                         <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
                     </div>
                     <p contenteditable="true" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 outline-none pt-1">
-                        Clique aqui para digitar o conteúdo detalhado desta nova caixa...
+                        Digite aqui o conteúdo detalhado desta nova caixa...
                     </p>
                 </div>
             `;
@@ -641,7 +644,7 @@
                 </div>
                 <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-20">
                     <span contenteditable="true" class="exp-titulo">Nova Empresa — Cargo</span>
-                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">mês de ano - mês de ano</span>
+                    <span contenteditable="true" class="exp-data text-slate-400 font-normal">Período</span>
                 </div>
                 <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
                     <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs"></span>
@@ -680,15 +683,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.4') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v3.3', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v3.4', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.4') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -713,7 +716,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.4') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -723,9 +726,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.3') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.4') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v3.3', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v3.4', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
@@ -745,10 +748,6 @@
             setTimeout(() => {
                 respEl.innerHTML = `<b>Sugestão da IA:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, redução de indisponibilidade e liderança em projetos de melhoria contínua com metodologias ágeis e SAP PM."</i>`;
             }, 1000);
-        }
-
-        function instalarApp() {
-            alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
         }
     </script>
 </body>
