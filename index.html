@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v4.9)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.0)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v4.9%22,
+        %22short_name%22: %22Currículo v5.0%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -63,10 +63,10 @@
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-44 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
+    <!-- BARRA DE FERRAMENTAS ESTILO WORD COM BOTÃO OK NA COR -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-4 py-2 shadow-lg flex flex-wrap items-center justify-between gap-2 border-b border-slate-700 text-xs">
         <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-blue-400">✏️ Editor Word (v4.9):</span>
+            <span class="font-bold text-blue-400">✏️ Editor Word (v5.0):</span>
             
             <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs font-medium" title="Tipo de Letra">
                 <option value="Arial">Arial</option>
@@ -86,10 +86,11 @@
                 <option value="7">Extra Grande</option>
             </select>
 
-            <!-- SELETOR DE COR DE TEXTO FUNCIONAL -->
-            <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700">
+            <!-- SELETOR DE COR DE TEXTO COM BOTÃO OK -->
+            <div class="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded border border-slate-700">
                 <span class="text-[10px] text-slate-300">🎨 Cor:</span>
-                <input type="color" id="cor-picker" onchange="aplicarCorTexto(this.value)" class="h-5 w-6 bg-transparent border-0 cursor-pointer" title="Escolher Cor do Texto">
+                <input type="color" id="cor-picker" value="#2563eb" class="h-5 w-6 bg-transparent border-0 cursor-pointer" title="Escolher Cor">
+                <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-0.5 rounded text-[10px] font-bold transition shadow-sm">OK</button>
             </div>
 
             <div class="h-4 w-px bg-slate-700"></div>
@@ -105,7 +106,7 @@
             <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Direita</button>
             <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Justificar</button>
         </div>
-        <div class="text-[10px] text-yellow-400 font-semibold">💡 v4.9: Cores fixas garantidas e caixas limpas!</div>
+        <div class="text-[10px] text-yellow-400 font-semibold">💡 v5.0: Nome reposicionado e botão OK na cor!</div>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -113,7 +114,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v4.9)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.0)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -141,21 +142,9 @@
         <!-- FOLHA DO CURRÍCULO -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) -->
+            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) - SEM O NOME (APENAS CONTACTOS E COMPETÊNCIAS) -->
             <div class="sidebar-print md:col-span-4 bg-slate-900 text-slate-100 p-6 sm:p-8 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
-                    <!-- NOME / CARGO -->
-                    <div class="border-b border-slate-800 pb-4 relative group">
-                        <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                            <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                            <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                            <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                        </div>
-                        <h2 contenteditable="true" id="c-nome" data-original="Mariana Cruz" class="text-2xl font-black text-white uppercase tracking-wider outline-none">Mariana Cruz</h2>
-                        <p contenteditable="true" id="c-cargo-lateral" data-original="Engenheira Mecânica & Confiabilidade" class="text-xs text-blue-400 font-semibold mt-1 outline-none">Engenheira Mecânica & Confiabilidade</p>
-                    </div>
-
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
                         <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
@@ -231,14 +220,14 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v4.9
+                    Gestor Pessoal v5.0
                 </div>
             </div>
 
-            <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
+            <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) - COM O NOME GRANDE NO TOPO -->
             <div id="container-principal-conteudo" class="main-print md:col-span-8 p-6 sm:p-10 space-y-6">
                 
-                <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO -->
+                <!-- NOME EM DESTAQUE NO TOPO DA COLUNA PRINCIPAL -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
@@ -246,7 +235,18 @@
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide pr-32 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-3xl font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider pr-32 outline-none">MARIANA PEREIRA CRUZ</h1>
+                </div>
+
+                <!-- TÍTULO PRINCIPAL / CARGO -->
+                <div class="pb-2 relative group">
+                    <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                    </div>
+                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide pr-32 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
                 </div>
 
                 <!-- RESUMO PROFISSIONAL -->
@@ -263,7 +263,7 @@
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL (LINHAS SEPARADAS PARA EMPRESA, CARGO E PERÍODO) -->
+                <!-- EXPERIÊNCIA PROFISSIONAL -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
@@ -280,15 +280,12 @@
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
                             </div>
-                            <!-- Linha 1: Nome da Empresa -->
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
                             </div>
-                            <!-- Linha 2: Cargo -->
                             <div>
                                 <span contenteditable="true" data-original="Engenheira de Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span>
                             </div>
-                            <!-- Linha 3: Período (Texto livre editável) -->
                             <div>
                                 <span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span>
                             </div>
@@ -296,7 +293,7 @@
                                 <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2025-12"></span>
                                 <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2026-09"></span>
                                 <label><input type="checkbox" class="chk-atual" checked> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
                             </div>
                             <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
@@ -325,7 +322,7 @@
                                 <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2022-11"></span>
                                 <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2025-12"></span>
                                 <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
                             </div>
                             <p contenteditable="true" data-original="Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
@@ -592,7 +589,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Minhas Versões Salvas no Aparelho (v4.9)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Minhas Versões Salvas no Aparelho (v5.0)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -642,7 +639,7 @@
             </button>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 px-2 py-1 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v4.9</span>
+            <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 px-2 py-1 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.0</span>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                 💾 Salvar
             </button>
@@ -655,7 +652,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V4.9 -->
+    <!-- SCRIPT DE CONTROLO V5.0 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -728,11 +725,12 @@
             document.execCommand(command, false, value);
         }
 
-        // Função robusta para aplicar cor de texto sem falhas
-        function aplicarCorTexto(cor) {
+        // Função robusta de aplicação de cor com o botão OK
+        function aplicarCorSelecionada() {
+            const cor = document.getElementById('cor-picker').value;
             const selection = window.getSelection();
             if (!selection.rangeCount || selection.isCollapsed) {
-                alert("Por favor, selecione primeiro o texto que deseja colorir.");
+                alert("Por favor, selecione primeiro o texto que deseja colorir na folha do currículo.");
                 return;
             }
             const range = selection.getRangeAt(0);
@@ -741,6 +739,7 @@
             span.appendChild(range.extractContents());
             range.insertNode(span);
             selection.removeAllRanges();
+            alert("🎨 Cor aplicada com sucesso!");
         }
 
         function restaurarOriginal(btn, tipo) {
@@ -916,15 +915,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v4.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.0') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v4.9', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v5.0', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v4.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.0') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -949,7 +948,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v4.9') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.0') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -959,9 +958,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v4.9') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.0') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v4.9', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v5.0', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
