@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.3)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.4)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v5.3%22,
+        %22short_name%22: %22Currículo v5.4%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -66,52 +66,48 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-44 select-none">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
-    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-4 py-2 shadow-lg flex flex-wrap items-center justify-between gap-2 border-b border-slate-700 text-xs">
-        <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-blue-400">✏️ Editor Word (v5.3):</span>
-            
-            <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs font-medium" title="Tipo de Letra">
-                <option value="Arial">Arial</option>
-                <option value="Calibri">Calibri</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Courier New">Courier New</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Verdana">Verdana</option>
-            </select>
+    <!-- BARRA DE FERRAMENTAS ESTILO WORD COM ROLAGEM HORIZONTAL -->
+    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-1.5 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
+        <span class="font-bold text-blue-400 shrink-0">✏️ v5.4:</span>
+        
+        <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tipo de Letra">
+            <option value="Arial">Arial</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Verdana">Verdana</option>
+        </select>
 
-            <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs font-medium" title="Tamanho">
-                <option value="3">Normal</option>
-                <option value="2">Médio-Pequeno</option>
-                <option value="4">Médio-Grande</option>
-                <option value="5">Grande</option>
-                <option value="6">Muito Grande</option>
-                <option value="7">Extra Grande</option>
-            </select>
+        <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tamanho">
+            <option value="3">Normal</option>
+            <option value="2">Médio-Pequeno</option>
+            <option value="4">Médio-Grande</option>
+            <option value="5">Grande</option>
+            <option value="6">Muito Grande</option>
+        </select>
 
-            <!-- SELETOR DE COR DE TEXTO COM BOTÃO OK -->
-            <div class="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded border border-slate-700">
-                <span class="text-[10px] text-slate-300">🎨 Cor:</span>
-                <input type="color" id="cor-picker" value="#2563eb" class="h-5 w-6 bg-transparent border-0 cursor-pointer" title="Escolher Cor">
-                <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-0.5 rounded text-[10px] font-bold transition shadow-sm">OK</button>
-            </div>
-
-            <div class="h-4 w-px bg-slate-700"></div>
-
-            <button onclick="execCmd('bold')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold" title="Negrito"><b>B</b></button>
-            <button onclick="execCmd('italic')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded italic" title="Itálico"><i>I</i></button>
-            <button onclick="execCmd('underline')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded underline" title="Sublinhado"><u>U</u></button>
-            
-            <div class="h-4 w-px bg-slate-700"></div>
-            
-            <button onclick="execCmd('justifyLeft')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Esquerda</button>
-            <button onclick="execCmd('justifyCenter')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Centro</button>
-            <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Direita</button>
-            <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Justificar</button>
+        <!-- SELETOR DE COR COM OK -->
+        <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
+            <span class="text-[10px] text-slate-300">🎨</span>
+            <input type="color" id="cor-picker" value="#2563eb" class="h-4 w-5 bg-transparent border-0 cursor-pointer" title="Cor">
+            <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
         </div>
-        <div class="text-[10px] text-yellow-400 font-semibold">💡 v5.3: Quebra ajustada na barra lateral e margem PDF perfeita!</div>
+
+        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
+
+        <button onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0"><b>B</b></button>
+        <button onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0"><i>I</i></button>
+        <button onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0"><u>U</u></button>
+        
+        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
+        
+        <button onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
+        <button onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
+        <button onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
+        <button onclick="execCmd('justifyFull')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Just</button>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -119,7 +115,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.3)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.4)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -142,20 +138,20 @@
     </div>
 
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
-    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-4 sm:p-8 pt-16 space-y-6">
+    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-14 space-y-6">
         
         <!-- FOLHA DO CURRÍCULO COM BORDA SOLIDA E SUAVE -->
-        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) COM PROTEÇÃO DE QUEBRA -->
-            <div class="sidebar-print sidebar-break md:col-span-4 bg-slate-900 text-slate-100 p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) -->
+            <div class="sidebar-print sidebar-break md:col-span-4 bg-slate-900 text-slate-100 p-5 sm:p-8 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
                         <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
                             <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                             <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                             <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
@@ -175,7 +171,7 @@
                                 <button onclick="moverCaixa(this, 'subir')" class="print-hidden bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="print-hidden bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-competencias')" class="print-hidden text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
@@ -211,7 +207,7 @@
                                 <button onclick="moverCaixa(this, 'subir')" class="print-hidden bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="print-hidden bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-certificacoes')" class="print-hidden text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
@@ -225,42 +221,42 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v5.3
+                    Gestor Pessoal v5.4
                 </div>
             </div>
 
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
-            <div id="container-principal-conteudo" class="main-print md:col-span-8 p-6 sm:p-10 space-y-6">
+            <div id="container-principal-conteudo" class="main-print md:col-span-8 p-4 sm:p-10 space-y-6">
                 
                 <!-- NOME EM LINHA ÚNICA NO TOPO -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group overflow-hidden">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1 z-10">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-xl sm:text-2xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide pr-32 outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-2xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide pr-24 outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
                 </div>
 
                 <!-- TÍTULO PRINCIPAL / CARGO -->
                 <div class="pb-2 relative group">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide pr-32 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+                    <p contenteditable="true" id="c-cargo" data-original="CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional" class="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide pr-24 outline-none">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
                 </div>
 
                 <!-- RESUMO PROFISSIONAL -->
                 <section class="space-y-2 relative group bg-slate-50/30 p-3 rounded-xl border border-transparent hover:border-slate-200">
                     <div class="print-hidden absolute top-2 right-2 flex items-center gap-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
+                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
@@ -268,22 +264,22 @@
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL -->
+                <!-- EXPERIÊNCIA PROFISSIONAL COM BOTÕES COMPACTOS -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova Experiência</button>
+                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
                     </div>
                     
                     <div id="container-experiencias" class="space-y-4">
                         <!-- Vale 1 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -298,7 +294,7 @@
                                 <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2025-12"></span>
                                 <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2026-09"></span>
                                 <label><input type="checkbox" class="chk-atual" checked> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
@@ -306,13 +302,13 @@
                         </div>
 
                         <!-- Vale 2 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -335,13 +331,13 @@
                         </div>
 
                         <!-- Vale 3 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -364,13 +360,13 @@
                         </div>
 
                         <!-- Yara -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Yara International" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Yara International</span>
@@ -393,13 +389,13 @@
                         </div>
 
                         <!-- White Martins -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="White Martins" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">White Martins</span>
@@ -422,13 +418,13 @@
                         </div>
 
                         <!-- Light -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Light" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Light</span>
@@ -451,13 +447,13 @@
                         </div>
 
                         <!-- TechnipFMC -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="TechnipFMC" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">TechnipFMC</span>
@@ -480,13 +476,13 @@
                         </div>
 
                         <!-- Michelin -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Michelin" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Michelin</span>
@@ -509,13 +505,13 @@
                         </div>
 
                         <!-- SICPA -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Bloco de Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="SICPA" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">SICPA</span>
@@ -545,7 +541,7 @@
                         <div class="flex items-center gap-1">
                             <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
                         </div>
-                        <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova Formação</button>
+                        <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
                     </div>
                     <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
@@ -595,9 +591,9 @@
         </div>
 
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
-        <div class="print-hidden bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+        <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Minhas Versões Salvas no Aparelho (v5.3)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v5.4)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -630,37 +626,37 @@
         </div>
     </div>
 
-    <!-- BARRA INFERIOR -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-wrap justify-between items-center gap-2 max-w-5xl mx-auto rounded-t-2xl shadow-2xl">
-        <div class="flex items-center gap-2 flex-wrap">
-            <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1">
-                📱 Instalar App
+    <!-- BARRA INFERIOR COMPACTA PARA TELEMÓVEL -->
+    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
+        <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="instalarApp()" class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 font-bold transition flex items-center gap-1">
+                📱 App
             </button>
-            <button onclick="adicionarCaixaTitulo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
-                📦 + Caixa Título
+            <button onclick="adicionarCaixaTitulo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
+                📦 + Título
             </button>
-            <button onclick="adicionarCaixaTexto()" class="bg-violet-600 hover:bg-violet-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
-                📝 + Caixa Texto
+            <button onclick="adicionarCaixaTexto()" class="bg-violet-600 hover:bg-violet-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
+                📝 + Texto
             </button>
-            <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1">
-                🤖 Assistente IA
+            <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
+                🤖 IA
             </button>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 px-2 py-1 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.3</span>
-            <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
+        <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.4</span>
+            <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 💾 Salvar
             </button>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold transition shadow-sm">
                 🖨️ PDF
             </button>
-            <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 hover:bg-red-50 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-xl text-xs font-semibold transition">
+            <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded-xl font-semibold transition">
                 🔒 Sair
             </button>
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V5.3 -->
+    <!-- SCRIPT DE CONTROLO V5.4 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -882,11 +878,11 @@
             const div = document.createElement('div');
             div.className = "space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm";
             div.innerHTML = `
-                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-2 mb-2 border-slate-200 dark:border-slate-700">
-                    <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Novo Bloco de Experiência</span>
-                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir Bloco">▲ Subir</button>
-                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer Bloco">▼ Descer</button>
-                    <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar Bloco">✕ Apagar Bloco</button>
+                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                    <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                    <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                 </div>
                 <div>
                     <span contenteditable="true" data-original="Nova Empresa" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Nova Empresa</span>
@@ -922,15 +918,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.4') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v5.3', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v5.4', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.4') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -955,7 +951,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.4') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -965,9 +961,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.3') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.4') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v5.3', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v5.4', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
