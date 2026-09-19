@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.3)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.5)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v7.3%22,
+        %22short_name%22: %22Currículo v7.5%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -74,7 +74,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.3:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v7.5:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -146,7 +146,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.3)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.5)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -252,7 +252,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v7.3
+                    Gestor Pessoal v7.5
                 </div>
             </div>
 
@@ -392,7 +392,7 @@
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA)." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de acción voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
+                                Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
                             </p>
                         </div>
 
@@ -604,7 +604,7 @@
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
@@ -613,7 +613,7 @@
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
@@ -622,7 +622,7 @@
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
@@ -642,7 +642,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.3)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.5)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -697,7 +697,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.3</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.5</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 📥 Word
             </button>
@@ -713,10 +713,11 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V7.3 (CHAVE MESTRA AUTO-SAVE) -->
+    <!-- SCRIPT DE CONTROLO V7.5 (CHAVE MESTRA PERMANENTE & WORD POR VERSÃO) -->
     <script>
         const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
+        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key";
         let deferredPrompt = null;
         let formatoCopiado = null;
         let ultimoEditavelFocado = null;
@@ -929,6 +930,25 @@
             alert("📥 Currículo exportado para Word (.doc) com sucesso!");
         }
 
+        function exportarVersaoWord(val) {
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            let dados = versoes[val];
+            if(dados && dados.folhaHtml) {
+                const htmlConteudo = `<div class="resume-container">${dados.folhaHtml}</div>`;
+                const blob = new Blob(['\ufeff' + htmlConteudo], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Curriculo_Mariana_${val.replace(/[^a-zA-Z0-9]/g, '_')}.doc`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                alert(`📥 Versão "${val}" exportada para Word com sucesso!`);
+            } else {
+                alert("Erro ao exportar esta versão.");
+            }
+        }
+
         function iniciarReconhecimentoVoz() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
@@ -1139,15 +1159,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v7.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v7.3', JSON.stringify(versoes));
+            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v7.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -1162,9 +1182,10 @@
                 card.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
                 card.innerHTML = `
                     <div class="font-bold text-xs text-slate-800 dark:text-white truncate" title="${v}">📄 ${v}</div>
-                    <div class="flex gap-2 pt-1">
-                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1.5 rounded-xl text-[11px] font-bold transition">Carregar</button>
-                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 hover:bg-red-200 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition">✕</button>
+                    <div class="flex gap-1.5 pt-1">
+                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold transition">Carregar</button>
+                        <button onclick="exportarVersaoWord('${v}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-[10px] text-[10px] font-bold transition" title="Exportar esta versão para Word">📥 Word</button>
+                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded-[10px] text-[10px] font-bold transition">✕</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1172,7 +1193,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v7.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -1183,9 +1204,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v7.3') || '{}');
+                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v7.3', JSON.stringify(versoes));
+                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
