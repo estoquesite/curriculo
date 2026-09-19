@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.9)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v8.1)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v7.9%22,
+        %22short_name%22: %22Currículo v8.1%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -80,7 +80,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v8.1:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -152,7 +152,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.9)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v8.1)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -258,7 +258,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v7.9
+                    Gestor Pessoal v8.1
                 </div>
             </div>
 
@@ -648,7 +648,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.8)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v8.1)</h3>
                 <div class="flex items-center gap-2">
                     <button onclick="document.getElementById('input-importar').click()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm" title="Importar currículo guardado">
                         📂 Importar
@@ -664,9 +664,36 @@
             </div>
         </div>
 
+        <!-- CAIXA DE INTELIGÊNCIA ARTIFICIAL FIXA NO FUNDO (DEPOIS DE ARQUIVO) -->
+        <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
+            <div class="flex items-center justify-between border-b pb-2 dark:border-slate-700">
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">🤖 Caixa de Inteligência Artificial (Painel Rápido)</h3>
+                <span class="text-[10px] text-slate-400">Escreva ou fale para reescrever partes do currículo</span>
+            </div>
+            <div class="space-y-2 text-xs">
+                <div class="relative">
+                    <textarea id="ia-prompt-fundo" rows="3" placeholder="Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos e SAP PM..." class="w-full p-2.5 pr-12 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                    <button onclick="iniciarReconhecimentoVozFundo()" class="absolute right-2.5 bottom-3.5 bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-xl text-xs shadow transition" title="Falar por voz">
+                        🎤
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="gerarSugestaoIAFundo()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-xl transition shadow-sm">
+                        ✨ Gerar Sugestão com IA
+                    </button>
+                    <button onclick="document.getElementById('ia-resposta-fundo').classList.add('hidden'); document.getElementById('ia-prompt-fundo').value='';" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl font-semibold">
+                        Limpar
+                    </button>
+                </div>
+                <div id="ia-resposta-fundo" class="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl hidden text-slate-700 dark:text-slate-300 space-y-2">
+                    <!-- Resposta gerada -->
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- MODAL DO ASSISTENTE DE IA COM MICROFONE -->
+    <!-- MODAL DO ASSISTENTE DE IA -->
     <div id="modal-ia" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
@@ -674,17 +701,15 @@
                 <button onclick="fecharModalIA()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
             </div>
             <div class="space-y-3 text-xs">
-                <p class="text-slate-500">Descreva o que queres melhorar ou ajustar no texto (podes digitar ou falar):</p>
+                <p class="text-slate-500">Descreva o que queres melhorar ou ajustar no texto:</p>
                 <div class="relative">
-                    <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos..." class="w-full p-2 pr-10 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
-                    <button onclick="iniciarReconhecimentoVoz()" class="absolute right-2 bottom-3 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl text-sm shadow transition" title="Falar com a IA (Microfone)">
-                        🎤
-                    </button>
+                    <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo..." class="w-full p-2 pr-10 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
+                    <button onclick="iniciarReconhecimentoVozModal()" class="absolute right-2 bottom-3 bg-blue-600 text-white p-2 rounded-xl text-sm shadow transition">🎤</button>
                 </div>
-                <button onclick="gerarSugestaoIA()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">
+                <button onclick="gerarSugestaoIAModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">
                     ✨ Gerar Sugestão Profissional
                 </button>
-                <div id="ia-resposta" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
+                <div id="ia-resposta-modal" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
             </div>
             <button onclick="fecharModalIA()" class="w-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs">
                 Fechar
@@ -709,7 +734,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.8</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v8.1</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 📥 Word
             </button>
@@ -725,7 +750,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V7.8 (WORD COM TABELAS LADO A LADO) -->
+    <!-- SCRIPT DE CONTROLO V8.1 -->
     <script>
         const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
@@ -1035,28 +1060,38 @@
             const arquivo = event.target.files[0];
             if (!arquivo) return;
 
+            let nomeSugerido = arquivo.name.replace(/\.[^/.]+$/, "");
+            let nomeVersao = prompt("Dê um nome para esta versão importada:", nomeSugerido);
+            if (!nomeVersao) {
+                event.target.value = '';
+                return;
+            }
+
             const leitor = new FileReader();
             leitor.onload = function(e) {
                 const conteudo = e.target.result;
+                let folhaHtml = "";
+
                 if (conteudo.includes('resume-container') || conteudo.includes('curriculo-folha')) {
                     const parser = new DOMParser();
                     const docHtml = parser.parseFromString(conteudo, 'text/html');
-                    const folhaImportada = docHtml.getElementById('curriculo-folha') || docHtml.querySelector('.resume-container');
-                    if (folhaImportada) {
-                        document.getElementById('curriculo-folha').innerHTML = folhaImportada.innerHTML;
-                        salvarAuto();
-                        alert("📂 Currículo importado com sucesso!");
-                    } else {
-                        alert("O arquivo selecionado não tem um formato de currículo compatível.");
-                    }
+                    const folha = docHtml.getElementById('curriculo-folha') || docHtml.querySelector('.resume-container');
+                    folhaHtml = folha ? folha.innerHTML : conteudo;
                 } else {
-                    alert("Formato de arquivo inválido para importação.");
+                    folhaHtml = conteudo;
                 }
+
+                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+                versoes[nomeVersao] = { folhaHtml: folhaHtml };
+                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+                atualizarListaVersoesVisual();
+                alert(`📂 Versão "${nomeVersao}" importada e salva com sucesso no painel de versões!`);
                 event.target.value = '';
             };
             leitor.readAsText(arquivo);
         }
 
+        // Funções de IA para o Painel Fixo no Fundo
         function iniciarReconhecimentoVoz() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
@@ -1066,19 +1101,62 @@
             const recognition = new SpeechRecognition();
             recognition.lang = 'pt-BR';
             recognition.onstart = function() {
-                document.getElementById('ia-prompt').placeholder = "Ouvindo... Pode falar!";
+                document.getElementById('ia-prompt-fundo').placeholder = "Ouvindo... Pode falar!";
             };
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript;
-                document.getElementById('ia-prompt').value = transcript;
+                document.getElementById('ia-prompt-fundo').value = transcript;
             };
             recognition.onerror = function(event) {
                 alert("Erro no reconhecimento de voz. Tente novamente.");
             };
             recognition.onend = function() {
-                document.getElementById('ia-prompt').placeholder = "Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos...";
+                document.getElementById('ia-prompt-fundo').placeholder = "Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos...";
             };
             recognition.start();
+        }
+
+        function gerarSugestaoIAFundo() {
+            const promptTexto = document.getElementById('ia-prompt-fundo').value;
+            const respEl = document.getElementById('ia-resposta-fundo');
+            if(!promptTexto) return alert("Digite ou fale um pedido para o assistente de IA.");
+            
+            respEl.classList.remove('hidden');
+            respEl.innerHTML = "⏳ Processando sugestão profissional...";
+            
+            setTimeout(() => {
+                respEl.innerHTML = `<b>Sugestão da IA:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, redução de indisponibilidade e liderança em projetos de melhoria contínua com metodologias ágeis e SAP PM."</i><br><br><button onclick="copiarTextoIA(this)" class='bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold'>Copiar Texto</button>`;
+            }, 1000);
+        }
+
+        function copiarTextoIA(btn) {
+            const texto = btn.previousElementSibling.previousElementSibling.innerText;
+            if (ultimoEditavelFocado) {
+                ultimoEditavelFocado.innerText = texto;
+                salvarAuto();
+                alert("✨ Texto aplicado com sucesso na caixa selecionada do currículo!");
+            } else {
+                alert("Por favor, clique primeiro numa caixa de texto do currículo onde queres colocar o resultado.");
+            }
+        }
+
+        // Funções da Modal de IA do topo
+        function iniciarReconhecimentoVozModal() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { alert("Não suportado."); return; }
+            const rec = new SpeechRecognition();
+            rec.lang = 'pt-BR';
+            rec.onresult = (e) => { document.getElementById('ia-prompt').value = e.results[0][0].transcript; };
+            rec.start();
+        }
+
+        function gerarSugestaoIAModal() {
+            const resp = document.getElementById('ia-resposta-modal');
+            resp.classList.remove('hidden');
+            resp.innerHTML = "⏳ Processando...";
+            setTimeout(() => {
+                resp.innerHTML = "<b>Sugestão:</b> <i>Gestão de ativos e confiabilidade com excelência operacional.</i>";
+            }, 1000);
         }
 
         function restaurarOriginal(btn, tipo) {
@@ -1322,19 +1400,6 @@
 
         function abrirModalIA() { document.getElementById('modal-ia').classList.remove('hidden'); }
         function fecharModalIA() { document.getElementById('modal-ia').classList.add('hidden'); }
-
-        function gerarSugestaoIA() {
-            const promptTexto = document.getElementById('ia-prompt').value;
-            const respEl = document.getElementById('ia-resposta');
-            if(!promptTexto) return alert("Digite um pedido para o assistente.");
-            
-            respEl.classList.remove('hidden');
-            respEl.innerHTML = "⏳ Processando sugestão profissional...";
-            
-            setTimeout(() => {
-                respEl.innerHTML = `<b>Sugestão da IA:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, redução de indisponibilidade e liderança em projetos de melhoria contínua com metodologias ágeis e SAP PM."</i>`;
-            }, 1000);
-        }
     </script>
 </body>
 </html>
