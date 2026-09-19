@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.5)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v5.7)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v5.5%22,
+        %22short_name%22: %22Currículo v5.7%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -36,13 +36,13 @@
             .sidebar-print { 
                 background-color: #0f172a !important; 
                 color: #f8fafc !important; 
-                grid-column: span 4 / span 4 !important; 
-                word-break: break-all !important;
+                grid-column: span 5 / span 5 !important; 
+                word-break: normal !important;
                 -webkit-print-color-adjust: exact !important; 
                 print-color-adjust: exact !important; 
             }
             .main-print { 
-                grid-column: span 8 / span 8 !important; 
+                grid-column: span 7 / span 7 !important; 
                 background-color: #ffffff !important;
             }
             [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; outline: none !important; }
@@ -61,7 +61,7 @@
             padding: 2px;
         }
         .sidebar-break {
-            word-break: break-all;
+            word-break: normal;
             overflow-wrap: break-word;
         }
     </style>
@@ -70,7 +70,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD COM ROLAGEM HORIZONTAL -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-1.5 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v5.5:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v5.7:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -115,7 +115,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.5)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v5.7)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -140,11 +140,11 @@
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
     <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-14 space-y-6">
         
-        <!-- FOLHA DO CURRÍCULO COM BORDA SÓLIDA E SUAVE -->
+        <!-- FOLHA DO CURRÍCULO COM COLUNAS AMPLIADAS (5 / 7) -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) COM TEXTO OTIMIZADO -->
-            <div class="sidebar-print sidebar-break md:col-span-4 bg-slate-900 text-slate-100 p-4 sm:p-8 space-y-6 flex flex-col justify-between">
+            <!-- BARRA LATERAL (ESQUERDA - 5 COLUNAS) -->
+            <div class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
@@ -155,7 +155,7 @@
                             <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
-                        <div contenteditable="true" id="c-contato" data-original="📱 21 99035-4416<br>✉️ marianna_adm@yahoo.com.br<br>📍 Rio de Janeiro, Brasil<br>🔗 linkedin.com/in/marianapcruz" class="text-[11px] text-slate-300 space-y-1.5 outline-none sidebar-break">
+                        <div contenteditable="true" id="c-contato" data-original="📱 21 99035-4416<br>✉️ marianna_adm@yahoo.com.br<br>📍 Rio de Janeiro, Brasil<br>🔗 linkedin.com/in/marianapcruz" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
                             <p>📱 21 99035-4416</p>
                             <p>✉️ marianna_adm@yahoo.com.br</p>
                             <p>📍 Rio de Janeiro, Brasil</p>
@@ -175,7 +175,7 @@
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
-                        <div id="container-competencias" class="text-[11px] text-slate-300 space-y-1.5 sidebar-break">
+                        <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Rastreamento de Ativos</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
@@ -211,7 +211,7 @@
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
-                        <div id="container-certificacoes" class="text-[11px] text-slate-300 space-y-1.5 sidebar-break">
+                        <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
@@ -221,18 +221,18 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v5.5
+                    Gestor Pessoal v5.7
                 </div>
             </div>
 
-            <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
-            <div id="container-principal-conteudo" class="main-print md:col-span-8 p-4 sm:p-10 space-y-6">
+            <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
+            <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
                 
                 <!-- NOME EM LINHA ÚNICA NO TOPO -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group overflow-hidden">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1 z-10">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
@@ -290,11 +290,14 @@
                             <div>
                                 <span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2025-12"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2026-09"></span>
-                                <label><input type="checkbox" class="chk-atual" checked> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
+                            <!-- CALCULADOR COMPACTO EM LINHA -->
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2026-09"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual" checked> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
@@ -319,11 +322,13 @@
                             <div>
                                 <span contenteditable="true" data-original="novembro de 2022 - dezembro de 2025 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2022-11"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2025-12"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2022-11"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
@@ -348,11 +353,13 @@
                             <div>
                                 <span contenteditable="true" data-original="novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2020-11"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2022-11"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2020-11"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2022-11"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA)." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
@@ -377,11 +384,13 @@
                             <div>
                                 <span contenteditable="true" data-original="fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2020-02"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2020-10"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2020-02"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2020-10"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças da unidade. Gestão de ordens de serviço, controle de backlog e paradas programadas." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças da unidade. Gestão de ordens de serviço, controle de backlog e paradas programadas.
@@ -406,11 +415,13 @@
                             <div>
                                 <span contenteditable="true" data-original="outubro de 2017 - novembro de 2019 (2 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">outubro de 2017 - novembro de 2019 (2 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2017-10"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2019-11"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2017-10"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2019-11"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados.
@@ -435,11 +446,13 @@
                             <div>
                                 <span contenteditable="true" data-original="junho de 2015 - setembro de 2017 (2 anos 4 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">junho de 2015 - setembro de 2017 (2 anos 4 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2015-06"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2017-09"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2015-06"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2017-09"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Gestão de cronogramas e indicadores como MTBF e MTTR." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Gestão de cronogramas e indicadores como MTBF e MTTR.
@@ -464,11 +477,13 @@
                             <div>
                                 <span contenteditable="true" data-original="abril de 2012 - maio de 2015 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">abril de 2012 - maio de 2015 (3 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2012-04"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2015-05"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2012-04"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2015-05"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Planeamento e programação de manutenção, controlo de backlog, ordens de serviço vencidas, SLA e produtividade das equipes de campo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Planeamento e programação de manutenção, controlo de backlog, ordens de serviço vencidas, SLA e produtividade das equipes de campo.
@@ -493,11 +508,13 @@
                             <div>
                                 <span contenteditable="true" data-original="janeiro de 2010 - dezembro de 2011 (2 anos)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">janeiro de 2010 - dezembro de 2011 (2 anos)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2010-01"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2011-12"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2010-01"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2011-12"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Controlo de pontos de estoque fabris, inventários físicos, tratamento de notas fiscais e implementação de projetos." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Controlo de pontos de estoque fabris, inventários físicos, tratamento de notas fiscais e implementação de projetos.
@@ -522,11 +539,13 @@
                             <div>
                                 <span contenteditable="true" data-original="janeiro de 2009 - dezembro de 2009 (1 ano)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">janeiro de 2009 - dezembro de 2009 (1 ano)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                                <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs" value="2009-01"></span>
-                                <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs" value="2009-12"></span>
-                                <label><input type="checkbox" class="chk-atual"> Presente</label>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2009-01"></span>
+                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2009-12"></span>
+                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                                </div>
+                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                                 Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos.
@@ -593,7 +612,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v5.5)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v5.7)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -643,7 +662,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.5</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v5.7</span>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 💾 Salvar
             </button>
@@ -656,7 +675,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V5.5 -->
+    <!-- SCRIPT DE CONTROLO V5.7 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -893,11 +912,13 @@
                 <div>
                     <span contenteditable="true" data-original="Período" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Período</span>
                 </div>
-                <div class="print-hidden bg-blue-50 dark:bg-blue-950/40 p-2 rounded-lg my-1 flex flex-wrap items-center gap-2 text-[11px]">
-                    <span>📅 Início: <input type="month" class="input-inicio p-1 bg-white border rounded text-xs"></span>
-                    <span>Fim: <input type="month" class="input-fim p-1 bg-white border rounded text-xs"></span>
-                    <label><input type="checkbox" class="chk-atual"> Presente</label>
-                    <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular Duração</button>
+                <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                    <div class="flex items-center gap-1 flex-wrap">
+                        <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]"></span>
+                        <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]"></span>
+                        <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                    </div>
+                    <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                 </div>
                 <p contenteditable="true" data-original="Descreva as atividades e conquistas..." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
                     Descreva as atividades e conquistas...
@@ -918,15 +939,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v5.5', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v5.7', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -951,7 +972,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -961,9 +982,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.5') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v5.7') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v5.5', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v5.7', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
