@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v8.3)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v8.4)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' }
-    </script>
-    <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
-        %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v8.3%22,
-        %22start_url%22: %22.%22,
-        %22display%22: %22standalone%22,
-        %22background_color%22: %22%23f8fafc%22,
-        %22theme_color%22: %22%232563eb%22,
-        %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3135/3135715.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
-    }">
     <style>
         @media print {
             @page {
@@ -76,11 +64,11 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
+<body class="bg-slate-100 text-slate-800 min-h-screen pb-36 select-none">
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v8.3:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v8.4:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -148,23 +136,23 @@
     </div>
 
     <!-- BOTÃO FLUTUANTE "A" DE IA SEMPRE VISÍVEL -->
-    <button id="btn-flutuante-ia" onclick="abrirModalIA()" class="print-hidden fixed bottom-20 right-4 z-40 bg-purple-600 hover:bg-purple-700 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center font-black text-lg transition transform hover:scale-110 active:scale-95 border-2 border-white dark:border-slate-800" title="Abrir Assistente de IA">
+    <button id="btn-flutuante-ia" onclick="abrirModalIA()" class="print-hidden fixed bottom-20 right-4 z-40 bg-purple-600 hover:bg-purple-700 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center font-black text-lg transition transform hover:scale-110 active:scale-95 border-2 border-white" title="Abrir Assistente de IA">
         A
     </button>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
     <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100">
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v8.3)</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
+                <h2 class="text-xl font-bold text-slate-900">Acesso Restrito (v8.4)</h2>
+                <p class="text-xs text-slate-500 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
             <form onsubmit="verificarLogin(event)" class="space-y-3 text-left">
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Senha (PIN)</label>
-                    <input type="password" id="input-senha" placeholder="••••" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    <input type="password" id="input-senha" placeholder="••••" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm">
                     Entrar com PIN (1510)
@@ -183,7 +171,7 @@
     <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-28 space-y-6">
         
         <!-- FOLHA DO CURRÍCULO COM BORDA SÓLIDA E SUAVE -->
-        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full">
+        <div id="curriculo-folha" class="resume-container bg-white text-slate-800 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full">
             
             <!-- BARRA LATERAL (ESQUERDA - 5 COLUNAS) -->
             <div class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 space-y-6 flex flex-col justify-between">
@@ -263,22 +251,22 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v8.3
+                    Gestor Pessoal v8.4
                 </div>
             </div>
 
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
-            <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
+            <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6 bg-white text-slate-800">
                 
                 <!-- NOME EM LINHA ÚNICA NO TOPO SEM BARRAS ESTRANHAS -->
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
+                <div class="border-b border-slate-200 pb-4 relative group">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-xl font-black text-blue-700 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
                 </div>
 
                 <!-- TÍTULO PRINCIPAL / CARGO -->
@@ -289,7 +277,7 @@
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
+                    <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-[11px] font-bold text-slate-600 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
                 </div>
 
                 <!-- RESUMO PROFISSIONAL -->
@@ -298,10 +286,10 @@
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                         <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
-                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                    <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
+                    <h2 class="text-xs font-extrabold text-blue-600 uppercase tracking-wider">Resumo</h2>
+                    <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio." class="text-xs leading-relaxed text-slate-700 text-justify outline-none">
                         Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
                     </p>
                 </section>
@@ -309,14 +297,14 @@
                 <!-- EXPERIÊNCIA PROFISSIONAL -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
-                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
+                        <h2 class="text-xs font-extrabold text-blue-600 uppercase tracking-wider">Experiência Profissional</h2>
                         <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
                     </div>
                     
                     <div id="container-experiencias" class="space-y-4">
                         <!-- Vale 1 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -324,15 +312,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
+                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Vale</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Engenheira de Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span>
+                                <span contenteditable="true" data-original="Engenheira de Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Engenheira de Gestão de Ativos</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span>
+                                <span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 text-xs">dezembro de 2025 - Present (10 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2026-09"></span>
@@ -340,14 +328,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
                             </p>
                         </div>
 
                         <!-- Vale 2 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -355,15 +343,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
+                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Vale</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Especialista Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Especialista Gestão de Ativos</span>
+                                <span contenteditable="true" data-original="Especialista Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Especialista Gestão de Ativos</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="novembro de 2022 - dezembro de 2025 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
+                                <span contenteditable="true" data-original="novembro de 2022 - dezembro de 2025 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 text-xs">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2022-11"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
@@ -371,14 +359,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA (Root Cause Analysis), FMEA/FMECA, RCM e Análise de Modos de Falha. Identificar perdas de produção relacionadas a falhas mecânicas e propor soluções técnicas e processuais para mitigação. Definir, monitorar e analisar indicadores de confiabilidade, incluindo MTBF, MTTR, disponibilidade operacional e custo do ciclo de vida dos ativos. Elaborar planos de ação para eliminação de falhas recorrentes e aumento da vida útil dos equipamentos. Fornecer suporte técnico especializado para manutenção corretiva, preventiva e preditiva. Participar da elaboração e revisão de planos de manutenção baseados em criticidade e risco. Apoiar tecnicamente paradas programadas de manutenção e grandes intervenções em equipamentos críticos. Avaliar relatórios de inspeção, vibração, termografia, análise de óleo, ultrassom e demais técnicas preditivas. Garantir que os procedimentos de manutenção estejam alinhados às recomendações dos fabricantes e às melhores práticas do setor.
                             </p>
                         </div>
 
                         <!-- Vale 3 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -386,15 +374,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
+                                <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Vale</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Analista de Mecânica SR" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Analista de Mecânica SR</span>
+                                <span contenteditable="true" data-original="Analista de Mecânica SR" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Analista de Mecânica SR</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil</span>
+                                <span contenteditable="true" data-original="novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil" class="exp-data outline-none block text-slate-500 text-xs">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro, Brasil</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2020-11"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2022-11"></span>
@@ -402,14 +390,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA)." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA)." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
                             </p>
                         </div>
 
                         <!-- Yara -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -417,15 +405,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Yara International" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Yara International</span>
+                                <span contenteditable="true" data-original="Yara International" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Yara International</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Analista de PCM SR" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Analista de PCM SR</span>
+                                <span contenteditable="true" data-original="Analista de PCM SR" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Analista de PCM SR</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office</span>
+                                <span contenteditable="true" data-original="fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office" class="exp-data outline-none block text-slate-500 text-xs">fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2020-02"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2020-10"></span>
@@ -433,14 +421,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças da unidade. Gestão de ordens de serviço, controle de backlog e paradas programadas." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças da unidade. Gestão de ordens de serviço, controle de backlog e paradas programadas." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças da unidade. Gestão de ordens de serviço, controle de backlog e paradas programadas.
                             </p>
                         </div>
 
                         <!-- White Martins -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -448,15 +436,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="White Martins" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">White Martins</span>
+                                <span contenteditable="true" data-original="White Martins" class="exp-empresa outline-none block font-bold text-sm text-slate-900">White Martins</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Analista de PCM SR" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Analista de PCM SR</span>
+                                <span contenteditable="true" data-original="Analista de PCM SR" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Analista de PCM SR</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="outubro de 2017 - novembro de 2019 (2 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">outubro de 2017 - novembro de 2019 (2 anos 2 meses)</span>
+                                <span contenteditable="true" data-original="outubro de 2017 - novembro de 2019 (2 anos 2 meses)" class="exp-data outline-none block text-slate-500 text-xs">outubro de 2017 - novembro de 2019 (2 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2017-10"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2019-11"></span>
@@ -464,14 +452,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados.
                             </p>
                         </div>
 
                         <!-- Light -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -479,15 +467,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Light" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Light</span>
+                                <span contenteditable="true" data-original="Light" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Light</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Analista de PCM" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Analista de PCM</span>
+                                <span contenteditable="true" data-original="Analista de PCM" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Analista de PCM</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="junho de 2015 - setembro de 2017 (2 anos 4 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">junho de 2015 - setembro de 2017 (2 anos 4 meses)</span>
+                                <span contenteditable="true" data-original="junho de 2015 - setembro de 2017 (2 anos 4 meses)" class="exp-data outline-none block text-slate-500 text-xs">junho de 2015 - setembro de 2017 (2 anos 4 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2015-06"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2017-09"></span>
@@ -495,14 +483,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Gestão de cronogramas e indicadores como MTBF e MTTR." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Gestão de cronogramas e indicadores como MTBF e MTTR." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Gestão de cronogramas e indicadores como MTBF e MTTR.
                             </p>
                         </div>
 
                         <!-- TechnipFMC -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -510,15 +498,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="TechnipFMC" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">TechnipFMC</span>
+                                <span contenteditable="true" data-original="TechnipFMC" class="exp-empresa outline-none block font-bold text-sm text-slate-900">TechnipFMC</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Analista de PCM" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Analista de PCM</span>
+                                <span contenteditable="true" data-original="Analista de PCM" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Analista de PCM</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="abril de 2012 - maio de 2015 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">abril de 2012 - maio de 2015 (3 anos 2 meses)</span>
+                                <span contenteditable="true" data-original="abril de 2012 - maio de 2015 (3 anos 2 meses)" class="exp-data outline-none block text-slate-500 text-xs">abril de 2012 - maio de 2015 (3 anos 2 meses)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2012-04"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2015-05"></span>
@@ -526,14 +514,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Planeamento e programação de manutenção, controlo de backlog, ordens de serviço vencidas, SLA e produtividade das equipes de campo." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Planeamento e programação de manutenção, controlo de backlog, ordens de serviço vencidas, SLA e produtividade das equipes de campo." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Planeamento e programação de manutenção, controlo de backlog, ordens de serviço vencidas, SLA e produtividade das equipes de campo.
                             </p>
                         </div>
 
                         <!-- Michelin -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -541,15 +529,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Michelin" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Michelin</span>
+                                <span contenteditable="true" data-original="Michelin" class="exp-empresa outline-none block font-bold text-sm text-slate-900">Michelin</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Estagiária de Administração" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Estagiária de Administração</span>
+                                <span contenteditable="true" data-original="Estagiária de Administração" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Estagiária de Administração</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="janeiro de 2010 - dezembro de 2011 (2 anos)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">janeiro de 2010 - dezembro de 2011 (2 anos)</span>
+                                <span contenteditable="true" data-original="janeiro de 2010 - dezembro de 2011 (2 anos)" class="exp-data outline-none block text-slate-500 text-xs">janeiro de 2010 - dezembro de 2011 (2 anos)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2010-01"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2011-12"></span>
@@ -557,14 +545,14 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Controlo de pontos de estoque fabris, inventários físicos, tratamento de notas fiscais e implementação de projetos." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Controlo de pontos de estoque fabris, inventários físicos, tratamento de notas fiscais e implementação de projetos." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Controlo de pontos de estoque fabris, inventários físicos, tratamento de notas fiscais e implementação de projetos.
                             </p>
                         </div>
 
                         <!-- SICPA -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
@@ -572,15 +560,15 @@
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="SICPA" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">SICPA</span>
+                                <span contenteditable="true" data-original="SICPA" class="exp-empresa outline-none block font-bold text-sm text-slate-900">SICPA</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="Estagiária Técnico Administrativa" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Estagiária Técnico Administrativa</span>
+                                <span contenteditable="true" data-original="Estagiária Técnico Administrativa" class="exp-cargo outline-none block font-semibold text-blue-600 text-xs">Estagiária Técnico Administrativa</span>
                             </div>
                             <div>
-                                <span contenteditable="true" data-original="janeiro de 2009 - dezembro de 2009 (1 ano)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">janeiro de 2009 - dezembro de 2009 (1 ano)</span>
+                                <span contenteditable="true" data-original="janeiro de 2009 - dezembro de 2009 (1 ano)" class="exp-data outline-none block text-slate-500 text-xs">janeiro de 2009 - dezembro de 2009 (1 ano)</span>
                             </div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                            <div class="print-hidden bg-blue-50 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
                                 <div class="flex items-center gap-1 flex-wrap">
                                     <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2009-01"></span>
                                     <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2009-12"></span>
@@ -588,7 +576,7 @@
                                 </div>
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
-                            <p contenteditable="true" data-original="Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                            <p contenteditable="true" data-original="Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos." class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">
                                 Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos.
                             </p>
                         </div>
@@ -599,21 +587,21 @@
                 <section id="sec-formacao" class="space-y-2">
                     <div class="flex justify-between items-center border-b pb-1">
                         <div class="flex items-center gap-1">
-                            <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
+                            <h2 class="text-xs font-extrabold text-blue-600 uppercase tracking-wider">Formação Acadêmica</h2>
                         </div>
                         <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
                     </div>
-                    <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                    <div id="container-formacao" class="text-xs text-slate-700 space-y-2">
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                                 <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• Universidade Tecnológica Federal do Paraná — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)" class="flex-1 outline-none pr-36">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
@@ -622,7 +610,7 @@
                             </div>
                             <p contenteditable="true" data-original="• PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)" class="flex-1 outline-none pr-36">• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
@@ -631,7 +619,7 @@
                             </div>
                             <p contenteditable="true" data-original="• Estácio — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Engenharia Mecânica (fevereiro de 2020 - dezembro de 2025)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
@@ -651,14 +639,17 @@
         </div>
 
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
-        <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
-            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v8.3)</h3>
+        <div class="print-hidden bg-white p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 tracking-wider">📁 Versões Salvas (v8.4)</h3>
                 <div class="flex items-center gap-2">
                     <button onclick="document.getElementById('input-importar').click()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm" title="Importar currículo guardado">
                         📂 Importar
                     </button>
                     <input type="file" id="input-importar" accept=".html,.htm,.doc" class="hidden" onchange="importarCurriculo(event)">
+                    <button onclick="restaurarPadraoLimpo()" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm" title="Restaurar layout original se houver erro">
+                        🔄 Restaurar Padrão
+                    </button>
                     <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                         💾 Salvar Versão Atual
                     </button>
@@ -670,14 +661,14 @@
         </div>
 
         <!-- CAIXA DE INTELIGÊNCIA ARTIFICIAL FIXA NO FUNDO -->
-        <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
-            <div class="flex items-center justify-between border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">🤖 Caixa de Inteligência Artificial (Painel Rápido)</h3>
+        <div class="print-hidden bg-white p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between border-b pb-2">
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 tracking-wider">🤖 Caixa de Inteligência Artificial (Painel Rápido)</h3>
                 <span class="text-[10px] text-slate-400">Escreva ou fale para reescrever partes do currículo</span>
             </div>
             <div class="space-y-2 text-xs">
                 <div class="relative">
-                    <textarea id="ia-prompt-fundo" rows="3" placeholder="Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos e SAP PM..." class="w-full p-2.5 pr-12 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl dark:text-white outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                    <textarea id="ia-prompt-fundo" rows="3" placeholder="Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos e SAP PM..." class="w-full p-2.5 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 outline-none focus:ring-2 focus:ring-purple-500"></textarea>
                     <button onclick="iniciarReconhecimentoVoz()" class="absolute right-2.5 bottom-3.5 bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-xl text-xs shadow transition" title="Falar por voz">
                         🎤
                     </button>
@@ -686,11 +677,11 @@
                     <button onclick="gerarSugestaoIAFundo()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-xl transition shadow-sm">
                         ✨ Gerar Sugestão com IA
                     </button>
-                    <button onclick="document.getElementById('ia-resposta-fundo').classList.add('hidden'); document.getElementById('ia-prompt-fundo').value='';" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl font-semibold">
+                    <button onclick="document.getElementById('ia-resposta-fundo').classList.add('hidden'); document.getElementById('ia-prompt-fundo').value='';" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl font-semibold">
                         Limpar
                     </button>
                 </div>
-                <div id="ia-resposta-fundo" class="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl hidden text-slate-700 dark:text-slate-300 space-y-2">
+                <div id="ia-resposta-fundo" class="p-3 bg-slate-50 border border-slate-200 rounded-xl hidden text-slate-700 space-y-2">
                     <!-- Resposta gerada -->
                 </div>
             </div>
@@ -700,32 +691,32 @@
 
     <!-- MODAL DO ASSISTENTE DE IA -->
     <div id="modal-ia" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">🤖 Assistente de IA para Currículo</h3>
+        <div class="bg-white p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-base font-bold text-slate-900">🤖 Assistente de IA para Currículo</h3>
                 <button onclick="fecharModalIA()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
             </div>
             <div class="space-y-3 text-xs">
                 <p class="text-slate-500">Descreva o que queres melhorar ou ajustar no texto:</p>
                 <div class="relative">
-                    <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo..." class="w-full p-2 pr-10 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
+                    <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo..." class="w-full p-2 pr-10 bg-slate-50 border rounded-xl text-slate-800"></textarea>
                     <button onclick="iniciarReconhecimentoVozModal()" class="absolute right-2 bottom-3 bg-blue-600 text-white p-2 rounded-xl text-sm shadow transition">🎤</button>
                 </div>
                 <button onclick="gerarSugestaoIAModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">
                     ✨ Gerar Sugestão Profissional
                 </button>
-                <div id="ia-resposta-modal" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
+                <div id="ia-resposta-modal" class="p-3 bg-slate-50 border rounded-xl hidden text-slate-700"></div>
             </div>
-            <button onclick="fecharModalIA()" class="w-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs">
+            <button onclick="fecharModalIA()" class="w-full bg-slate-200 text-slate-700 font-medium py-2 rounded-xl text-xs">
                 Fechar
             </button>
         </div>
     </div>
 
     <!-- BARRA INFERIOR COMPACTA -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
+    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
         <div class="flex items-center gap-1.5 flex-wrap">
-            <button onclick="instalarApp()" class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 font-bold transition flex items-center gap-1">
+            <button onclick="instalarApp()" class="px-2.5 py-1 rounded-xl bg-blue-50 text-blue-600 font-bold transition flex items-center gap-1">
                 📱 App
             </button>
             <button onclick="adicionarCaixaTitulo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
@@ -739,7 +730,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v8.3</span>
+            <span class="text-[10px] font-bold text-blue-600 px-1.5 py-0.5 bg-blue-50 rounded-lg">v8.4</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 📥 Word
             </button>
@@ -749,13 +740,13 @@
             <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold transition shadow-sm">
                 🖨️ PDF
             </button>
-            <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded-xl font-semibold transition">
+            <button onclick="bloquearSessao()" class="bg-slate-100 text-red-600 px-2 py-1 rounded-xl font-semibold transition">
                 🔒 Sair
             </button>
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V8.3 -->
+    <!-- SCRIPT DE CONTROLO V8.4 -->
     <script>
         const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
@@ -781,7 +772,7 @@
         });
 
         function salvarAuto() {
-            const htmlFolha = document.getElementById('curriculo-folha').innerHTML;
+            const htmlFolha = document.getElementById('curriculo-folha').outerHTML;
             localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
         }
 
@@ -832,10 +823,8 @@
                 tempDiv.innerHTML = salvo;
                 const folha = tempDiv.querySelector('.resume-container') || tempDiv.firstElementChild;
                 if(folha) {
-                    folha.className = "resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full";
+                    folha.className = "resume-container bg-white text-slate-800 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full";
                     document.getElementById('curriculo-folha').outerHTML = folha.outerHTML;
-                } else {
-                    document.getElementById('curriculo-folha').innerHTML = salvo;
                 }
             }
 
@@ -844,6 +833,13 @@
             }
             atualizarListaVersoesVisual();
         });
+
+        function restaurarPadraoLimpo() {
+            if(confirm("Deseja restaurar o currículo para o layout padrão original limpo?")) {
+                localStorage.removeItem(CHAVE_AUTOSAVE);
+                location.reload();
+            }
+        }
 
         function verificarLogin(e) {
             e.preventDefault();
@@ -1090,7 +1086,7 @@
                     const docHtml = parser.parseFromString(conteudo, 'text/html');
                     const folha = docHtml.getElementById('curriculo-folha') || docHtml.querySelector('.resume-container');
                     if (folha) {
-                        folha.className = "resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full";
+                        folha.className = "resume-container bg-white text-slate-800 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 overflow-hidden grid grid-cols-1 md:grid-cols-12 w-full";
                         folhaHtml = folha.outerHTML;
                     } else {
                         folhaHtml = conteudo;
