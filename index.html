@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v6.3)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v6.4)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v6.3%22,
+        %22short_name%22: %22Currículo v6.4%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -74,7 +74,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD COM PINCEL E CORES -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v6.3:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v6.4:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -125,7 +125,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v6.3)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v6.4)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -159,16 +159,13 @@
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
                         <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-800">
-                            <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                <option value="" disabled selected>🔠 Aa</option>
-                                <option value="upper">TUDO MAIÚSCULO</option>
-                                <option value="lower">tudo minúsculo</option>
-                                <option value="capitalize">Primeira Letra Maiúscula</option>
-                            </select>
-                            <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                            <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                            <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                            <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                            <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                            <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Primeira Letra Maiúscula">Cap</button>
+                            <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                            <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
+                            <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
                         <div contenteditable="true" id="c-contato" data-original="📱 21 99035-4416<br>✉️ marianna_adm@yahoo.com.br<br>📍 Rio de Janeiro, Brasil<br>🔗 linkedin.com/in/marianapcruz" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
@@ -184,17 +181,13 @@
                         <div class="print-hidden flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
                             <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
                             <div class="flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-competencias')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
@@ -226,17 +219,13 @@
                         <div class="print-hidden flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
                             <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
                             <div class="flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-certificacoes')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
@@ -250,7 +239,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v6.3
+                    Gestor Pessoal v6.4
                 </div>
             </div>
 
@@ -260,15 +249,11 @@
                 <!-- NOME EM LINHA ÚNICA NO TOPO SEM BARRAS ESTRANHAS -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                            <option value="" disabled selected>🔠 Aa</option>
-                            <option value="upper">TUDO MAIÚSCULO</option>
-                            <option value="lower">tudo minúsculo</option>
-                            <option value="capitalize">Primeira Letra Maiúscula</option>
-                        </select>
+                        <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                        <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🔄</button>
+                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
                     <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
@@ -277,15 +262,12 @@
                 <!-- TÍTULO PRINCIPAL / CARGO -->
                 <div class="pb-2 relative group">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                            <option value="" disabled selected>🔠 Aa</option>
-                            <option value="upper">TUDO MAIÚSCULO</option>
-                            <option value="lower">tudo minúsculo</option>
-                            <option value="capitalize">Primeira Letra Maiúscula</option>
-                        </select>
+                        <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                        <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                        <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🔄</button>
+                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
                     <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
@@ -294,15 +276,12 @@
                 <!-- RESUMO PROFISSIONAL -->
                 <section class="space-y-2 relative group">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                            <option value="" disabled selected>🔠 Aa</option>
-                            <option value="upper">TUDO MAIÚSCULO</option>
-                            <option value="lower">tudo minúsculo</option>
-                            <option value="capitalize">Primeira Letra Maiúscula</option>
-                        </select>
+                        <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                        <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                        <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🔄 Desfazer</button>
+                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                         <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
@@ -323,12 +302,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -360,12 +336,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -397,12 +370,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -434,12 +404,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -471,12 +438,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -508,12 +472,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -545,12 +506,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -582,12 +540,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -619,12 +574,9 @@
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
                                 <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                                 <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
@@ -665,61 +617,45 @@
                     <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• Universidade Tecnológica Federal do Paraná — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)" class="flex-1 outline-none pr-36">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)" class="flex-1 outline-none pr-36">• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• Estácio — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Engenharia Mecânica (fevereiro de 2020 - dezembro de 2025)</p>
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
                             <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                                    <option value="" disabled selected>🔠 Aa</option>
-                                    <option value="upper">TUDO MAIÚSCULO</option>
-                                    <option value="lower">tudo minúsculo</option>
-                                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                                </select>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Descer">▼</button>
+                                <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                                <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• Estácio — Graduação em Administração de Empresas (2010 - 2014)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)</p>
                         </div>
@@ -736,7 +672,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v6.3)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v6.4)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -786,7 +722,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v6.3</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v6.4</span>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 💾 Salvar
             </button>
@@ -799,7 +735,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V6.3 -->
+    <!-- SCRIPT DE CONTROLO V6.4 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -932,32 +868,20 @@
             alert("✨ Formato aplicado com sucesso!");
         }
 
-        // Função de Mudança de Case estilo Word (Tudo maiúsculo, tudo minúsculo, capitalizar)
-        function mudarCaseSelecao(selectEl) {
-            const opcao = selectEl.value;
-            if(!opcao) return;
-            const container = selectEl.closest('.group, section, .exp-item, div');
+        // Função de mudança direta de case por botões (sem perda de foco)
+        function mudarCaseDireto(btn, tipo) {
+            const container = btn.closest('.group, section, .exp-item, div');
             const editavel = container ? container.querySelector('[contenteditable="true"]') : null;
             if (!editavel) return;
 
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0 && !selection.isCollapsed && editavel.contains(selection.anchorNode)) {
-                let selecionado = selection.toString();
-                if (opcao === 'upper') selecionado = selecionado.toUpperCase();
-                else if (opcao === 'lower') selecionado = selecionado.toLowerCase();
-                else if (opcao === 'capitalize') selecionado = selecionado.replace(/\b\w/g, l => l.toUpperCase());
-                
-                const range = selection.getRangeAt(0);
-                range.deleteContents();
-                range.insertNode(document.createTextNode(selecionado));
-            } else {
-                let texto = editavel.innerText || editavel.textContent;
-                if (opcao === 'upper') texto = texto.toUpperCase();
-                else if (opcao === 'lower') texto = texto.toLowerCase();
-                else if (opcao === 'capitalize') texto = texto.replace(/\b\w/g, l => l.toUpperCase());
-                editavel.innerText = texto;
+            let texto = editavel.innerText || editavel.textContent;
+            if (tipo === 'upper') {
+                editavel.innerText = texto.toUpperCase();
+            } else if (tipo === 'lower') {
+                editavel.innerText = texto.toLowerCase();
+            } else if (tipo === 'capitalize') {
+                editavel.innerText = texto.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
             }
-            selectEl.selectedIndex = 0;
             alert("✨ Texto formatado com sucesso!");
         }
 
@@ -1047,12 +971,9 @@
             sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700";
             sec.innerHTML = `
                 <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-200">
-                    <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                        <option value="" disabled selected>🔠 Aa</option>
-                        <option value="upper">TUDO MAIÚSCULO</option>
-                        <option value="lower">tudo minúsculo</option>
-                        <option value="capitalize">Primeira Letra Maiúscula</option>
-                    </select>
+                    <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                    <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                    <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                     <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                     <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                     <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🔄</button>
@@ -1070,12 +991,9 @@
             sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700";
             sec.innerHTML = `
                 <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-200">
-                    <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                        <option value="" disabled selected>🔠 Aa</option>
-                        <option value="upper">TUDO MAIÚSCULO</option>
-                        <option value="lower">tudo minúsculo</option>
-                        <option value="capitalize">Primeira Letra Maiúscula</option>
-                    </select>
+                    <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                    <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                    <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                     <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                     <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                     <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🔄</button>
@@ -1095,12 +1013,8 @@
             div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
             div.innerHTML = `
                 <span contenteditable="true" data-original="• Novo Item" class="flex-1 outline-none">• Novo Item</span>
-                <select onchange="mudarCaseSelecao(this)" class="print-hidden bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                    <option value="" disabled selected>🔠 Aa</option>
-                    <option value="upper">TUDO MAIÚSCULO</option>
-                    <option value="lower">tudo minúsculo</option>
-                    <option value="capitalize">Primeira Letra Maiúscula</option>
-                </select>
+                <button onclick="mudarCaseDireto(this, 'upper')" class="print-hidden bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Maiúsculo">MAIÚS</button>
+                <button onclick="mudarCaseDireto(this, 'lower')" class="print-hidden bg-indigo-600 text-white px-1 py-0.5 rounded text-[9px] font-bold" title="Minúsculo">minús</button>
                 <button onclick="restaurarCaixaGenerica(this)" class="print-hidden bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[9px] font-bold" title="Desfazer">🔄</button>
                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
             `;
@@ -1113,12 +1027,10 @@
             div.className = "space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm";
             div.innerHTML = `
                 <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                    <select onchange="mudarCaseSelecao(this)" class="bg-indigo-600 text-white text-[9px] font-bold rounded px-1 py-0.5 outline-none" title="Maiúsculas/Minúsculas">
-                        <option value="" disabled selected>🔠 Aa</option>
-                        <option value="upper">TUDO MAIÚSCULO</option>
-                        <option value="lower">tudo minúsculo</option>
-                        <option value="capitalize">Primeira Letra Maiúscula</option>
-                    </select>
+                    <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                    <button onclick="mudarCaseDireto(this, 'upper')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
+                    <button onclick="mudarCaseDireto(this, 'lower')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Tudo Minúsculo">minús</button>
+                    <button onclick="mudarCaseDireto(this, 'capitalize')" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold" title="Capitalizar">Cap</button>
                     <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                     <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
                     <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
@@ -1159,15 +1071,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.4') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v6.3', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v6.4', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.4') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -1192,7 +1104,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.3') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.4') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -1202,9 +1114,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.3') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v6.4') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v6.3', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v6.4', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
