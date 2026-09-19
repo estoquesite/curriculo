@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.5)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.6)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v7.5%22,
+        %22short_name%22: %22Currículo v7.6%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -74,7 +74,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.5:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v7.6:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -146,7 +146,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.5)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.6)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
             </div>
             
@@ -252,7 +252,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v7.5
+                    Gestor Pessoal v7.6
                 </div>
             </div>
 
@@ -392,7 +392,7 @@
                                 <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
                             </div>
                             <p contenteditable="true" data-original="Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA)." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de ação voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
+                                Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional. Atuação na elaboração, acompanhamento e análise de indicadores de Gestão de Ativos, Manutenção e Confiabilidade, definindo e implementando planos de acción voltados para a melhoria contínua dos resultados. Administração de sistemas de Operação e Manutenção (O&M). Desenvolvimento e implementação de estratégias voltadas ao aumento da confiabilidade de equipamentos críticos, conduzindo análises de falhas por meio das metodologias FMEA, FMECA e Análise de Causa Raiz (RCA).
                             </p>
                         </div>
 
@@ -625,7 +625,7 @@
                                 <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                             <p contenteditable="true" data-original="• Estácio — Graduação em Administração de Empresas (2010 - 2014)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)</p>
                         </div>
@@ -642,7 +642,7 @@
         <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.5)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.6)</h3>
                 <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                     💾 Salvar Versão Atual
                 </button>
@@ -697,7 +697,7 @@
             </button>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.5</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.6</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
                 📥 Word
             </button>
@@ -713,7 +713,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO V7.5 (CHAVE MESTRA PERMANENTE & WORD POR VERSÃO) -->
+    <!-- SCRIPT DE CONTROLO V7.6 (EXPORTAÇÃO WORD COMPATÍVEL) -->
     <script>
         const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
@@ -917,9 +917,61 @@
             }
         }
 
+        function gerarHtmlWord(conteudoHtml) {
+            return `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Currículo</title>
+                <style>
+                    body { font-family: Arial, sans-serif; color: #0f172a; margin: 20px; }
+                    table { width: 100%; border-collapse: collapse; }
+                    td { vertical-align: top; padding: 10px; }
+                    .sidebar { width: 35%; background-color: #0f172a; color: #ffffff; padding: 15px; }
+                    .main { width: 65%; padding: 15px; }
+                    h1 { color: #1d4ed8; font-size: 20px; text-transform: uppercase; margin-bottom: 5px; }
+                    h2 { color: #2563eb; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-top: 15px; }
+                    p, span, div { font-size: 11px; line-height: 1.4; color: #334155; }
+                    .sidebar p, .sidebar span, .sidebar div { color: #f8fafc; font-size: 11px; }
+                </style>
+                </head>
+                <body>
+                    <table>
+                        <tr>
+                            <td class="sidebar">${document.querySelector('.sidebar-print') ? document.querySelector('.sidebar-print').innerHTML : ''}</td>
+                            <td class="main">${document.querySelector('.main-print') ? document.querySelector('.main-print').innerHTML : ''}</td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            `;
+        }
+
         function exportarWord() {
-            const htmlConteudo = document.getElementById('curriculo-folha').outerHTML;
-            const blob = new Blob(['\ufeff' + htmlConteudo], { type: 'application/msword' });
+            const folhaEl = document.getElementById('curriculo-folha');
+            // Limpa botões de edição antes de exportar
+            const clone = folhaEl.cloneNode(true);
+            clone.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
+
+            const htmlWord = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Currículo Mariana Cruz</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    table { width: 100%; border-collapse: collapse; }
+                    td { vertical-align: top; padding: 10px; }
+                    .sidebar-print { width: 35%; background: #0f172a; color: #ffffff; }
+                    .main-print { width: 65%; background: #ffffff; color: #0f172a; }
+                    h1 { color: #1d4ed8; font-size: 22px; }
+                    h2 { color: #2563eb; font-size: 13px; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
+                    p, span, div { font-size: 11px; line-height: 1.4; }
+                </style>
+                </head>
+                <body>
+                    ${clone.outerHTML}
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -927,15 +979,38 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert("📥 Currículo exportado para Word (.doc) com sucesso!");
+            alert("📥 Currículo exportado para Word com sucesso!");
         }
 
         function exportarVersaoWord(val) {
             let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
-                const htmlConteudo = `<div class="resume-container">${dados.folhaHtml}</div>`;
-                const blob = new Blob(['\ufeff' + htmlConteudo], { type: 'application/msword' });
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = dados.folhaHtml;
+                tempDiv.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
+
+                const htmlWord = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head><meta charset='utf-8'><title>Currículo ${val}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        table { width: 100%; border-collapse: collapse; }
+                        td { vertical-align: top; padding: 10px; }
+                        .sidebar-print { width: 35%; background: #0f172a; color: #ffffff; }
+                        .main-print { width: 65%; background: #ffffff; color: #0f172a; }
+                        h1 { color: #1d4ed8; font-size: 22px; }
+                        h2 { color: #2563eb; font-size: 13px; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
+                        p, span, div { font-size: 11px; line-height: 1.4; }
+                    </style>
+                    </head>
+                    <body>
+                        ${tempDiv.outerHTML}
+                    </body>
+                    </html>
+                `;
+
+                const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
