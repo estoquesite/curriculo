@@ -24,18 +24,20 @@
             body { background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; }
             .print-hidden, #tela-login, .fixed, button { display: none !important; }
             .resume-container { box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; max-width: 100% !important; }
+            .sidebar-print { background-color: #1e293b !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; }
         }
         [contenteditable="true"]:hover {
             outline: 2px dashed #3b82f6;
-            background-color: rgba(59, 130, 246, 0.03);
-            border-radius: 6px;
+            background-color: rgba(59, 130, 246, 0.05);
+            border-radius: 4px;
         }
         [contenteditable="true"]:focus {
             outline: 2px solid #2563eb;
             background-color: white;
-            border-radius: 6px;
-            padding: 4px;
+            color: #0f172a;
+            border-radius: 4px;
+            padding: 2px;
         }
     </style>
 </head>
@@ -70,13 +72,13 @@
     </div>
 
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
-    <div id="conteudo-site" class="hidden max-w-4xl mx-auto p-4 sm:p-8">
+    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-4 sm:p-8">
         
         <!-- BARRA DE AÇÕES RÁPIDAS (NÃO SAI NA IMPRESSÃO) -->
         <div class="print-hidden flex flex-wrap justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6 gap-3">
             <div>
-                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Modo de Edição Total Ativo (v1.2)</h1>
-                <p class="text-[11px] text-slate-500">Modifique livremente qualquer texto, datas ou adicione novas experiências abaixo.</p>
+                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Modo de Edição com Barra Lateral (v1.3)</h1>
+                <p class="text-[11px] text-slate-500">Clique em qualquer parte para editar as informações.</p>
             </div>
             <div class="flex flex-wrap gap-2">
                 <button onclick="salvarAlteracoes()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">
@@ -91,187 +93,211 @@
             </div>
         </div>
 
-        <!-- FOLHA DO CURRÍCULO -->
-        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-6">
+        <!-- FOLHA DO CURRÍCULO (ESTILO DUAS COLUNAS / BARRA LATERAL) -->
+        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- CABEÇALHO -->
-            <div class="border-b border-slate-200 dark:border-slate-700 pb-6">
-                <h1 contenteditable="true" id="c-nome" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Mariana Cruz</h1>
-                <p contenteditable="true" id="c-cargo" class="text-sm font-bold text-blue-600 dark:text-blue-400 mt-1">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
-                <div contenteditable="true" id="c-contato" class="text-xs text-slate-500 dark:text-slate-400 mt-2 flex flex-wrap gap-4">
-                    <span>📱 21 99035-4416</span>
-                    <span>✉️ marianna_adm@yahoo.com.br</span>
-                    <span>📍 Rio de Janeiro, Brasil</span>
-                    <span>🔗 linkedin.com/in/marianapcruz</span>
+            <!-- BARRA LATERAL (ESQUERDA - 4 COLUNAS) -->
+            <div class="sidebar-print md:col-span-4 bg-slate-900 text-slate-100 p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+                <div class="space-y-6">
+                    <!-- FOTO / NOME CURTO -->
+                    <div class="border-b border-slate-800 pb-4">
+                        <h2 contenteditable="true" id="c-nome" class="text-xl font-black text-white uppercase tracking-wider">Mariana Cruz</h2>
+                        <p contenteditable="true" id="c-cargo-lateral" class="text-xs text-blue-400 font-semibold mt-1">Engenheira Mecânica & Confiabilidade</p>
+                    </div>
+
+                    <!-- CONTACTOS -->
+                    <div class="space-y-2">
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
+                        <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5">
+                            <p>📱 21 99035-4416</p>
+                            <p>✉️ marianna_adm@yahoo.com.br</p>
+                            <p>📍 Rio de Janeiro, Brasil</p>
+                            <p>🔗 linkedin.com/in/marianapcruz</p>
+                        </div>
+                    </div>
+
+                    <!-- PRINCIPAIS COMPETÊNCIAS -->
+                    <div class="space-y-2">
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
+                        <div contenteditable="true" id="c-competencias" class="text-xs text-slate-300 space-y-1">
+                            <p>• Rastreamento de Ativos[cite: 2]</p>
+                            <p>• Módulo SAP PM[cite: 2]</p>
+                            <p>• Melhoria Contínua[cite: 2]</p>
+                            <p>• Gestão de Ativos & Confiabilidade</p>
+                            <p>• Gestão de Projetos</p>
+                            <p>• CAPEX e OPEX[cite: 2]</p>
+                            <p>• Análise de Causa Raiz (RCA / FMEA)</p>
+                        </div>
+                    </div>
+
+                    <!-- CERTIFICAÇÕES -->
+                    <div class="space-y-2">
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
+                        <div contenteditable="true" id="c-certificacoes" class="text-xs text-slate-300 space-y-1">
+                            <p>• Engenheira Mecânica - CREA-RJ Ativo[cite: 2]</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center">
+                    Gestor Pessoal v1.3
                 </div>
             </div>
 
-            <!-- RESUMO PROFISSIONAL -->
-            <section class="space-y-2">
-                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
-                    Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás[cite: 2]. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional[cite: 2]. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão[cite: 2]. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos[cite: 2].
-                </p>
-            </section>
-
-            <!-- PRINCIPAIS COMPETÊNCIAS -->
-            <section class="space-y-2">
-                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Principais Competências</h2>
-                <div contenteditable="true" id="c-competencias" class="text-xs text-slate-700 dark:text-slate-300 grid grid-cols-2 sm:grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                    <div>• Rastreamento de ativos[cite: 2]</div>
-                    <div>• Módulo SAP PM[cite: 2]</div>
-                    <div>• Melhoria contínua[cite: 2]</div>
-                    <div>• Gestão de Ativos & Confiabilidade</div>
-                    <div>• Gestão de Projetos</div>
-                    <div>• CAPEX e OPEX[cite: 2]</div>
-                </div>
-            </section>
-
-            <!-- EXPERIÊNCIA PROFISSIONAL -->
-            <section class="space-y-4">
-                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência</h2>
+            <!-- CONTEÚDO PRINCIPAL (DIREITA - 8 COLUNAS) -->
+            <div class="md:col-span-8 p-6 sm:p-10 space-y-6">
                 
-                <!-- Vale 1 -->
-                <div id="c-exp1" class="space-y-1 text-xs">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp1-titulo">Vale — Engenheira de Gestão de Ativos</span>
-                        <span contenteditable="true" id="c-exp1-data" class="text-slate-400 font-normal">dezembro de 2025 - Present (10 meses)[cite: 2]</span>
-                    </div>
-                    <p contenteditable="true" id="c-exp1-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos[cite: 2].
+                <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO -->
+                <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <p contenteditable="true" id="c-cargo" class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+                </div>
+
+                <!-- RESUMO PROFISSIONAL -->
+                <section class="space-y-2">
+                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
+                    <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás[cite: 2]. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional[cite: 2]. Especialista em SAP (módulos PM, MM e FI) e Power BI[cite: 2].
                     </p>
-                </div>
+                </section>
 
-                <!-- Vale 2 -->
-                <div id="c-exp2" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp2-titulo">Vale — Especialista Gestão de Ativos</span>
-                        <span contenteditable="true" id="c-exp2-data" class="text-slate-400 font-normal">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)[cite: 2]</span>
+                <!-- EXPERIÊNCIA PROFISSIONAL -->
+                <section class="space-y-4">
+                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
+                    
+                    <!-- Vale 1 -->
+                    <div id="c-exp1" class="space-y-1 text-xs">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp1-titulo">Vale — Engenheira de Gestão de Ativos</span>
+                            <span contenteditable="true" id="c-exp1-data" class="text-slate-400 font-normal">dez 2025 - Presente[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp1-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Desenvolver e gerenciar o monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade; Elaborar indicadores de gestão de ativos e planos de ação[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp2-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Desenvolver e implementar estratégias para aumento da confiabilidade dos equipamentos rotativos críticos da planta. Conduzir análises de falhas utilizando metodologias como RCA, FMEA/FMECA, RCM[cite: 2].
-                    </p>
-                </div>
 
-                <!-- Vale 3 -->
-                <div id="c-exp3" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp3-titulo">Vale — Analista de Mecânica SR</span>
-                        <span contenteditable="true" id="c-exp3-data" class="text-slate-400 font-normal">novembro de 2020 - novembro de 2022 (2 anos 1 mês) — Rio de Janeiro[cite: 2]</span>
+                    <!-- Vale 2 -->
+                    <div id="c-exp2" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp2-titulo">Vale — Especialista Gestão de Ativos</span>
+                            <span contenteditable="true" id="c-exp2-data" class="text-slate-400 font-normal">nov 2022 - dez 2025[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp2-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Estratégias para aumento da confiabilidade de equipamentos rotativos críticos. Condução de análises de falhas (RCA, FMEA/FMECA, RCM)[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp3-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Responsável pela gestão e monitoramento das condições dos ativos, com foco na preservação, disponibilidade, confiabilidade e desempenho operacional[cite: 2].
-                    </p>
-                </div>
 
-                <!-- Yara International -->
-                <div id="c-exp4" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp4-titulo">Yara International — Analista de PCM SR</span>
-                        <span contenteditable="true" id="c-exp4-data" class="text-slate-400 font-normal">fevereiro de 2020 - outubro de 2020 (9 meses) — Home Office[cite: 2]</span>
+                    <!-- Vale 3 -->
+                    <div id="c-exp3" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp3-titulo">Vale — Analista de Mecânica SR</span>
+                            <span contenteditable="true" id="c-exp3-data" class="text-slate-400 font-normal">nov 2020 - nov 2022[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp3-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Gestão e monitoramento das condições dos ativos, focando na preservação, disponibilidade e confiabilidade operacional[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp4-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Responsável pelo cumprimento das metas do planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças[cite: 2].
-                    </p>
-                </div>
 
-                <!-- White Martins -->
-                <div id="c-exp5" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp5-titulo">White Martins — Analista de PCM SR</span>
-                        <span contenteditable="true" id="c-exp5-data" class="text-slate-400 font-normal">outubro de 2017 - novembro de 2019 (2 anos 2 meses) — RJ[cite: 2]</span>
+                    <!-- Yara International -->
+                    <div id="c-exp4" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp4-titulo">Yara International — Analista de PCM SR</span>
+                            <span contenteditable="true" id="c-exp4-data" class="text-slate-400 font-normal">fev 2020 - out 2020[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp4-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Cumprimento das metas de planejamento e controle da manutenção preventiva/corretiva/preditiva e reposição de peças[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp5-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Planejar e programar as manutenções corretivas, preventivas e preditivas, utilizando sistemas informatizados e fluxos padronizados[cite: 2].
-                    </p>
-                </div>
 
-                <!-- Light -->
-                <div id="c-exp6" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp6-titulo">Light — Analista de PCM</span>
-                        <span contenteditable="true" id="c-exp6-data" class="text-slate-400 font-normal">junho de 2015 - setembro de 2017 (2 anos 4 meses) — RJ[cite: 2]</span>
+                    <!-- White Martins -->
+                    <div id="c-exp5" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp5-titulo">White Martins — Analista de PCM SR</span>
+                            <span contenteditable="true" id="c-exp5-data" class="text-slate-400 font-normal">out 2017 - nov 2019[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp5-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Planeamento e programação de manutenções corretivas, preventivas e preditivas utilizando sistemas informatizados[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp6-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Planejar e programar as atividades de manutenção corretiva, preventiva e preditiva; Elaborar e acompanhar ordens de serviço[cite: 2].
-                    </p>
-                </div>
 
-                <!-- TechnipFMC -->
-                <div id="c-exp7" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp7-titulo">TechnipFMC — Analista de PCM</span>
-                        <span contenteditable="true" id="c-exp7-data" class="text-slate-400 font-normal">abril de 2012 - maio de 2015 (3 anos 2 meses)[cite: 2]</span>
+                    <!-- Light -->
+                    <div id="c-exp6" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp6-titulo">Light — Analista de PCM</span>
+                            <span contenteditable="true" id="c-exp6-data" class="text-slate-400 font-normal">jun 2015 - set 2017[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp6-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Planeamento e programação de atividades de manutenção corretiva, preventiva e preditiva; controlo de ordens de serviço[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp7-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Planejar e programar atividades de manutenção preventiva e corretiva. Elaborar a programação diária e semanal das equipes de campo[cite: 2].
-                    </p>
-                </div>
 
-                <!-- Michelin -->
-                <div id="c-exp8" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp8-titulo">Michelin — Estagiária de Administração</span>
-                        <span contenteditable="true" id="c-exp8-data" class="text-slate-400 font-normal">janeiro de 2010 - dezembro de 2011 (2 anos)[cite: 2]</span>
+                    <!-- TechnipFMC -->
+                    <div id="c-exp7" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp7-titulo">TechnipFMC — Analista de PCM</span>
+                            <span contenteditable="true" id="c-exp7-data" class="text-slate-400 font-normal">abr 2012 - mai 2015[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp7-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Programação diária e semanal de equipes de campo, controlo de backlog, OSs vencidas e prazos[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp8-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Auxiliar nos procedimentos de controle de pontos de estoque fabris; ajudar na elaboração de relatórios sobre diferenças de estoques[cite: 2].
-                    </p>
-                </div>
 
-                <!-- SICPA -->
-                <div id="c-exp9" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp9-titulo">SICPA — Estagiária Técnico Administrativa</span>
-                        <span contenteditable="true" id="c-exp9-data" class="text-slate-400 font-normal">janeiro de 2009 - dezembro de 2009 (1 ano)[cite: 2]</span>
+                    <!-- Michelin -->
+                    <div id="c-exp8" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp8-titulo">Michelin — Estagiária de Administração</span>
+                            <span contenteditable="true" id="c-exp8-data" class="text-slate-400 font-normal">jan 2010 - dez 2011[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp8-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Controlo de pontos de estoque fabris e elaboração de relatórios de divergências[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp9-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Acompanhamento dos pedidos de compras; rotinas de liberação de notas para pagamentos; suporte à área gerencial[cite: 2].
-                    </p>
-                </div>
 
-                <!-- ESPAÇO EXTRA PARA NOVA EXPERIÊNCIA -->
-                <div id="c-exp10" class="space-y-1 text-xs pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span contenteditable="true" id="c-exp10-titulo">Empresa Exemplo — Novo Cargo / Experiência Adicional</span>
-                        <span contenteditable="true" id="c-exp10-data" class="text-slate-400 font-normal">Mês Ano - Presente</span>
+                    <!-- SICPA -->
+                    <div id="c-exp9" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp9-titulo">SICPA — Estagiária Técnico Administrativa</span>
+                            <span contenteditable="true" id="c-exp9-data" class="text-slate-400 font-normal">jan 2009 - dez 2009[cite: 2]</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp9-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Acompanhamento de pedidos de compras, rotinas de pagamentos e suporte gerencial[cite: 2].
+                        </p>
                     </div>
-                    <p contenteditable="true" id="c-exp10-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Clique aqui para descrever as suas novas atividades, conquistas ou projetos estratégicos realizados nesta nova posição.
-                    </p>
-                </div>
-            </section>
 
-            <!-- FORMAÇÃO ACADÊMICA -->
-            <section class="space-y-2">
-                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação acadêmica</h2>
-                <div contenteditable="true" id="c-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                    <p>• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação, Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)[cite: 2]</p>
-                    <p>• <b>PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)[cite: 2]</p>
-                    <p>• <b>Estácio</b> — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)[cite: 2]</p>
-                    <p>• <b>Estácio</b> — Graduação, Administração de Empresas (2010 - 2014)[cite: 2]</p>
-                </div>
-            </section>
+                    <!-- EXPERIÊNCIA EXTRA ADICIONAL -->
+                    <div id="c-exp10" class="space-y-1 text-xs pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
+                        <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                            <span contenteditable="true" id="c-exp10-titulo">Nova Empresa — Novo Cargo / Projeto</span>
+                            <span contenteditable="true" id="c-exp10-data" class="text-slate-400 font-normal">Mês Ano - Presente</span>
+                        </div>
+                        <p contenteditable="true" id="c-exp10-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Espaço livre para adicionar novas experiências profissionais futuras.
+                        </p>
+                    </div>
+                </section>
 
-            <!-- CERTIFICAÇÕES E CURSOS ADICIONAIS -->
-            <section class="space-y-2">
-                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Certificações e Cursos Adicionais</h2>
-                <div contenteditable="true" id="c-certificacoes" class="text-xs text-slate-700 dark:text-slate-300 space-y-1 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                    <p>• Engenheira Mecânica - CREA-RJ Ativo[cite: 2]</p>
-                    <p>• Digite aqui novos cursos, palestras, treinamentos SAP ou certificações adicionais...</p>
-                </div>
-            </section>
+                <!-- FORMAÇÃO ACADÉMICA -->
+                <section class="space-y-2">
+                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
+                    <div contenteditable="true" id="c-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                        <p>• <b>UTFPR</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (2026 - 2027)[cite: 2]</p>
+                        <p>• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (2026 - 2027)[cite: 2]</p>
+                        <p>• <b>Estácio</b> — Graduação em Engenharia Mecânica (2020 - 2025)[cite: 2]</p>
+                        <p>• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)[cite: 2]</p>
+                    </div>
+                </section>
+
+            </div>
 
         </div>
     </div>
 
     <!-- BARRA INFERIOR COM BOTÃO DE INSTALAR APP, VERSÃO E BLOQUEIO -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center max-w-4xl mx-auto rounded-t-2xl shadow-lg">
+    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center max-w-5xl mx-auto rounded-t-2xl shadow-lg">
         <div class="flex items-center gap-2">
             <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1" title="Instalar App no Celular">
                 📱 Instalar App
             </button>
-            <span class="text-[10px] font-bold text-slate-400 ml-1">v1.2</span>
+            <span class="text-[10px] font-bold text-slate-400 ml-1">v1.3</span>
         </div>
         <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 hover:bg-red-50 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-xl text-xs font-semibold transition">
             🔒 Bloquear / Sair
@@ -383,11 +409,12 @@
         function salvarAlteracoes() {
             const dados = {
                 nome: document.getElementById('c-nome').innerHTML,
-                cargo: document.getElementById('c-cargo').innerHTML,
+                cargoLateral: document.getElementById('c-cargo-lateral').innerHTML,
                 contato: document.getElementById('c-contato').innerHTML,
-                resumo: document.getElementById('c-resumo').innerHTML,
                 competencias: document.getElementById('c-competencias').innerHTML,
                 certificacoes: document.getElementById('c-certificacoes').innerHTML,
+                cargo: document.getElementById('c-cargo').innerHTML,
+                resumo: document.getElementById('c-resumo').innerHTML,
                 formacao: document.getElementById('c-formacao').innerHTML,
             };
 
@@ -399,19 +426,20 @@
                 }
             }
 
-            localStorage.setItem('curriculo_personalizado_mariana_v1.2', JSON.stringify(dados));
+            localStorage.setItem('curriculo_personalizado_mariana_v1.3', JSON.stringify(dados));
             alert("💾 Alterações salvas com sucesso!");
         }
 
         function carregarDadosSalvos() {
-            const salvos = JSON.parse(localStorage.getItem('curriculo_personalizado_mariana_v1.2'));
+            const salvos = JSON.parse(localStorage.getItem('curriculo_personalizado_mariana_v1.3'));
             if (salvos) {
                 document.getElementById('c-nome').innerHTML = salvos.nome;
-                document.getElementById('c-cargo').innerHTML = salvos.cargo;
+                document.getElementById('c-cargo-lateral').innerHTML = salvos.cargoLateral;
                 document.getElementById('c-contato').innerHTML = salvos.contato;
-                document.getElementById('c-resumo').innerHTML = salvos.resumo;
                 document.getElementById('c-competencias').innerHTML = salvos.competencias;
                 if(salvos.certificacoes) document.getElementById('c-certificacoes').innerHTML = salvos.certificacoes;
+                document.getElementById('c-cargo').innerHTML = salvos.cargo;
+                document.getElementById('c-resumo').innerHTML = salvos.resumo;
                 
                 for(let i=1; i<=10; i++) {
                     if(salvos[`exp${i}Titulo`]) document.getElementById(`c-exp${i}-titulo`).innerHTML = salvos[`exp${i}Titulo`];
@@ -424,7 +452,7 @@
 
         function restaurarPadrao() {
             if (confirm("Deseja restaurar os dados originais do currículo?")) {
-                localStorage.removeItem('curriculo_personalizado_mariana_v1.2');
+                localStorage.removeItem('curriculo_personalizado_mariana_v1.3');
                 location.reload();
             }
         }
