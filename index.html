@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Currículo Dinâmico - Mariana Cruz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <!-- Manifesto PWA para Instalar como App -->
+    <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
+        %22name%22: %22Gestor de Currículo%22,
+        %22short_name%22: %22Currículo%22,
+        %22start_url%22: %22.%22,
+        %22display%22: %22standalone%22,
+        %22background_color%22: %22%23f8fafc%22,
+        %22theme_color%22: %22%232563eb%22,
+        %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3135/3135715.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
+    }">
+    <style>
+        @media print {
+            body { background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; }
+            .print-hidden, #tela-login, .fixed, button { display: none !important; }
+            .resume-container { box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; max-width: 100% !important; }
+            [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; }
+        }
+        [contenteditable="true"]:hover {
+            outline: 2px dashed #3b82f6;
+            background-color: rgba(59, 130, 246, 0.03);
+            border-radius: 6px;
+        }
+        [contenteditable="true"]:focus {
+            outline: 2px solid #2563eb;
+            background-color: white;
+            border-radius: 6px;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-28 select-none">
+
+    <!-- TELA DE LOGIN COM PIN 1510 -->
+    <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
+            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
+            <div>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Pessoal</p>
+            </div>
+            
+            <form onsubmit="verificarLogin(event)" class="space-y-3 text-left">
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Senha (PIN)</label>
+                    <input type="password" id="input-senha" required placeholder="••••" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm">
+                    Entrar com PIN (1510)
+                </button>
+            </form>
+            <p id="erro-senha" class="text-xs text-red-500 hidden font-medium">Senha incorreta! A senha é 1510.</p>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
+    <div id="conteudo-site" class="hidden max-w-4xl mx-auto p-4 sm:p-8">
+        
+        <!-- BARRA DE AÇÕES RÁPIDAS (NÃO SAI NA IMPRESSÃO) -->
+        <div class="print-hidden flex flex-wrap justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6 gap-3">
+            <div>
+                <h1 class="text-sm font-bold text-slate-900 dark:text-white">✏️ Modo de Edição Total Ativo</h1>
+                <p class="text-[11px] text-slate-500">Clique em qualquer texto ou data para modificar livremente.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="salvarAlteracoes()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">
+                    💾 Salvar
+                </button>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">
+                    🖨️ Imprimir / PDF
+                </button>
+                <button onclick="restaurarPadrao()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition" title="Restaurar dados originais">
+                    🔄 Restaurar
+                </button>
+            </div>
+        </div>
+
+        <!-- FOLHA DO CURRÍCULO -->
+        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-6">
+            
+            <!-- CABEÇALHO -->
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-6">
+                <h1 contenteditable="true" id="c-nome" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Mariana Cruz</h1>
+                <p contenteditable="true" id="c-cargo" class="text-sm font-bold text-blue-600 dark:text-blue-400 mt-1">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
+                <div contenteditable="true" id="c-contato" class="text-xs text-slate-500 dark:text-slate-400 mt-2 flex flex-wrap gap-4">
+                    <span>📱 21 99035-4416</span>
+                    <span>✉️ marianna_adm@yahoo.com.br</span>
+                    <span>📍 Rio de Janeiro, Brasil</span>
+                    <span>🔗 linkedin.com/in/marianapcruz</span>
+                </div>
+            </div>
+
+            <!-- RESUMO PROFISSIONAL -->
+            <section class="space-y-2">
+                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo Profissional</h2>
+                <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify">
+                    Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás[cite: 2]. Possui sólida experiência na gestão do ciclo de vida dos ativos, assegurando conformidade, desempenho e maximização da disponibilidade operacional[cite: 2]. Especialista em SAP (módulos PM, MM e FI) e Power BI[cite: 2].
+                </p>
+            </section>
+
+            <!-- PRINCIPAIS COMPETÊNCIAS -->
+            <section class="space-y-2">
+                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Principais Competências</h2>
+                <div contenteditable="true" id="c-competencias" class="text-xs text-slate-700 dark:text-slate-300 grid grid-cols-2 sm:grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <div>• Rastreamento de Ativos</div>
+                    <div>• Módulo SAP PM</div>
+                    <div>• Melhoria Contínua / Lean / Kaizen</div>
+                    <div>• Gestão de Ativos & Confiabilidade</div>
+                    <div>• CAPEX e OPEX</div>
+                    <div>• Análise de Causa Raiz (RCA / FMEA)</div>
+                </div>
+            </section>
+
+            <!-- CERTIFICAÇÕES -->
+            <section class="space-y-2">
+                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Certificações</h2>
+                <div contenteditable="true" id="c-certificacoes" class="text-xs text-slate-700 dark:text-slate-300 space-y-1 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <p>• Engenheira Mecânica - CREA-RJ Ativo[cite: 2]</p>
+                </div>
+            </section>
+
+            <!-- EXPERIÊNCIA PROFISSIONAL -->
+            <section class="space-y-4">
+                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
+                
+                <div id="c-exp1" class="space-y-1 text-xs">
+                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                        <span contenteditable="true" id="c-exp1-titulo">Engenheira de Gestão de Ativos — Vale</span>
+                        <span contenteditable="true" id="c-exp1-data" class="text-slate-400 font-normal">Dezembro 2025 - Presente[cite: 2]</span>
+                    </div>
+                    <p contenteditable="true" id="c-exp1-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Desenvolver e gerenciar o monitoramento das condições dos ativos visando preservação e confiabilidade. Elaborar indicadores de gestão de ativos, montagem de planos de ação e gestão do software de O&M[cite: 2]. Apoio ao orçamento e controle de custos (CAPEX e OPEX)[cite: 2].
+                    </p>
+                </div>
+
+                <div id="c-exp2" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                        <span contenteditable="true" id="c-exp2-titulo">Especialista Gestão de Ativos — Vale</span>
+                        <span contenteditable="true" id="c-exp2-data" class="text-slate-400 font-normal">Novembro 2022 - Dezembro 2025[cite: 2]</span>
+                    </div>
+                    <p contenteditable="true" id="c-exp2-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Desenvolvimento e implementação de estratégias para aumento da confiabilidade de equipamentos rotativos críticos. Condução de análises de falhas (RCA, FMEA/FMECA, RCM) e monitoramento de indicadores como MTBF, MTTR e disponibilidade operacional[cite: 2].
+                    </p>
+                </div>
+
+                <div id="c-exp3" class="space-y-1 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                        <span contenteditable="true" id="c-exp3-titulo">Analista de PCM SR — Yara International & White Martins</span>
+                        <span contenteditable="true" id="c-exp3-data" class="text-slate-400 font-normal">Outubro 2017 - Outubro 2020[cite: 2]</span>
+                    </div>
+                    <p contenteditable="true" id="c-exp3-texto" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Planejamento e controle de manutenção preventiva, corretiva e preditiva. Gestão de ordens de serviço, controle de backlog, paradas programadas e garantia da disponibilidade dos equipamentos[cite: 2].
+                    </p>
+                </div>
+            </section>
+
+            <!-- FORMAÇÃO ACADÊMICA E CURSOS -->
+            <section class="space-y-2">
+                <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica & Cursos / Especializações</h2>
+                <div contenteditable="true" id="c-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                    <p>• <b>Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos</b> — UTFPR (2026 - 2027)[cite: 2]</p>
+                    <p>• <b>MBA em Gestão de Projetos e Metodologias Ágeis</b> — PUCRS (2026 - 2027)[cite: 2]</p>
+                    <p>• <b>Graduação em Engenharia Mecânica</b> — Estácio (2020 - 2025)[cite: 2]</p>
+                    <p>• <b>Graduação em Administração de Empresas</b> — Estácio (2010 - 2014)[cite: 2]</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- BARRA INFERIOR COM BOTÃO DE INSTALAR APP, VERSÃO E BLOQUEIO -->
+    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center max-w-4xl mx-auto rounded-t-2xl shadow-lg">
+        <div class="flex items-center gap-2">
+            <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1" title="Instalar App no Celular">
+                📱 Instalar App
+            </button>
+            <span class="text-[10px] font-bold text-slate-400 ml-1">v1.0</span>
+        </div>
+        <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 hover:bg-red-50 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-xl text-xs font-semibold transition">
+            🔒 Bloquear / Sair
+        </button>
+    </div>
+
+    <!-- SCRIPT DE CONTROLO E PWA -->
+    <script>
+        const PIN_CORRETO = "1510";
+        let deferredPrompt = null;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function instalarApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
+                liberarSistema();
+            }
+            carregarDadosSalvos();
+        });
+
+        function verificarLogin(e) {
+            e.preventDefault();
+            const senha = document.getElementById('input-senha').value;
+            if (senha === PIN_CORRETO) {
+                sessionStorage.setItem('curriculo_autenticado', 'true');
+                liberarSistema();
+            } else {
+                document.getElementById('erro-senha').classList.remove('hidden');
+                document.getElementById('input-senha').value = '';
+            }
+        }
+
+        function liberarSistema() {
+            document.getElementById('tela-login').classList.add('hidden');
+            document.getElementById('conteudo-site').classList.remove('hidden');
+        }
+
+        function bloquearSessao() {
+            sessionStorage.removeItem('curriculo_autenticado');
+            location.reload();
+        }
+
+        function salvarAlteracoes() {
+            const dados = {
+                nome: document.getElementById('c-nome').innerHTML,
+                cargo: document.getElementById('c-cargo').innerHTML,
+                contato: document.getElementById('c-contato').innerHTML,
+                resumo: document.getElementById('c-resumo').innerHTML,
+                competencias: document.getElementById('c-competencias').innerHTML,
+                certificacoes: document.getElementById('c-certificacoes').innerHTML,
+                exp1Titulo: document.getElementById('c-exp1-titulo').innerHTML,
+                exp1Data: document.getElementById('c-exp1-data').innerHTML,
+                exp1Texto: document.getElementById('c-exp1-texto').innerHTML,
+                exp2Titulo: document.getElementById('c-exp2-titulo').innerHTML,
+                exp2Data: document.getElementById('c-exp2-data').innerHTML,
+                exp2Texto: document.getElementById('c-exp2-texto').innerHTML,
+                exp3Titulo: document.getElementById('c-exp3-titulo').innerHTML,
+                exp3Data: document.getElementById('c-exp3-data').innerHTML,
+                exp3Texto: document.getElementById('c-exp3-texto').innerHTML,
+                formacao: document.getElementById('c-formacao').innerHTML,
+            };
+            localStorage.setItem('curriculo_personalizado_mariana', JSON.stringify(dados));
+            alert("💾 Alterações salvas com sucesso!");
+        }
+
+        function carregarDadosSalvos() {
+            const salvos = JSON.parse(localStorage.getItem('curriculo_personalizado_mariana'));
+            if (salvos) {
+                document.getElementById('c-nome').innerHTML = salvos.nome;
+                document.getElementById('c-cargo').innerHTML = salvos.cargo;
+                document.getElementById('c-contato').innerHTML = salvos.contato;
+                document.getElementById('c-resumo').innerHTML = salvos.resumo;
+                document.getElementById('c-competencias').innerHTML = salvos.competencias;
+                if(salvos.certificacoes) document.getElementById('c-certificacoes').innerHTML = salvos.certificacoes;
+                if(salvos.exp1Titulo) document.getElementById('c-exp1-titulo').innerHTML = salvos.exp1Titulo;
+                if(salvos.exp1Data) document.getElementById('c-exp1-data').innerHTML = salvos.exp1Data;
+                if(salvos.exp1Texto) document.getElementById('c-exp1-texto').innerHTML = salvos.exp1Texto;
+                if(salvos.exp2Titulo) document.getElementById('c-exp2-titulo').innerHTML = salvos.exp2Titulo;
+                if(salvos.exp2Data) document.getElementById('c-exp2-data').innerHTML = salvos.exp2Data;
+                if(salvos.exp2Texto) document.getElementById('c-exp2-texto').innerHTML = salvos.exp2Texto;
+                if(salvos.exp3Titulo) document.getElementById('c-exp3-titulo').innerHTML = salvos.exp3Titulo;
+                if(salvos.exp3Data) document.getElementById('c-exp3-data').innerHTML = salvos.exp3Data;
+                if(salvos.exp3Texto) document.getElementById('c-exp3-texto').innerHTML = salvos.exp3Texto;
+                document.getElementById('c-formacao').innerHTML = salvos.formacao;
+            }
+        }
+
+        function restaurarPadrao() {
+            if (confirm("Deseja restaurar os dados originais do currículo?")) {
+                localStorage.removeItem('curriculo_personalizado_mariana');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
