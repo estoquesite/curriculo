@@ -59,8 +59,6 @@
             border-radius: 4px;
             padding: 2px;
         }
-        .drag-handle { cursor: grab; user-select: none; }
-        .drag-handle:active { cursor: grabbing; }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-44 select-none">
@@ -78,7 +76,7 @@
             <button onclick="execCmd('justifyRight')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Direita</button>
             <button onclick="execCmd('justifyFull')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded">Justificar</button>
         </div>
-        <div class="text-[10px] text-yellow-400 font-semibold">💡 Clica nos lápis (✏️) para focar e editar os textos!</div>
+        <div class="text-[10px] text-yellow-400 font-semibold">💡 Clica nos lápis (✏️) para editar diretamente!</div>
     </div>
 
     <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
@@ -120,7 +118,7 @@
                     <!-- NOME / CARGO -->
                     <div class="border-b border-slate-800 pb-4 relative group">
                         <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                            <button onclick="focarElemento(this)" class="text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
+                            <button onclick="focarTexto(this)" class="text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
                             <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h2 contenteditable="true" id="c-nome" class="text-xl font-black text-white uppercase tracking-wider">Mariana Cruz</h2>
@@ -130,7 +128,7 @@
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
                         <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                            <button onclick="focarElemento(this)" class="text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
+                            <button onclick="focarTexto(this)" class="text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
                             <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
@@ -145,32 +143,26 @@
                     <!-- PRINCIPAIS COMPETÊNCIAS -->
                     <div class="space-y-2 relative group">
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-1">
-                                <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
-                            </div>
+                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
                             <div class="flex items-center gap-1">
                                 <button onclick="adicionarItemSidebar('container-competencias')" class="print-hidden text-[10px] bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5">
-                            <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded cursor-move">
-                                <span class="drag-handle text-slate-400 font-bold px-1">⠿</span>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Rastreamento de Ativos</span>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
+                                <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 hover:text-red-300 px-1 font-bold">✕</button>
                             </div>
-                            <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded cursor-move">
-                                <span class="drag-handle text-slate-400 font-bold px-1">⠿</span>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Módulo SAP PM</span>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
+                                <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 hover:text-red-300 px-1 font-bold">✕</button>
                             </div>
-                            <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded cursor-move">
-                                <span class="drag-handle text-slate-400 font-bold px-1">⠿</span>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua</span>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
+                                <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 hover:text-red-300 px-1 font-bold">✕</button>
                             </div>
                         </div>
@@ -179,20 +171,16 @@
                     <!-- CERTIFICAÇÕES -->
                     <div class="space-y-2 relative group">
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-1">
-                                <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs" title="Editar">✏️</button>
-                            </div>
+                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
                             <div class="flex items-center gap-1">
                                 <button onclick="adicionarItemSidebar('container-certificacoes')" class="print-hidden text-[10px] bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded font-bold">➕</button>
                                 <button onclick="this.closest('.group').remove()" class="print-hidden bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5">
-                            <div draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)" class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded cursor-move">
-                                <span class="drag-handle text-slate-400 font-bold px-1">⠿</span>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
-                                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
+                                <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 hover:text-red-300 px-1 font-bold">✕</button>
                             </div>
                         </div>
@@ -200,7 +188,7 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v3.5
+                    Gestor Pessoal v3.6
                 </div>
             </div>
 
@@ -210,7 +198,7 @@
                 <!-- TÍTULO PRINCIPAL / CABEÇALHO DIREITO -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
                     <div class="print-hidden absolute top-0 right-0 flex items-center gap-1">
-                        <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                        <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
                         <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
                     <p contenteditable="true" id="c-cargo" class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide pr-8">CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional</p>
@@ -219,13 +207,11 @@
                 <!-- RESUMO PROFISSIONAL -->
                 <section class="space-y-2 relative group bg-slate-50/30 p-3 rounded-xl border border-transparent hover:border-slate-200">
                     <div class="print-hidden absolute top-2 right-2 flex items-center gap-1">
-                        <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
-                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer alterações">🔄 Desfazer</button>
+                        <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                         <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                     </div>
-                    <div class="flex items-center gap-1">
-                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                    </div>
+                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
                         Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
                     </p>
@@ -234,9 +220,7 @@
                 <!-- EXPERIÊNCIA PROFISSIONAL -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
-                        <div class="flex items-center gap-1">
-                            <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                        </div>
+                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
                         <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova Experiência</button>
                     </div>
                     
@@ -244,11 +228,13 @@
                         <!-- Vale 1 -->
                         <div class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
                             <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
-                                <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer alterações">🔄 Desfazer</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar texto">✏️</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
-                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-32">
+                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-40">
                                 <span contenteditable="true" class="exp-titulo">Vale — Engenheira de Gestão de Ativos</span>
                                 <span contenteditable="true" class="exp-data text-slate-400 font-normal">dezembro de 2025 - Present (10 meses)</span>
                             </div>
@@ -266,11 +252,13 @@
                         <!-- Vale 2 -->
                         <div class="space-y-1 text-xs exp-item relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
                             <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
-                                <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer alterações">🔄 Desfazer</button>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
+                                <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar texto">✏️</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                                 <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
-                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-32">
+                            <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-40">
                                 <span contenteditable="true" class="exp-titulo">Vale — Especialista Gestão de Ativos</span>
                                 <span contenteditable="true" class="exp-data text-slate-400 font-normal">novembro de 2022 - dezembro de 2025 (3 anos 2 meses)</span>
                             </div>
@@ -297,12 +285,12 @@
                     </div>
                     <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100">
-                            <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                            <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
                             <p contenteditable="true" class="flex-1 outline-none">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
                             <button onclick="this.closest('div').remove()" class="print-hidden text-red-500 font-bold px-1.5 py-0.5 rounded bg-red-50">✕</button>
                         </div>
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100">
-                            <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                            <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
                             <p contenteditable="true" class="flex-1 outline-none">• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
                             <button onclick="this.closest('div').remove()" class="print-hidden text-red-500 font-bold px-1.5 py-0.5 rounded bg-red-50">✕</button>
                         </div>
@@ -349,7 +337,7 @@
         </div>
     </div>
 
-    <!-- BARRA INFERIOR (COM TODOS OS BOTÕES DE AÇÃO ORGANIZADOS NO MÓVEL) -->
+    <!-- BARRA INFERIOR COM TODOS OS BOTÕES ORGANIZADOS -->
     <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-wrap justify-between items-center gap-2 max-w-5xl mx-auto rounded-t-2xl shadow-2xl">
         <div class="flex items-center gap-2 flex-wrap">
             <button onclick="instalarApp()" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1">
@@ -375,7 +363,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROLO, EDITAR, SETAS E PWA -->
+    <!-- SCRIPT DE CONTROLO V3.6 -->
     <script>
         const PIN_CORRETO = "1510";
         let deferredPrompt = null;
@@ -448,16 +436,16 @@
             document.execCommand(command, false, value);
         }
 
-        // FAZER O LÁPIS FUNCIONAR (Focar o campo editável mais próximo)
-        function focarElemento(btn) {
-            const container = btn.closest('.group, section, div');
+        // FAZER O LÁPIS FUNCIONAR (Focar o campo de texto associado)
+        function focarTexto(btn) {
+            const container = btn.closest('.group, section, div, .exp-item');
             const editavel = container ? container.querySelector('[contenteditable="true"]') : null;
             if (editavel) {
                 editavel.focus();
             }
         }
 
-        // DESFAZER ALTERAÇÕES (Restaurar texto original)
+        // DESFAZER / RESTAURAR TEXTO ORIGINAL
         function restaurarOriginal(btn, tipo) {
             const card = btn.closest('.group, section, .exp-item');
             if (tipo === 'resumo') {
@@ -471,7 +459,7 @@
             }
         }
 
-        // MOVER CAIXA COM SETINHAS (SUBIR / DESCER)
+        // MOVER CAIXA COM SETAS (SUBIR / DESCER)
         function moverCaixa(btn, direcao) {
             const card = btn.closest('section, .exp-item');
             if (!card) return;
@@ -531,7 +519,7 @@
             alert(`✅ Duração calculada: ${textoDuracao}`);
         }
 
-        // ADICIONAR CAIXA LIVRE NO CONTEÚDO PRINCIPAL (COM SETINHAS E APAGAR)
+        // ADICIONAR CAIXA LIVRE COM SETAS, LÁPIS E APAGAR
         function adicionarCaixaLivre() {
             const container = document.getElementById('container-principal-conteudo');
             const sec = document.createElement('section');
@@ -540,12 +528,10 @@
                 <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
                     <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                     <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                    <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                    <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
                     <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                 </div>
-                <div class="flex items-center gap-1">
-                    <h2 contenteditable="true" class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider outline-none">NOVA SEÇÃO</h2>
-                </div>
+                <h2 contenteditable="true" class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider outline-none">NOVA SEÇÃO</h2>
                 <div class="space-y-1">
                     <div class="flex justify-between font-bold text-slate-900 dark:text-white">
                         <span contenteditable="true" class="outline-none">Título do Item</span>
@@ -557,7 +543,7 @@
                         <label><input type="checkbox" class="chk-atual" checked> Presente</label>
                         <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px]">🔄 Calcular</button>
                     </div>
-                    <p contenteditable="true" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 outline-none pt-1">
+                    <p contenteditable="true" data-original="Digite aqui o conteúdo detalhado desta nova caixa..." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 outline-none pt-1">
                         Digite aqui o conteúdo detalhado desta nova caixa...
                     </p>
                 </div>
@@ -572,7 +558,7 @@
             div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
             div.innerHTML = `
                 <span contenteditable="true" class="flex-1 outline-none">• Novo Item</span>
-                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
+                <button onclick="focarTexto(this)" class="print-hidden text-slate-400 hover:text-white text-xs">✏️</button>
                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 hover:text-red-300 px-1 font-bold">✕</button>
             `;
             container.appendChild(div);
@@ -586,10 +572,11 @@
                 <div class="print-hidden absolute right-2 top-2 flex items-center gap-1">
                     <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
                     <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                    <button onclick="focarElemento(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                    <button onclick="focarTexto(this)" class="text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
+                    <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 hover:bg-amber-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
                     <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                 </div>
-                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-28">
+                <div class="flex justify-between font-bold text-slate-900 dark:text-white pr-40">
                     <span contenteditable="true" class="exp-titulo">Nova Empresa — Cargo</span>
                     <span contenteditable="true" class="exp-data text-slate-400 font-normal">Período</span>
                 </div>
@@ -610,18 +597,6 @@
             btn.closest('.exp-item').remove();
         }
 
-        function adicionarFormacao() {
-            const container = document.getElementById('container-formacao');
-            const div = document.createElement('div');
-            div.className = "flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100";
-            div.innerHTML = `
-                <button onclick="focarElemento(this)" class="print-hidden text-slate-400 hover:text-blue-600 text-xs" title="Editar">✏️</button>
-                <p contenteditable="true" class="flex-1 outline-none">• <b>Instituição</b> — Curso / Detalhes (Ano)</p>
-                <button onclick="this.closest('div').remove()" class="print-hidden text-red-500 font-bold px-1.5 py-0.5 rounded bg-red-50">✕</button>
-            `;
-            container.appendChild(div);
-        }
-
         function salvarVersao() {
             let nomeVersao = prompt("Dê um nome para esta versão (ex: Mariana - Engenharia):", "Versão " + new Date().toLocaleDateString());
             if(!nomeVersao) return;
@@ -630,15 +605,15 @@
                 folhaHtml: document.getElementById('curriculo-folha').innerHTML
             };
 
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.6') || '{}');
             versoes[nomeVersao] = dados;
-            localStorage.setItem('curriculo_versoes_mariana_v3.5', JSON.stringify(versoes));
+            localStorage.setItem('curriculo_versoes_mariana_v3.6', JSON.stringify(versoes));
             atualizarListaVersoesVisual();
             alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
         function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.6') || '{}');
             const container = document.getElementById('lista-versoes-visual');
             container.innerHTML = '';
 
@@ -663,7 +638,7 @@
         }
 
         function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.5') || '{}');
+            let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.6') || '{}');
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
@@ -673,9 +648,9 @@
 
         function apagarVersaoEspecifica(val) {
             if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.5') || '{}');
+                let versoes = JSON.parse(localStorage.getItem('curriculo_versoes_mariana_v3.6') || '{}');
                 delete versoes[val];
-                localStorage.setItem('curriculo_versoes_mariana_v3.5', JSON.stringify(versoes));
+                localStorage.setItem('curriculo_versoes_mariana_v3.6', JSON.stringify(versoes));
                 atualizarListaVersoesVisual();
                 alert("Versão apagada com sucesso.");
             }
