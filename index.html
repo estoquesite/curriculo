@@ -76,7 +76,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Novo - Nuvem Ativa):</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Completo - Nuvem Ativa):</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -146,13 +146,13 @@
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
     <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-28 space-y-6">
         
-        <!-- FOLHA DO CURRÍCULO -->
+        <!-- FOLHA DO CURRÍCULO COMPLETA -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
             <!-- BARRA LATERAL (ESQUERDA - 5 COLUNAS) -->
             <div class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
-                    <!-- CONTACTOS -->
+                    <!-- CONTACTO -->
                     <div class="space-y-2 relative group">
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
                         <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
 
-                    <!-- PRINCIPAIS COMPETÊNCIAS -->
+                    <!-- COMPETÊNCIAS -->
                     <div class="space-y-2 relative group">
                         <div class="flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
                             <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
@@ -180,6 +180,28 @@
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua</span>
+                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                            </div>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
+                                <span contenteditable="true" class="flex-1 outline-none">• Gestão de Ativos & Confiabilidade</span>
+                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                            </div>
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
+                                <span contenteditable="true" class="flex-1 outline-none">• CAPEX e OPEX</span>
+                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CERTIFICAÇÕES -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
+                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
+                            <button onclick="adicionarItemSidebar('container-certificacoes')" class="print-hidden bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
+                        </div>
+                        <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
+                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
+                                <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                         </div>
@@ -201,14 +223,14 @@
 
                 <!-- CARGO -->
                 <div class="pb-2 relative group">
-                    <p contenteditable="true" id="c-cargo" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | SAP PM & HANA</p>
+                    <p contenteditable="true" id="c-cargo" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
                 </div>
 
                 <!-- RESUMO -->
                 <section class="space-y-2 relative group">
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás.
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
                     </p>
                 </section>
 
@@ -225,15 +247,27 @@
                             <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span></div>
                             <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span></div>
                             <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação.
+                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
                             </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FORMAÇÃO ACADÊMICA -->
+                <section id="sec-formacao" class="space-y-2">
+                    <div class="flex justify-between items-center border-b pb-1">
+                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
+                    </div>
+                    <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                            <p contenteditable="true" class="flex-1 outline-none">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
 
-        <!-- PAINEL VISUAL DE VERSÕES SALVAS COM STATUS DA NUVEM -->
+        <!-- PAINEL VISUAL DE VERSÕES SALVAS -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700 flex-wrap gap-2">
                 <div class="flex items-center gap-2">
@@ -435,7 +469,7 @@
             let dados = versoes[val];
             if(dados && dados.folhaHtml) {
                 document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
-                await salvarNaNuvem();
+                await salvarAuto();
                 alert(`Versão "${val}" carregada e sincronizada!`);
             }
         }
