@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.9 Nuvem)</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v8.0 Nuvem Completa)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v7.9%22,
+        %22short_name%22: %22Currículo v8.0%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%23f8fafc%22,
@@ -76,7 +76,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Totalmente Completo):</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v8.0 (Histórico Completo + Nuvem):</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -105,19 +105,6 @@
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
-            <span class="text-[10px] text-slate-300">🔠</span>
-            <button onclick="mudarCaseGlobal('upper')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
-            <button onclick="mudarCaseGlobal('lower')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Tudo Minúsculo">minús</button>
-            <button onclick="mudarCaseGlobal('capitalize')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Capitalizar">Cap</button>
-        </div>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <button onclick="limparFormatacaoSelecao()" class="px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded font-bold shrink-0 text-white" title="Limpar Formatação">🧹 Limpar</button>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
         <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold shrink-0 text-white" title="Exportar para Word">📥 Word</button>
     </div>
 
@@ -126,7 +113,7 @@
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.9)</h2>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v8.0)</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo (Nuvem)</p>
             </div>
             
@@ -175,11 +162,11 @@
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Módulo SAP PM</span>
+                                <span contenteditable="true" class="flex-1 outline-none">• Módulo SAP PM & HANA</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua</span>
+                                <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua & Lean</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
@@ -195,21 +182,16 @@
 
                     <!-- CERTIFICAÇÕES -->
                     <div class="space-y-2 relative group">
-                        <div class="flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
-                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
-                            <button onclick="adicionarItemSidebar('container-certificacoes')" class="print-hidden bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
-                        </div>
-                        <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
+                        <div class="text-xs text-slate-300 space-y-1.5">
+                            <p>• Engenheira Mecânica - CREA-RJ Ativo</p>
+                            <p>• Especialização em Confiabilidade e Gestão de Ativos (UTFPR)</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v7.9 Nuvem
+                    Gestor Pessoal v8.0 Nuvem
                 </div>
             </div>
 
@@ -230,11 +212,11 @@
                 <section class="space-y-2 relative group">
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos.
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA -->
+                <!-- EXPERIÊNCIA PROFISSIONAL COMPLETA -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
@@ -242,12 +224,33 @@
                     </div>
                     
                     <div id="container-experiencias" class="space-y-4">
+                        <!-- Vale -->
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span></div>
+                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale S.A.</span></div>
                             <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span></div>
-                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span></div>
+                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present</span></div>
                             <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
+                                Desenvolvimento e gestão no monitoramento das condições dos ativos, visando preservação, disponibilidade e confiabilidade; elaboração e análise de indicadores de gestão de ativos e planos de ação; gestão de software de O&M e suporte a usuários; acompanhamento de planos de manutenção e CAPEX/OPEX.
+                            </p>
+                        </div>
+
+                        <!-- Light -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Light Serviços de Eletricidade</span></div>
+                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira Mecânica / Gestão de Processos</span></div>
+                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Atuação em Manutenção e Operação</span></div>
+                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                                Atuação com foco em confiabilidade de sistemas elétricos e industriais, gestão de ativos de rede, análise de falhas, otimização de processos operacionais e conformidade com normas técnicas do setor de energia.
+                            </p>
+                        </div>
+
+                        <!-- FMC / Outras Experiências Anteriores -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">FMC Technologies / Indústrias de Óleo, Gás e Engenharia</span></div>
+                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira Mecânica de Projetos e Controle Patrimonial</span></div>
+                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Histórico Consolidado (16+ anos de experiência)</span></div>
+                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                                Gestão do ciclo de vida de equipamentos e ativos industriais de grande porte, controle patrimonial, implantação de melhorias contínuas, interface direta com suprimentos, engenharia e manutenção.
                             </p>
                         </div>
                     </div>
@@ -260,7 +263,10 @@
                     </div>
                     <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
                         <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <p contenteditable="true" class="flex-1 outline-none">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
+                            <p contenteditable="true" class="flex-1 outline-none">• <b>Universidade Tecnológica Federal do Paraná (UTFPR)</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
+                            <p contenteditable="true" class="flex-1 outline-none">• <b>Graduação</b> — Engenharia Mecânica</p>
                         </div>
                     </div>
                 </section>
@@ -271,7 +277,7 @@
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700 flex-wrap gap-2">
                 <div class="flex items-center gap-2">
-                    <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Sincronização com Nuvem</h3>
+                    <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Sincronização com Nuvem (v8.0)</h3>
                     <span id="status-nuvem" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">🟡 Conectando...</span>
                 </div>
                 <div class="flex items-center gap-2">
@@ -290,7 +296,7 @@
             <span id="feedback-salvar" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hidden">✅ Alterações salvas na nuvem com sucesso!</span>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.9 Nuvem</span>
+            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v8.0 Nuvem</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition">📥 Word</button>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition">💾 Salvar</button>
         </div>
@@ -302,8 +308,8 @@
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const PIN_CORRETO = "1510";
-        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key_novo";
-        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key_novo";
+        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key_v8";
+        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key_v8";
         let timeoutAutoSave = null;
 
         function atualizarStatusNuvem(status, texto) {
