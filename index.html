@@ -424,7 +424,7 @@
         async function sincronizarComNuvem() {
             try {
                 let { data, error } = await supabaseClient
-                    .from('app_dados_curriculo')
+                    .from('dados_aplicacao') // Apontando para a tabela correta
                     .select('conteudo')
                     .eq('id', '1')
                     .single();
@@ -457,7 +457,7 @@
 
             try {
                 await supabaseClient
-                    .from('app_dados_curriculo')
+                    .from('dados_aplicacao') // Apontando para a tabela correta
                     .upsert({ id: '1', conteudo: dadosGlobaisNuvem });
             } catch (err) {
                 console.error("Erro ao gravar na nuvem:", err);
