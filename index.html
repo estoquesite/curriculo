@@ -3,302 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v8.0 Nuvem Completa)</title>
-    <!-- Tailwind CSS -->
+    <title>Gestor de Currículo - Mariana Cruz (v8.1 Nuvem)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' }
-    </script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
-        %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v8.0%22,
-        %22start_url%22: %22.%22,
-        %22display%22: %22standalone%22,
-        %22background_color%22: %22%23f8fafc%22,
-        %22theme_color%22: %22%232563eb%22,
-        %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3135/3135715.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
-    }">
     <style>
         @media print {
-            @page {
-                size: A4;
-                margin: 8mm;
-            }
-            body { background: white !important; color: #0f172a !important; padding: 0 !important; margin: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .print-hidden, #tela-login, #modal-ia, #word-toolbar, .fixed, button { display: none !important; }
-            
-            .resume-container { 
-                box-shadow: none !important; 
-                border: 2px solid #1e3a8a !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                width: 100% !important; 
-                max-width: 100% !important; 
-                display: grid !important; 
-                grid-template-columns: repeat(12, minmax(0, 1fr)) !important; 
-            }
-            .sidebar-print { 
-                background-color: #0f172a !important; 
-                color: #f8fafc !important; 
-                grid-column: span 5 / span 5 !important; 
-                word-break: normal !important;
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
-            }
-            .main-print { 
-                grid-column: span 7 / span 7 !important; 
-                background-color: #ffffff !important;
-            }
-            [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; outline: none !important; }
+            @page { size: A4; margin: 8mm; }
+            body { background: white !important; color: #0f172a !important; padding: 0 !important; margin: 0 !important; }
+            .print-hidden, #tela-login, #word-toolbar, .fixed, button { display: none !important; }
+            .resume-container { box-shadow: none !important; border: 2px solid #1e3a8a !important; width: 100% !important; display: grid !important; grid-template-columns: repeat(12, minmax(0, 1fr)) !important; }
+            .sidebar-print { background-color: #0f172a !important; color: #f8fafc !important; grid-column: span 5 / span 5 !important; -webkit-print-color-adjust: exact !important; }
+            .main-print { grid-column: span 7 / span 7 !important; background-color: #ffffff !important; }
+            [contenteditable="true"] { border: none !important; background: transparent !important; }
         }
-
-        [contenteditable="true"]:hover {
-            outline: 2px dashed #3b82f6;
-            background-color: rgba(59, 130, 246, 0.05);
-            border-radius: 4px;
-        }
-        [contenteditable="true"]:focus {
-            outline: 2px solid #2563eb;
-            background-color: white;
-            color: #0f172a;
-            border-radius: 4px;
-            padding: 2px;
-        }
-        .sidebar-break {
-            word-break: normal;
-            overflow-wrap: break-word;
-        }
+        [contenteditable="true"]:hover { outline: 2px dashed #3b82f6; background-color: rgba(59, 130, 246, 0.05); }
+        [contenteditable="true"]:focus { outline: 2px solid #2563eb; background-color: white; color: #0f172a; }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
+<body class="bg-slate-100 text-slate-800 min-h-screen pb-36 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
-    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v8.0 (Histórico Completo + Nuvem):</span>
-        
-        <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
-            <option value="Arial">Arial</option>
-            <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">LinkedIn / Modern Sans</option>
-            <option value="Calibri">Calibri</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Courier New">Courier New</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Verdana">Verdana</option>
-        </select>
-
-        <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tamanho">
-            <option value="3">Normal</option>
-            <option value="2">Pequeno</option>
-            <option value="4">Médio</option>
-            <option value="5">Grande</option>
-            <option value="6">Muito Grande</option>
-        </select>
-
-        <!-- SELETOR DE COR COM OK -->
-        <div class="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
-            <span class="text-[10px] text-slate-300">🎨</span>
-            <input type="color" id="cor-picker" value="#2563eb" class="h-4 w-5 bg-transparent border-0 cursor-pointer" title="Cor">
-            <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
-        </div>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold shrink-0 text-white" title="Exportar para Word">📥 Word</button>
+    <!-- BARRA SUPERIOR -->
+    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 text-xs">
+        <span class="font-bold text-blue-400">✏️ v8.1 (Nuvem Ativa):</span>
+        <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold text-white">📥 Word</button>
     </div>
 
-    <!-- TELA DE LOGIN COM PIN 1510 -->
-    <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
-            <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v8.0)</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo (Nuvem)</p>
-            </div>
-            
-            <form onsubmit="verificarLogin(event)" class="space-y-3 text-left">
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Senha (PIN)</label>
-                    <input type="password" id="input-senha" placeholder="••••" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm">
-                    Entrar com PIN (1510)
-                </button>
+    <!-- TELA DE LOGIN PIN 1510 -->
+    <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4">
+            <h2 class="text-xl font-bold text-slate-900">Acesso Restrito</h2>
+            <form onsubmit="verificarLogin(event)" class="space-y-3">
+                <input type="password" id="input-senha" placeholder="PIN (1510)" class="w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-center text-lg">
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl">Entrar</button>
             </form>
-            <p id="erro-senha" class="text-xs text-red-500 hidden font-medium">Senha incorreta! A senha é 1510.</p>
+            <p id="erro-senha" class="text-xs text-red-500 hidden font-medium">PIN incorreto! Use 1510.</p>
         </div>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
+    <!-- CONTEÚDO -->
     <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-28 space-y-6">
-        
-        <!-- FOLHA DO CURRÍCULO COMPLETA -->
-        <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        <div id="curriculo-folha" class="resume-container bg-white rounded-3xl shadow-xl border-2 border-blue-950/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- BARRA LATERAL (ESQUERDA - 5 COLUNAS) -->
-            <div class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 space-y-6 flex flex-col justify-between">
+            <!-- LATERAL -->
+            <div class="sidebar-print md:col-span-5 bg-slate-900 text-slate-100 p-6 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
-                    <!-- CONTACTO -->
-                    <div class="space-y-2 relative group">
-                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
-                        <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
+                    <div>
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400">Contacto</h3>
+                        <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5 outline-none">
                             <p>📱 21 99035-4416</p>
                             <p>✉️ marianna_adm@yahoo.com.br</p>
                             <p>📍 Rio de Janeiro, Brasil</p>
                             <p>🔗 linkedin.com/in/marianapcruz</p>
                         </div>
                     </div>
-
-                    <!-- COMPETÊNCIAS -->
-                    <div class="space-y-2 relative group">
-                        <div class="flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
-                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
-                            <button onclick="adicionarItemSidebar('container-competencias')" class="print-hidden bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
-                        </div>
-                        <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Rastreamento de Ativos</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Módulo SAP PM & HANA</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua & Lean</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Gestão de Ativos & Confiabilidade</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• CAPEX e OPEX</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CERTIFICAÇÕES -->
-                    <div class="space-y-2 relative group">
-                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
-                        <div class="text-xs text-slate-300 space-y-1.5">
-                            <p>• Engenheira Mecânica - CREA-RJ Ativo</p>
-                            <p>• Especialização em Confiabilidade e Gestão de Ativos (UTFPR)</p>
+                    <div>
+                        <h3 class="text-[10px] font-extrabold uppercase text-slate-400">Competências</h3>
+                        <div contenteditable="true" id="c-competencias" class="text-xs text-slate-300 space-y-1.5 outline-none">
+                            <p>• Rastreamento de Ativos</p>
+                            <p>• Módulo SAP PM & HANA</p>
+                            <p>• Gestão de Ativos & Confiabilidade</p>
+                            <p>• CAPEX e OPEX</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v8.0 Nuvem
-                </div>
+                <div class="text-[10px] text-slate-500 text-center print-hidden">v8.1 Nuvem</div>
             </div>
 
-            <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
-            <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
-                
-                <!-- NOME -->
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
-                    <h1 contenteditable="true" id="c-nome-principal" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+            <!-- PRINCIPAL -->
+            <div class="main-print md:col-span-7 p-6 space-y-6">
+                <div>
+                    <h1 contenteditable="true" class="text-xl font-black text-blue-700 uppercase outline-none">MARIANA PEREIRA CRUZ</h1>
+                    <p contenteditable="true" class="text-[11px] font-bold text-slate-600 outline-none mt-1">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | SAP PM | Gestão de Ativos</p>
                 </div>
 
-                <!-- CARGO -->
-                <div class="pb-2 relative group">
-                    <p contenteditable="true" id="c-cargo" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
-                </div>
-
-                <!-- RESUMO -->
-                <section class="space-y-2 relative group">
-                    <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                    <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos.
+                <section class="space-y-2">
+                    <h2 class="text-xs font-extrabold text-blue-600 uppercase">Resumo</h2>
+                    <p contenteditable="true" class="text-xs leading-relaxed text-slate-700 text-justify outline-none">
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás.
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL COMPLETA -->
-                <section id="sec-experiencias" class="space-y-4">
-                    <div class="flex justify-between items-center border-b pb-1">
-                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
-                    </div>
-                    
-                    <div id="container-experiencias" class="space-y-4">
-                        <!-- Vale -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale S.A.</span></div>
-                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span></div>
-                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present</span></div>
-                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Desenvolvimento e gestão no monitoramento das condições dos ativos, visando preservação, disponibilidade e confiabilidade; elaboração e análise de indicadores de gestão de ativos e planos de ação; gestão de software de O&M e suporte a usuários; acompanhamento de planos de manutenção e CAPEX/OPEX.
-                            </p>
+                <section class="space-y-4">
+                    <h2 class="text-xs font-extrabold text-blue-600 uppercase">Experiência Profissional</h2>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                            <p contenteditable="true" class="font-bold text-sm text-slate-900 outline-none">Vale S.A.</p>
+                            <p contenteditable="true" class="font-semibold text-blue-600 text-xs outline-none">Engenheira de Gestão de Ativos</p>
+                            <p contenteditable="true" class="text-slate-500 text-xs outline-none">dezembro de 2025 - Present</p>
+                            <p contenteditable="true" class="text-slate-700 text-xs mt-1 outline-none">Desenvolvimento e gestão no monitoramento das condições dos ativos, confiabilidade, indicadores e CAPEX/OPEX.</p>
                         </div>
-
-                        <!-- Light -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Light Serviços de Eletricidade</span></div>
-                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira Mecânica / Gestão de Processos</span></div>
-                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Atuação em Manutenção e Operação</span></div>
-                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Atuação com foco em confiabilidade de sistemas elétricos e industriais, gestão de ativos de rede, análise de falhas, otimização de processos operacionais e conformidade com normas técnicas do setor de energia.
-                            </p>
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                            <p contenteditable="true" class="font-bold text-sm text-slate-900 outline-none">Light Serviços de Eletricidade</p>
+                            <p contenteditable="true" class="font-semibold text-blue-600 text-xs outline-none">Engenheira Mecânica / Gestão de Processos</p>
+                            <p contenteditable="true" class="text-slate-500 text-xs outline-none">Experiência Anterior</p>
+                            <p contenteditable="true" class="text-slate-700 text-xs mt-1 outline-none">Atuação com foco em confiabilidade de sistemas elétricos e industriais, gestão de ativos de rede e análise de falhas.</p>
                         </div>
-
-                        <!-- FMC / Outras Experiências Anteriores -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">FMC Technologies / Indústrias de Óleo, Gás e Engenharia</span></div>
-                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira Mecânica de Projetos e Controle Patrimonial</span></div>
-                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Histórico Consolidado (16+ anos de experiência)</span></div>
-                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Gestão do ciclo de vida de equipamentos e ativos industriais de grande porte, controle patrimonial, implantação de melhorias contínuas, interface direta com suprimentos, engenharia e manutenção.
-                            </p>
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                            <p contenteditable="true" class="font-bold text-sm text-slate-900 outline-none">FMC Technologies / Óleo e Gás</p>
+                            <p contenteditable="true" class="font-semibold text-blue-600 text-xs outline-none">Engenheira Mecânica de Projetos</p>
+                            <p contenteditable="true" class="text-slate-500 text-xs outline-none">Histórico Consolidado</p>
+                            <p contenteditable="true" class="text-slate-700 text-xs mt-1 outline-none">Gestão do ciclo de vida de equipamentos industriais de grande porte, controle patrimonial e melhoria contínua.</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- FORMAÇÃO ACADÊMICA -->
-                <section id="sec-formacao" class="space-y-2">
-                    <div class="flex justify-between items-center border-b pb-1">
-                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
-                    </div>
-                    <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <p contenteditable="true" class="flex-1 outline-none">• <b>Universidade Tecnológica Federal do Paraná (UTFPR)</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
-                        </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <p contenteditable="true" class="flex-1 outline-none">• <b>Graduação</b> — Engenharia Mecânica</p>
-                        </div>
-                    </div>
+                <section class="space-y-2">
+                    <h2 class="text-xs font-extrabold text-blue-600 uppercase">Formação Acadêmica</h2>
+                    <p contenteditable="true" class="text-xs text-slate-700 outline-none">• <b>Universidade Tecnológica Federal do Paraná (UTFPR)</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos</p>
+                    <p contenteditable="true" class="text-xs text-slate-700 outline-none">• <b>Graduação</b> — Engenharia Mecânica (CREA-RJ Ativo)</p>
                 </section>
             </div>
         </div>
 
-        <!-- PAINEL VISUAL DE VERSÕES SALVAS -->
-        <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
-            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700 flex-wrap gap-2">
-                <div class="flex items-center gap-2">
-                    <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Sincronização com Nuvem (v8.0)</h3>
-                    <span id="status-nuvem" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">🟡 Conectando...</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="sincronizarComNuvemManual()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-700 dark:text-gray-200 px-3 py-1.5 rounded-xl text-xs font-bold transition">🔄 Sincronizar Agora</button>
-                    <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">💾 Salvar na Nuvem</button>
-                </div>
-            </div>
-            <div id="lista-versoes-visual" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
-        </div>
-    </div>
-
-    <!-- BARRA INFERIOR -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
-        <div class="flex items-center gap-1.5 flex-wrap">
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl font-bold transition">🖨️ Imprimir / PDF</button>
-            <span id="feedback-salvar" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hidden">✅ Alterações salvas na nuvem com sucesso!</span>
-        </div>
-        <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v8.0 Nuvem</span>
-            <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition">📥 Word</button>
-            <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition">💾 Salvar</button>
+        <!-- STATUS E SALVAR -->
+        <div class="print-hidden bg-white p-4 rounded-3xl shadow-sm border flex justify-between items-center">
+            <span id="status-nuvem" class="text-xs font-bold text-amber-600">🟡 Conectando à nuvem...</span>
+            <button onclick="salvarNaNuvem()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold">💾 Salvar Alterações</button>
         </div>
     </div>
 
@@ -306,277 +126,68 @@
         const SUPABASE_URL = 'https://jmeepzdvmmjngxwvayqb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_54ORrLbP7naW7n-KlKCdUA_hZnpjguH';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         const PIN_CORRETO = "1510";
-        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key_v8";
-        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key_v8";
-        let timeoutAutoSave = null;
-
-        function atualizarStatusNuvem(status, texto) {
-            const badge = document.getElementById('status-nuvem');
-            if (!badge) return;
-            badge.innerText = texto;
-            if (status === 'sucesso') {
-                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold";
-            } else if (status === 'erro') {
-                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold";
-            } else {
-                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold";
-            }
-        }
-
-        function mostrarFeedbackVisual() {
-            const fb = document.getElementById('feedback-salvar');
-            if(!fb) return;
-            fb.classList.remove('hidden');
-            setTimeout(() => { fb.classList.add('hidden'); }, 3000);
-        }
+        const CHAVE_AUTOSAVE = "mariana_curriculo_master_v81";
 
         async function sincronizarComNuvem() {
             try {
-                atualizarStatusNuvem('pendente', '🟡 Sincronizando...');
-                let { data, error } = await supabaseClient
-                    .from('curriculo_novo')
-                    .select('conteudo')
-                    .eq('id', '1')
-                    .single();
-
-                if (error && error.code !== 'PGRST116') throw error;
-
-                if (data && data.conteudo) {
-                    let dadosGlobaisNuvem = data.conteudo;
-                    if (dadosGlobaisNuvem.folha) {
-                        localStorage.setItem(CHAVE_AUTOSAVE, dadosGlobaisNuvem.folha);
-                        document.getElementById('curriculo-folha').innerHTML = dadosGlobaisNuvem.folha;
-                    }
-                    if (dadosGlobaisNuvem.versoes) {
-                        localStorage.setItem(CHAVE_VERSOES, JSON.stringify(dadosGlobaisNuvem.versoes));
-                    }
-                } else {
-                    await salvarNaNuvem();
+                let { data, error } = await supabaseClient.from('curriculo_novo').select('conteudo').eq('id', '1').single();
+                if (data && data.conteudo && data.conteudo.folha) {
+                    document.getElementById('curriculo-folha').innerHTML = data.conteudo.folha;
                 }
-                atualizarStatusNuvem('sucesso', '🟢 Sincronizado com a Nuvem');
+                document.getElementById('status-nuvem').innerText = "🟢 Sincronizado com a Nuvem";
+                document.getElementById('status-nuvem').className = "text-xs font-bold text-emerald-600";
             } catch(e) {
-                console.error("Erro ao sincronizar com nuvem:", e);
-                atualizarStatusNuvem('erro', '🔴 Erro na Nuvem');
+                document.getElementById('status-nuvem').innerText = "🔴 Erro na Nuvem";
             }
         }
 
         async function salvarNaNuvem() {
-            let folhaLocal = localStorage.getItem(CHAVE_AUTOSAVE) || document.getElementById('curriculo-folha').innerHTML;
-            let versoesLocal = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-
-            let dadosGlobaisNuvem = {
-                folha: folhaLocal,
-                versoes: versoesLocal
-            };
-
+            let htmlFolha = document.getElementById('curriculo-folha').innerHTML;
+            localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
             try {
-                atualizarStatusNuvem('pendente', '🟡 Salvando...');
-                let { error } = await supabaseClient
-                    .from('curriculo_novo')
-                    .upsert({ id: '1', conteudo: dadosGlobaisNuvem });
-
-                if (error) throw error;
-
-                atualizarStatusNuvem('sucesso', '🟢 Salvo na Nuvem');
-                mostrarFeedbackVisual();
+                document.getElementById('status-nuvem').innerText = "🟡 Salvando...";
+                await supabaseClient.from('curriculo_novo').upsert({ id: '1', conteudo: { folha: htmlFolha } });
+                document.getElementById('status-nuvem').innerText = "🟢 Salvo na Nuvem com Sucesso!";
+                document.getElementById('status-nuvem').className = "text-xs font-bold text-emerald-600";
+                alert("💾 Currículo salvo e sincronizado na nuvem!");
             } catch (err) {
-                console.error("Erro ao gravar na nuvem:", err);
-                atualizarStatusNuvem('erro', '🔴 Falha ao Salvar');
+                document.getElementById('status-nuvem').innerText = "🔴 Falha ao Salvar";
             }
-        }
-
-        async function sincronizarComNuvemManual() {
-            await sincronizarComNuvem();
-            atualizarListaVersoesVisual();
-            alert("✅ Sincronização manual concluída!");
         }
 
         document.addEventListener('input', () => {
-            const htmlFolha = document.getElementById('curriculo-folha').innerHTML;
-            localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
-            
-            clearTimeout(timeoutAutoSave);
-            timeoutAutoSave = setTimeout(async () => {
-                await salvarNaNuvem();
-            }, 1000);
+            clearTimeout(window.tSave);
+            window.tSave = setTimeout(salvarNaNuvem, 1500);
         });
 
         window.addEventListener('DOMContentLoaded', async () => {
+            if (sessionStorage.getItem('autenticado') === 'true') liberar();
             await sincronizarComNuvem();
-            const salvo = localStorage.getItem(CHAVE_AUTOSAVE);
-            if (salvo) {
-                document.getElementById('curriculo-folha').innerHTML = salvo;
-            }
-
-            if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
-                liberarSistema();
-            }
-            atualizarListaVersoesVisual();
         });
 
         function verificarLogin(e) {
             e.preventDefault();
             if (document.getElementById('input-senha').value === PIN_CORRETO) {
-                sessionStorage.setItem('curriculo_autenticado', 'true');
-                liberarSistema();
+                sessionStorage.setItem('autenticado', 'true');
+                liberar();
             } else {
                 document.getElementById('erro-senha').classList.remove('hidden');
                 document.getElementById('input-senha').value = '';
             }
         }
 
-        function liberarSistema() {
+        function liberar() {
             document.getElementById('tela-login').classList.add('hidden');
             document.getElementById('conteudo-site').classList.remove('hidden');
         }
 
-        async function salvarVersao() {
-            let nomeVersao = prompt("Nome para esta versão:", "Versão " + new Date().toLocaleDateString());
-            if(!nomeVersao) return;
-
-            const dados = { folhaHtml: document.getElementById('curriculo-folha').innerHTML };
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            versoes[nomeVersao] = dados;
-            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
-            await salvarNaNuvem();
-            atualizarListaVersoesVisual();
-            alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
-        }
-
-        function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            const container = document.getElementById('lista-versoes-visual');
-            container.innerHTML = '';
-            const chaves = Object.keys(versoes);
-
-            if (chaves.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-full">Nenhuma versão salva.</p>';
-                return;
-            }
-
-            chaves.forEach(v => {
-                let card = document.createElement('div');
-                card.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
-                card.innerHTML = `
-                    <div class="font-bold text-xs text-slate-800 dark:text-white truncate" title="${v}">📄 ${v}</div>
-                    <div class="flex gap-1.5 pt-1">
-                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold">Carregar</button>
-                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 px-2 py-1 rounded-[10px] text-[10px] font-bold">✕</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        async function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            let dados = versoes[val];
-            if(dados && dados.folhaHtml) {
-                document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
-                await salvarNaNuvem();
-                alert(`Versão "${val}" carregada e sincronizada!`);
-            }
-        }
-
-        async function apagarVersaoEspecifica(val) {
-            if(confirm(`Apagar versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-                delete versoes[val];
-                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
-                await salvarNaNuvem();
-                atualizarListaVersoesVisual();
-                alert("Versão apagada.");
-            }
-        }
-
         function exportarWord() {
-            const folhaEl = document.getElementById('curriculo-folha');
-            const clone = folhaEl.cloneNode(true);
-            clone.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
-
-            const sidebar = clone.querySelector('.sidebar-print') || clone.querySelector('[class*="col-span-5"]');
-            const main = clone.querySelector('.main-print') || clone.querySelector('[class*="col-span-7"]');
-            const sidebarHtml = sidebar ? sidebar.innerHTML : '';
-            const mainHtml = main ? main.innerHTML : '';
-
-            const htmlWord = `
-                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head><meta charset='utf-8'><title>Currículo Mariana Cruz</title>
-                <style>
-                    body { font-family: Arial, sans-serif; background-color: #f8fafc; }
-                    .page-table { width: 100%; border-collapse: collapse; border: 2px solid #1e3a8a; background: #ffffff; }
-                    .sidebar-cell { width: 35%; background-color: #0f172a; color: #ffffff; padding: 20px; vertical-align: top; }
-                    .main-cell { width: 65%; background-color: #ffffff; color: #0f172a; padding: 25px; vertical-align: top; }
-                    h1 { color: #1d4ed8; font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
-                    h2 { color: #2563eb; font-size: 13px; font-weight: 800; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-top: 15px; }
-                    p, span, div { font-size: 11px; line-height: 1.4; color: #334155; }
-                    .sidebar-cell p, .sidebar-cell span, .sidebar-cell div, .sidebar-cell h3 { color: #f8fafc !important; font-size: 11px; }
-                    .sidebar-cell h3 { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #94a3b8 !important; }
-                </style>
-                </head>
-                <body>
-                    <table class="page-table">
-                        <tr>
-                            <td class="sidebar-cell">${sidebarHtml}</td>
-                            <td class="main-cell">${mainHtml}</td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            `;
-
-            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
+            const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Currículo</title></head><body>` + document.getElementById('curriculo-folha').innerHTML + `</body></html>`;
+            const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = 'Curriculo_Mariana_Cruz.doc';
+            const a = document.createElement('a'); a.href = url; a.download = 'Curriculo_Mariana_Cruz.doc';
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            alert("📥 Currículo exportado para Word!");
-        }
-
-        async function execCmd(command, value = null) {
-            document.execCommand(command, false, value);
-            await salvarNaNuvem();
-        }
-
-        async function aplicarCorSelecionada() {
-            const cor = document.getElementById('cor-picker').value;
-            const selection = window.getSelection();
-            if (!selection.rangeCount || selection.isCollapsed) {
-                alert("Selecione primeiro o texto que deseja colorir."); return;
-            }
-            const range = selection.getRangeAt(0);
-            const span = document.createElement('span');
-            span.style.color = cor;
-            span.appendChild(range.extractContents());
-            range.insertNode(span);
-            selection.removeAllRanges();
-            await salvarNaNuvem();
-            alert("🎨 Cor aplicada e salva na nuvem!");
-        }
-
-        async function adicionarItemSidebar(containerId) {
-            const container = document.getElementById(containerId);
-            const div = document.createElement('div');
-            div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
-            div.innerHTML = `<span contenteditable="true" class="flex-1 outline-none">• Novo Item</span>`;
-            container.appendChild(div);
-            await salvarNaNuvem();
-        }
-
-        async function adicionarExperiencia() {
-            const container = document.getElementById('container-experiencias');
-            const div = document.createElement('div');
-            div.className = "space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200";
-            div.innerHTML = `
-                <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm">Nova Empresa</span></div>
-                <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-xs text-blue-600">Cargo</span></div>
-                <div><span contenteditable="true" class="exp-data outline-none block text-xs text-slate-500">Período</span></div>
-                <p contenteditable="true" class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">Atividades...</p>
-            `;
-            container.prepend(div);
-            await salvarNaNuvem();
         }
     </script>
 </body>
