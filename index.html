@@ -76,7 +76,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9:</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Nuvem Ativa):</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -105,7 +105,6 @@
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- BOTÕES DE MAIÚSCULAS / MINÚSCULAS NO TOPO -->
         <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
             <span class="text-[10px] text-slate-300">🔠</span>
             <button onclick="mudarCaseGlobal('upper')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
@@ -115,35 +114,14 @@
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- BOTÃO LIMPAR FORMATAÇÃO -->
-        <button onclick="limparFormatacaoSelecao()" class="px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded font-bold shrink-0 text-white" title="Limpar Formatação Externa">🧹 Limpar</button>
+        <button onclick="limparFormatacaoSelecao()" class="px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded font-bold shrink-0 text-white" title="Limpar Formatação">🧹 Limpar</button>
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- EXPORTAR WORD -->
-        <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold shrink-0 text-white" title="Exportar para Word / Google Docs">📥 Word</button>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <!-- PINCEL DE FORMATAÇÃO -->
-        <button onclick="copiarFormato()" class="px-2 py-1 bg-indigo-700 hover:bg-indigo-600 rounded font-bold shrink-0" title="Copiar Formato">🖌️ Copiar</button>
-        <button onclick="colarFormato()" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 rounded font-bold shrink-0" title="Colar Formato">✨ Colar</button>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <button onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0" title="Negrito"><b>B</b></button>
-        <button onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0" title="Itálico"><i>I</i></button>
-        <button onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0" title="Sublinhado"><u>U</u></button>
-        
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-        
-        <button onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
-        <button onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
-        <button onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
-        <button onclick="execCmd('justifyFull')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Just</button>
+        <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold shrink-0 text-white" title="Exportar para Word">📥 Word</button>
     </div>
 
-    <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
+    <!-- TELA DE LOGIN COM PIN 1510 -->
     <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
             <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
@@ -161,11 +139,6 @@
                     Entrar com PIN (1510)
                 </button>
             </form>
-
-            <button type="button" onclick="entrarComBiometria()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm flex items-center justify-center gap-2">
-                <span>🔐</span> Entrar com Biometria
-            </button>
-
             <p id="erro-senha" class="text-xs text-red-500 hidden font-medium">Senha incorreta! A senha é 1510.</p>
         </div>
     </div>
@@ -181,14 +154,8 @@
                 <div class="space-y-6">
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
-                        <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-800">
-                            <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                            <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                            <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                            <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                        </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
-                        <div contenteditable="true" id="c-contato" data-original="📱 21 99035-4416<br>✉️ marianna_adm@yahoo.com.br<br>📍 Rio de Janeiro, Brasil<br>🔗 linkedin.com/in/marianapcruz" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
+                        <div contenteditable="true" id="c-contato" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
                             <p>📱 21 99035-4416</p>
                             <p>✉️ marianna_adm@yahoo.com.br</p>
                             <p>📍 Rio de Janeiro, Brasil</p>
@@ -198,15 +165,9 @@
 
                     <!-- PRINCIPAIS COMPETÊNCIAS -->
                     <div class="space-y-2 relative group">
-                        <div class="print-hidden flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
+                        <div class="flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
                             <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Competências</h3>
-                            <div class="flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="adicionarItemSidebar('container-competencias')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                            </div>
+                            <button onclick="adicionarItemSidebar('container-competencias')" class="print-hidden bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
                         </div>
                         <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
@@ -221,34 +182,6 @@
                                 <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua</span>
                                 <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Gestão de Ativos & Confiabilidade</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• CAPEX e OPEX</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CERTIFICAÇÕES -->
-                    <div class="space-y-2 relative group">
-                        <div class="print-hidden flex justify-between items-center border-b pb-1 mb-1 border-slate-800">
-                            <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Certificações</h3>
-                            <div class="flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="adicionarItemSidebar('container-certificacoes')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                            </div>
-                        </div>
-                        <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
-                            <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
-                                <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -261,43 +194,25 @@
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
             <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
                 
-                <!-- NOME EM LINHA ÚNICA -->
+                <!-- NOME -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
-                    <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
-                    </div>
-                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+                    <h1 contenteditable="true" id="c-nome-principal" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
                 </div>
 
-                <!-- TÍTULO PRINCIPAL / CARGO -->
+                <!-- CARGO -->
                 <div class="pb-2 relative group">
-                    <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
-                    </div>
-                    <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
+                    <p contenteditable="true" id="c-cargo" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | SAP PM & HANA</p>
                 </div>
 
-                <!-- RESUMO PROFISSIONAL -->
+                <!-- RESUMO -->
                 <section class="space-y-2 relative group">
-                    <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
-                        <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
-                        <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                        <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
-                    </div>
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
-                    <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás..." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
-                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio.
+                    <p contenteditable="true" id="c-resumo" class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
+                        Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás.
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL -->
+                <!-- EXPERIÊNCIA -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
@@ -305,104 +220,49 @@
                     </div>
                     
                     <div id="container-experiencias" class="space-y-4">
-                        <!-- Vale 1 -->
                         <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                            </div>
-                            <div><span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span></div>
-                            <div><span contenteditable="true" data-original="Engenheira de Gestão de Ativos" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span></div>
-                            <div><span contenteditable="true" data-original="dezembro de 2025 - Present (10 meses)" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span></div>
-                            <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
-                                <div class="flex items-center gap-1 flex-wrap">
-                                    <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]" value="2025-12"></span>
-                                    <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]" value="2026-09"></span>
-                                    <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual" checked> Pres.</label>
-                                </div>
-                                <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
-                            </div>
-                            <p contenteditable="true" data-original="Desenvolver e gerenciar no monitoramento das condições dos ativos..." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação. Identificar melhorias nos processos e procedimentos. Integração de dados; Gestão do software de O&M, acompanhamento do desempenho do sistema e auxiliando usuários; Acompanhar os planos de manutenção, os planos de melhorias e reforços e o ciclo de vida dos ativos, em conjunto com as equipes de manutenção, engenharia e operação; Criar e acompanhar indicadores de controle de estoque (sobressalentes) e de calibração/manutenção de instrumentos, além de apoiar o orçamento e controle de custos (CAPEX e OPEX) para ativos móveis e sobressalentes; Elaborar procedimentos, fluxogramas, relacionadas a gestão de ativos para estabelecimento de padrões de trabalho; Atuar diretamente no atingimento dos objetivos estratégicos da empresa, Participar de projetos de interesse da área; Contribuir para obtenção de resultado, através de sinergia com as demais áreas da empresa. Respeitando os parâmetros de segurança e de meio ambiente; Outras atividades delegadas pela coordenação/gerência pertinentes ao cargo.
+                            <div><span contenteditable="true" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span></div>
+                            <div><span contenteditable="true" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Engenheira de Gestão de Ativos</span></div>
+                            <div><span contenteditable="true" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">dezembro de 2025 - Present (10 meses)</span></div>
+                            <p contenteditable="true" class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                                Desenvolver e gerenciar no monitoramento das condições dos ativos, visando a preservação, disponibilidade e confiabilidade dos ativos; Elaborar e analisar indicadores de gestão de ativos e montagem de planos de ação.
                             </p>
                         </div>
                     </div>
                 </section>
-
-                <!-- FORMAÇÃO ACADÊMICA -->
-                <section id="sec-formacao" class="space-y-2">
-                    <div class="flex justify-between items-center border-b pb-1">
-                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
-                        <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
-                    </div>
-                    <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                            </div>
-                            <p contenteditable="true" data-original="• Universidade Tecnológica Federal do Paraná — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)" class="flex-1 outline-none pr-36">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
-                        </div>
-                    </div>
-                </section>
-
-                <div class="w-full h-px bg-blue-900/20 my-6"></div>
             </div>
         </div>
 
-        <!-- PAINEL VISUAL DE VERSÕES SALVAS -->
+        <!-- PAINEL VISUAL DE VERSÕES SALVAS COM STATUS DA NUVEM -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
-            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (Nuvem)</h3>
+            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700 flex-wrap gap-2">
                 <div class="flex items-center gap-2">
-                    <button onclick="sincronizarComNuvemManual()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-700 dark:text-gray-200 px-3 py-1.5 rounded-xl text-xs font-bold transition">🔄 Sincronizar</button>
-                    <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">💾 Salvar Versão Atual</button>
+                    <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Sincronização com Nuvem</h3>
+                    <span id="status-nuvem" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">🟡 Conectando...</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="sincronizarComNuvemManual()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-700 dark:text-gray-200 px-3 py-1.5 rounded-xl text-xs font-bold transition">🔄 Sincronizar Agora</button>
+                    <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">💾 Salvar na Nuvem</button>
                 </div>
             </div>
             <div id="lista-versoes-visual" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
         </div>
     </div>
 
-    <!-- MODAL DE IA -->
-    <div id="modal-ia" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">🤖 Assistente de IA</h3>
-                <button onclick="fecharModalIA()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
-            </div>
-            <div class="space-y-3 text-xs">
-                <textarea id="ia-prompt" rows="3" placeholder="Descreva o que queres melhorar..." class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
-                <button onclick="gerarSugestaoIA()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">✨ Gerar Sugestão</button>
-                <div id="ia-resposta" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
-            </div>
-            <button onclick="fecharModalIA()" class="w-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs">Fechar</button>
-        </div>
-    </div>
-
     <!-- BARRA INFERIOR -->
     <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
         <div class="flex items-center gap-1.5 flex-wrap">
-            <button onclick="instalarApp()" class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 font-bold transition">📱 App</button>
-            <button onclick="adicionarCaixaTitulo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-xl font-bold transition">📦 + Título</button>
-            <button onclick="adicionarCaixaTexto()" class="bg-violet-600 hover:bg-violet-700 text-white px-2.5 py-1 rounded-xl font-bold transition">📝 + Texto</button>
-            <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-2.5 py-1 rounded-xl font-bold transition">🤖 IA</button>
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl font-bold transition">🖨️ Imprimir / PDF</button>
+            <span id="feedback-salvar" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hidden">✅ Alterações salvas na nuvem com sucesso!</span>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
             <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.9 Nuvem</span>
             <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition">📥 Word</button>
             <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition">💾 Salvar</button>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold transition">🖨️ PDF</button>
-            <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded-xl font-semibold transition">🔒 Sair</button>
         </div>
     </div>
 
     <script>
-        // CONFIGURAÇÃO SUPABASE
         const SUPABASE_URL = 'https://jmeepzdvmmjngxwvayqb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_54ORrLbP7naW7n-KlKCdUA_hZnpjguH';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -410,27 +270,41 @@
         const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
         const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key";
-        let deferredPrompt = null;
-        let formatoCopiado = null;
-        let ultimoEditavelFocado = null;
-        let dadosGlobaisNuvem = {};
-        const mesesNomes = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+        let timeoutAutoSave = null;
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
+        function atualizarStatusNuvem(status, texto) {
+            const badge = document.getElementById('status-nuvem');
+            if (!badge) return;
+            badge.innerText = texto;
+            if (status === 'sucesso') {
+                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold";
+            } else if (status === 'erro') {
+                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold";
+            } else {
+                badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold";
+            }
+        }
+
+        function mostrarFeedbackVisual() {
+            const fb = document.getElementById('feedback-salvar');
+            if(!fb) return;
+            fb.classList.remove('hidden');
+            setTimeout(() => { fb.classList.add('hidden'); }, 3000);
+        }
 
         async function sincronizarComNuvem() {
             try {
+                atualizarStatusNuvem('pendente', '🟡 Sincronizando...');
                 let { data, error } = await supabaseClient
-                    .from('dados_aplicacao') // Apontando para a tabela correta
+                    .from('dados_aplicacao')
                     .select('conteudo')
                     .eq('id', '1')
                     .single();
 
+                if (error) throw error;
+
                 if (data && data.conteudo) {
-                    dadosGlobaisNuvem = data.conteudo;
+                    let dadosGlobaisNuvem = data.conteudo;
                     if (dadosGlobaisNuvem.folha) {
                         localStorage.setItem(CHAVE_AUTOSAVE, dadosGlobaisNuvem.folha);
                         document.getElementById('curriculo-folha').innerHTML = dadosGlobaisNuvem.folha;
@@ -438,11 +312,11 @@
                     if (dadosGlobaisNuvem.versoes) {
                         localStorage.setItem(CHAVE_VERSOES, JSON.stringify(dadosGlobaisNuvem.versoes));
                     }
-                } else {
-                    await salvarNaNuvem();
                 }
+                atualizarStatusNuvem('sucesso', '🟢 Sincronizado com a Nuvem');
             } catch(e) {
                 console.error("Erro ao sincronizar com nuvem:", e);
+                atualizarStatusNuvem('erro', '🔴 Erro na Nuvem');
             }
         }
 
@@ -450,79 +324,43 @@
             let folhaLocal = localStorage.getItem(CHAVE_AUTOSAVE) || document.getElementById('curriculo-folha').innerHTML;
             let versoesLocal = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
 
-            dadosGlobaisNuvem = {
+            let dadosGlobaisNuvem = {
                 folha: folhaLocal,
                 versoes: versoesLocal
             };
 
             try {
-                await supabaseClient
-                    .from('dados_aplicacao') // Apontando para a tabela correta
+                atualizarStatusNuvem('pendente', '🟡 Salvando...');
+                let { error } = await supabaseClient
+                    .from('dados_aplicacao')
                     .upsert({ id: '1', conteudo: dadosGlobaisNuvem });
+
+                if (error) throw error;
+
+                atualizarStatusNuvem('sucesso', '🟢 Salvo na Nuvem');
+                mostrarFeedbackVisual();
             } catch (err) {
                 console.error("Erro ao gravar na nuvem:", err);
+                atualizarStatusNuvem('erro', '🔴 Falha ao Salvar');
             }
         }
 
         async function sincronizarComNuvemManual() {
             await sincronizarComNuvem();
             atualizarListaVersoesVisual();
-            alert("✅ Sincronizado com sucesso com a nuvem!");
+            alert("✅ Sincronização manual concluída!");
         }
 
-        document.addEventListener('focusin', (e) => {
-            if (e.target && e.target.getAttribute && e.target.getAttribute('contenteditable') === 'true') {
-                ultimoEditavelFocado = e.target;
-            }
-        });
-
-        document.addEventListener('input', async () => {
-            await salvarAuto();
-        });
-
-        async function salvarAuto() {
+        document.addEventListener('input', () => {
             const htmlFolha = document.getElementById('curriculo-folha').innerHTML;
             localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
-            await salvarNaNuvem();
-        }
-
-        document.addEventListener('paste', async (e) => {
-            const activeEl = document.activeElement;
-            if (activeEl && activeEl.getAttribute && activeEl.getAttribute('contenteditable') === 'true') {
-                e.preventDefault();
-                const text = (e.clipboardData || window.clipboardData).getData('text/plain');
-                document.execCommand('insertText', false, text);
-                await salvarAuto();
-            }
+            
+            // Debounce para salvar na nuvem automaticamente após 1 segundo sem digitar
+            clearTimeout(timeoutAutoSave);
+            timeoutAutoSave = setTimeout(async () => {
+                await salvarNaNuvem();
+            }, 1000);
         });
-
-        document.addEventListener('selectionchange', () => {
-            const sel = window.getSelection();
-            if (sel.rangeCount > 0 && !sel.isCollapsed) {
-                const range = sel.getRangeAt(0);
-                const container = range.commonAncestorContainer;
-                const element = container.nodeType === 3 ? container.parentNode : container;
-                if(element.closest('#curriculo-folha')) {
-                    const estilo = window.getComputedStyle(element);
-                    formatoCopiado = {
-                        fontFamily: estilo.fontFamily,
-                        fontSize: estilo.fontSize,
-                        color: estilo.color,
-                        fontWeight: estilo.fontWeight,
-                        fontStyle: estilo.fontStyle
-                    };
-                }
-            }
-        });
-
-        function instalarApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            } else {
-                alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
-            }
-        }
 
         window.addEventListener('DOMContentLoaded', async () => {
             await sincronizarComNuvem();
@@ -548,97 +386,68 @@
             }
         }
 
-        async function entrarComBiometria() {
-            try {
-                const cred = await navigator.credentials.create({
-                    publicKey: {
-                        challenge: new Uint8Array(32),
-                        rp: { name: "Gestor de Currículo", id: window.location.hostname },
-                        user: { id: new Uint8Array(16), name: "mariana@curriculo.local", displayName: "Mariana" },
-                        pubKeyCredParams: [{ alg: -7, type: "public-key" }]
-                    }
-                });
-                if(cred) {
-                    sessionStorage.setItem('curriculo_autenticado', 'true');
-                    liberarSistema();
-                }
-            } catch(e) {
-                alert("Use o PIN 1510 para entrar.");
-            }
-        }
-
         function liberarSistema() {
             document.getElementById('tela-login').classList.add('hidden');
             document.getElementById('conteudo-site').classList.remove('hidden');
         }
 
-        function bloquearSessao() {
-            sessionStorage.removeItem('curriculo_autenticado');
-            location.reload();
+        async function salvarVersao() {
+            let nomeVersao = prompt("Nome para esta versão:", "Versão " + new Date().toLocaleDateString());
+            if(!nomeVersao) return;
+
+            const dados = { folhaHtml: document.getElementById('curriculo-folha').innerHTML };
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            versoes[nomeVersao] = dados;
+            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+            await salvarNaNuvem();
+            atualizarListaVersoesVisual();
+            alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
         }
 
-        async function execCmd(command, value = null) {
-            document.execCommand(command, false, value);
-            await salvarAuto();
-        }
+        function atualizarListaVersoesVisual() {
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            const container = document.getElementById('lista-versoes-visual');
+            container.innerHTML = '';
+            const chaves = Object.keys(versoes);
 
-        async function aplicarCorSelecionada() {
-            const cor = document.getElementById('cor-picker').value;
-            const selection = window.getSelection();
-            if (!selection.rangeCount || selection.isCollapsed) {
-                alert("Selecione primeiro o texto que deseja colorir."); return;
+            if (chaves.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-full">Nenhuma versão salva.</p>';
+                return;
             }
-            const range = selection.getRangeAt(0);
-            const span = document.createElement('span');
-            span.style.color = cor;
-            span.appendChild(range.extractContents());
-            range.insertNode(span);
-            selection.removeAllRanges();
-            await salvarAuto();
-            alert("🎨 Cor aplicada!");
+
+            chaves.forEach(v => {
+                let card = document.createElement('div');
+                card.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
+                card.innerHTML = `
+                    <div class="font-bold text-xs text-slate-800 dark:text-white truncate" title="${v}">📄 ${v}</div>
+                    <div class="flex gap-1.5 pt-1">
+                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold">Carregar</button>
+                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 px-2 py-1 rounded-[10px] text-[10px] font-bold">✕</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        async function limparFormatacaoSelecao() {
-            if (ultimoEditavelFocado) {
-                let textoPuro = ultimoEditavelFocado.innerText || ultimoEditavelFocado.textContent;
-                ultimoEditavelFocado.innerHTML = textoPuro;
-                await salvarAuto();
-                alert("🧹 Formatação limpa!");
-            } else { alert("Clique primeiro dentro da caixa de texto."); }
+        async function carregarVersao(val) {
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            let dados = versoes[val];
+            if(dados && dados.folhaHtml) {
+                document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
+                await salvarNaNuvem();
+                alert(`Versão "${val}" carregada e sincronizada!`);
+            }
         }
 
-        function copiarFormato() {
-            if (!formatoCopiado) { alert("Selecione um texto formatado primeiro."); return; }
-            alert("🖌️ Formato copiado!");
-        }
-
-        async function colarFormato() {
-            if (!formatoCopiado) { alert("Nenhum formato copiado."); return; }
-            const selection = window.getSelection();
-            if (!selection.rangeCount || selection.isCollapsed) { alert("Selecione o texto alvo."); return; }
-            const range = selection.getRangeAt(0);
-            const span = document.createElement('span');
-            span.style.fontFamily = formatoCopiado.fontFamily;
-            span.style.fontSize = formatoCopiado.fontSize;
-            span.style.color = formatoCopiado.color;
-            span.style.fontWeight = formatoCopiado.fontWeight;
-            span.style.fontStyle = formatoCopiado.fontStyle;
-            span.appendChild(range.extractContents());
-            range.insertNode(span);
-            selection.removeAllRanges();
-            await salvarAuto();
-            alert("✨ Formato aplicado!");
-        }
-
-        async function mudarCaseGlobal(tipo) {
-            if (ultimoEditavelFocado) {
-                let texto = ultimoEditavelFocado.innerText || ultimoEditavelFocado.textContent;
-                if (tipo === 'upper') ultimoEditavelFocado.innerText = texto.toUpperCase();
-                else if (tipo === 'lower') ultimoEditavelFocado.innerText = texto.toLowerCase();
-                else if (tipo === 'capitalize') ultimoEditavelFocado.innerText = texto.replace(/\b\w/g, l => l.toUpperCase());
-                await salvarAuto();
-                alert("✨ Texto formatado!");
-            } else { alert("Clique primeiro na caixa de texto."); }
+        async function apagarVersaoEspecifica(val) {
+            if(confirm(`Apagar versão "${val}"?`)) {
+                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+                delete versoes[val];
+                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+                await salvarNaNuvem();
+                atualizarListaVersoesVisual();
+                alert("Versão apagada.");
+            }
         }
 
         function exportarWord() {
@@ -677,7 +486,7 @@
                 </html>
             `;
 
-            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
+            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' >> 0 });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url; a.download = 'Curriculo_Mariana_Cruz.doc';
@@ -685,128 +494,25 @@
             alert("📥 Currículo exportado para Word!");
         }
 
-        async function salvarVersao() {
-            let nomeVersao = prompt("Nome para esta versão:", "Versão " + new Date().toLocaleDateString());
-            if(!nomeVersao) return;
-
-            const dados = { folhaHtml: document.getElementById('curriculo-folha').innerHTML };
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            versoes[nomeVersao] = dados;
-            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+        async function execCmd(command, value = null) {
+            document.execCommand(command, false, value);
             await salvarNaNuvem();
-            atualizarListaVersoesVisual();
-            alert(`💾 Versão "${nomeVersao}" salva e sincronizada!`);
         }
 
-        function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            const container = document.getElementById('lista-versoes-visual');
-            container.innerHTML = '';
-            const chaves = Object.keys(versoes);
-
-            if (chaves.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-full">Nenhuma versão salva.</p>';
-                return;
+        async function aplicarCorSelecionada() {
+            const cor = document.getElementById('cor-picker').value;
+            const selection = window.getSelection();
+            if (!selection.rangeCount || selection.isCollapsed) {
+                alert("Selecione primeiro o texto que deseja colorir."); return;
             }
-
-            chaves.forEach(v => {
-                let card = document.createElement('div');
-                card.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
-                card.innerHTML = `
-                    <div class="font-bold text-xs text-slate-800 dark:text-white truncate" title="${v}">📄 ${v}</div>
-                    <div class="flex gap-1.5 pt-1">
-                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold">Carregar</button>
-                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 px-2 py-1 rounded-[10px] text-[10px] font-bold">✕</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        async function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            let dados = versoes[val];
-            if(dados && dados.folhaHtml) {
-                document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
-                await salvarAuto();
-                alert(`Versão "${val}" carregada!`);
-            }
-        }
-
-        async function apagarVersaoEspecifica(val) {
-            if(confirm(`Apagar versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-                delete versoes[val];
-                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
-                await salvarNaNuvem();
-                atualizarListaVersoesVisual();
-                alert("Versão apagada.");
-            }
-        }
-
-        function abrirModalIA() { document.getElementById('modal-ia').classList.remove('hidden'); }
-        function fecharModalIA() { document.getElementById('modal-ia').classList.add('hidden'); }
-
-        function gerarSugestaoIA() {
-            const promptTexto = document.getElementById('ia-prompt').value;
-            const respEl = document.getElementById('ia-resposta');
-            if(!promptTexto) return alert("Digite um pedido.");
-            respEl.classList.remove('hidden');
-            respEl.innerHTML = "⏳ Processando...";
-            setTimeout(() => {
-                respEl.innerHTML = `<b>Sugestão:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, confiabilidade e SAP PM."</i>`;
-            }, 1000);
-        }
-
-        async function calcularTempoServico(btn) {
-            const card = btn.closest('.exp-item, section');
-            const inputInicio = card.querySelector('.input-inicio').value;
-            const inputFim = card.querySelector('.input-fim').value;
-            const chkAtual = card.querySelector('.chk-atual').checked;
-            const spanData = card.querySelector('.exp-data');
-
-            if (!inputInicio) return alert("Selecione a data de início.");
-            let dataInicio = new Date(inputInicio + "-01");
-            let dataFim = chkAtual ? new Date() : (inputFim ? new Date(inputFim + "-01") : new Date());
-
-            let anos = dataFim.getFullYear() - dataInicio.getFullYear();
-            let meses = dataFim.getMonth() - dataInicio.getMonth();
-            if (meses < 0) { anos--; meses += 12; }
-
-            let totalMeses = (anos * 12) + meses + 1;
-            let anosCalc = Math.floor(totalMeses / 12);
-            let mesesCalc = totalMeses % 12;
-
-            let textoDuracao = "";
-            if (anosCalc > 0) textoDuracao += `${anosCalc} ano${anosCalc > 1 ? 's' : ''}`;
-            if (mesesCalc > 0) {
-                if (textoDuracao) textoDuracao += " ";
-                textoDuracao += `${mesesCalc} mes${mesesCalc > 1 ? 'es' : 'e'}`;
-            }
-            if (!textoDuracao) textoDuracao = "menos de 1 mês";
-
-            let stringFinal = chkAtual ? `${mesesNomes[dataInicio.getMonth()]} de ${dataInicio.getFullYear()} - Present (${textoDuracao})` : `${mesesNomes[dataInicio.getMonth()]} de ${dataInicio.getFullYear()} - ${mesesNomes[dataFim.getMonth()]} de ${dataFim.getFullYear()} (${textoDuracao})`;
-            spanData.innerText = stringFinal;
-            await salvarAuto();
-            alert(`✅ Duração calculada: ${textoDuracao}`);
-        }
-
-        async function adicionarCaixaTitulo() {
-            const container = document.getElementById('container-principal-conteudo');
-            const sec = document.createElement('section');
-            sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300";
-            sec.innerHTML = `<h2 contenteditable="true" class="text-xs font-extrabold text-blue-600 uppercase outline-none">NOVO TÍTULO</h2>`;
-            container.appendChild(sec);
-            await salvarAuto();
-        }
-
-        async function adicionarCaixaTexto() {
-            const container = document.getElementById('container-principal-conteudo');
-            const sec = document.createElement('section');
-            sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300";
-            sec.innerHTML = `<div contenteditable="true" class="text-xs leading-relaxed text-slate-700 outline-none">Bloco de texto livre...</div>`;
-            container.appendChild(sec);
-            await salvarAuto();
+            const range = selection.getRangeAt(0);
+            const span = document.createElement('span');
+            span.style.color = cor;
+            span.appendChild(range.extractContents());
+            range.insertNode(span);
+            selection.removeAllRanges();
+            await salvarNaNuvem();
+            alert("🎨 Cor aplicada e salva na nuvem!");
         }
 
         async function adicionarItemSidebar(containerId) {
@@ -815,7 +521,7 @@
             div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
             div.innerHTML = `<span contenteditable="true" class="flex-1 outline-none">• Novo Item</span>`;
             container.appendChild(div);
-            await salvarAuto();
+            await salvarNaNuvem();
         }
 
         async function adicionarExperiencia() {
@@ -829,44 +535,7 @@
                 <p contenteditable="true" class="exp-texto text-slate-700 leading-relaxed outline-none pt-1">Atividades...</p>
             `;
             container.prepend(div);
-            await salvarAuto();
-        }
-
-        async function removerItemExp(btn) {
-            btn.closest('.exp-item').remove();
-            await salvarAuto();
-        }
-
-        async function restaurarOriginal(btn, tipo) {
-            const card = btn.closest('.group, section, .exp-item');
-            if (tipo === 'resumo') {
-                const el = document.getElementById('c-resumo');
-                el.innerText = el.getAttribute('data-original');
-                await salvarAuto();
-                alert("🔄 Resumo restaurado!");
-            }
-        }
-
-        async function restaurarCaixaGenerica(btn) {
-            const container = btn.closest('.group, section, div');
-            const editavel = container ? container.querySelector('[contenteditable="true"]') : null;
-            if (editavel && editavel.hasAttribute('data-original')) {
-                editavel.innerHTML = editavel.getAttribute('data-original');
-                await salvarAuto();
-                alert("🔄 Restaurado!");
-            }
-        }
-
-        async function moverCaixa(btn, direcao) {
-            const card = btn.closest('section, .exp-item');
-            if (!card) return;
-            if (direcao === 'subir' && card.previousElementSibling) {
-                card.parentNode.insertBefore(card, card.previousElementSibling);
-                await salvarAuto();
-            } else if (direcao === 'descer' && card.nextElementSibling) {
-                card.parentNode.insertBefore(card.nextElementSibling, card);
-                await salvarAuto();
-            }
+            await salvarNaNuvem();
         }
     </script>
 </body>
