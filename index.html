@@ -76,7 +76,7 @@
 
     <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
     <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Nuvem Ativa):</span>
+        <span class="font-bold text-blue-400 shrink-0">✏️ v7.9 (Novo - Nuvem Ativa):</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
@@ -268,8 +268,8 @@
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const PIN_CORRETO = "1510";
-        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
-        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key";
+        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key_novo";
+        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key_novo";
         let timeoutAutoSave = null;
 
         function atualizarStatusNuvem(status, texto) {
@@ -296,12 +296,12 @@
             try {
                 atualizarStatusNuvem('pendente', '🟡 Sincronizando...');
                 let { data, error } = await supabaseClient
-                    .from('dados_aplicacao')
+                    .from('curriculo_novo')
                     .select('conteudo')
                     .eq('id', '1')
                     .single();
 
-                if (error) throw error;
+                if (error && error.code !== 'PGRST116') throw error;
 
                 if (data && data.conteudo) {
                     let dadosGlobaisNuvem = data.conteudo;
@@ -312,6 +312,8 @@
                     if (dadosGlobaisNuvem.versoes) {
                         localStorage.setItem(CHAVE_VERSOES, JSON.stringify(dadosGlobaisNuvem.versoes));
                     }
+                } else {
+                    await salvarNaNuvem();
                 }
                 atualizarStatusNuvem('sucesso', '🟢 Sincronizado com a Nuvem');
             } catch(e) {
@@ -332,7 +334,7 @@
             try {
                 atualizarStatusNuvem('pendente', '🟡 Salvando...');
                 let { error } = await supabaseClient
-                    .from('dados_aplicacao')
+                    .from('curriculo_novo')
                     .upsert({ id: '1', conteudo: dadosGlobaisNuvem });
 
                 if (error) throw error;
@@ -355,7 +357,6 @@
             const htmlFolha = document.getElementById('curriculo-folha').innerHTML;
             localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
             
-            // Debounce para salvar na nuvem automaticamente após 1 segundo sem digitar
             clearTimeout(timeoutAutoSave);
             timeoutAutoSave = setTimeout(async () => {
                 await salvarNaNuvem();
@@ -486,7 +487,7 @@
                 </html>
             `;
 
-            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' >> 0 });
+            const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url; a.download = 'Curriculo_Mariana_Cruz.doc';
