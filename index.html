@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gestor de Currículo Profissional - Mariana Cruz</title>
+    <title>Gestor de Currículo Profissional - Mariana Cruz (v9.0)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +11,7 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo Pro%22,
+        %22short_name%22: %22Currículo v9.0%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
         %22background_color%22: %22%230f172a%22,
@@ -38,7 +38,7 @@
                 display: none !important; 
             }
             
-            /* Garante que a barra azul escura saia 100% aberta na impressão */
+            /* Garante que na impressão a barra azul escura saia sempre completa */
             #conteudo-sidebar {
                 display: block !important;
             }
@@ -107,7 +107,7 @@
     <header id="top-bar" class="print-hidden fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white px-3 py-2.5 flex items-center justify-between shadow-md">
         <div class="flex items-center gap-2">
             <span class="text-base font-black text-blue-400">📄 Mariana Pro</span>
-            <span class="text-[10px] bg-blue-900/50 text-blue-300 font-bold px-1.5 py-0.5 rounded border border-blue-700/50">v8.8</span>
+            <span class="text-[10px] bg-blue-900/50 text-blue-300 font-bold px-1.5 py-0.5 rounded border border-blue-700/50">v9.0</span>
         </div>
         <div class="flex items-center gap-1.5">
             <button onclick="toggleToolbar()" class="px-3 py-1.5 bg-slate-800 active:bg-slate-700 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-slate-200">
@@ -129,8 +129,6 @@
             <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Modern Sans</option>
             <option value="Calibri">Calibri</option>
             <option value="Times New Roman">Times New Roman</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Verdana">Verdana</option>
         </select>
 
         <select onchange="execCmd('fontSize', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0">
@@ -166,12 +164,6 @@
         <button onpointerdown="event.preventDefault()" onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0"><b>B</b></button>
         <button onpointerdown="event.preventDefault()" onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0"><i>I</i></button>
         <button onpointerdown="event.preventDefault()" onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0"><u>U</u></button>
-        
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-        
-        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
-        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
-        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
     </div>
 
     <!-- TELA DE LOGIN EXCLUSIVA POR BIOMETRIA -->
@@ -179,7 +171,7 @@
         <div class="bg-slate-900 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-6 border border-slate-800">
             <div class="space-y-1">
                 <h2 class="text-xl font-black text-white">Gestor de Currículo</h2>
-                <p class="text-xs text-slate-400">Mariana Pereira Cruz</p>
+                <p class="text-xs text-slate-400">Mariana Pereira Cruz (v9.0)</p>
             </div>
 
             <div class="py-4">
@@ -194,7 +186,7 @@
                 <button onclick="autenticarComDigital()" class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-3.5 rounded-2xl transition shadow-md text-sm flex items-center justify-center gap-2">
                     <span>👆</span> Tocar para Entrar com Digital
                 </button>
-                <p class="text-[11px] text-slate-400">Use o sensor biométrico do seu celular</p>
+                <p class="text-[11px] text-slate-400">Autenticação biométrica rápida</p>
             </div>
 
             <p id="erro-biometria" class="text-xs text-red-400 hidden font-medium"></p>
@@ -207,23 +199,22 @@
         <!-- FOLHA DO CURRÍCULO -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
             
-            <!-- PARTE AZUL ESCURA (RETRÁTIL NO CELULAR / FIXA NO COMPUTADOR E IMPRESSÃO) -->
-            <div class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 transition-all duration-300">
+            <!-- PARTE AZUL ESCURA (COM O BOTÃO DE ENCOLHER/ABRIR SEMPRE VISÍVEL) -->
+            <div id="sidebar-azul" class="sidebar-print sidebar-break md:col-span-5 bg-slate-900 text-slate-100 p-4 sm:p-6 transition-all duration-300">
                 
-                <!-- BOTÃO DE ENCOLHER / ABRIR (VISÍVEL APENAS NO CELULAR) -->
-                <div class="print-hidden md:hidden flex justify-between items-center cursor-pointer select-none bg-slate-800/80 active:bg-slate-800 p-2.5 rounded-xl border border-slate-700 mb-2" onclick="toggleSidebarMobile()">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-black uppercase text-blue-400 tracking-wider">👤 Contatos & Competências</span>
-                        <span id="badge-sidebar-status" class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full font-bold">Toque p/ Abrir</span>
-                    </div>
-                    <button id="btn-toggle-sidebar" class="bg-blue-600 text-white p-1 px-3 rounded-lg text-xs font-bold transition flex items-center gap-1">
-                        <span id="texto-btn-sidebar">Expandir</span>
-                        <span id="seta-sidebar">▼</span>
+                <!-- BOTÃO DE ENCOLHER / ABRIR A PARTE AZUL (DESTAQUE NO TOPO) -->
+                <div class="print-hidden pb-3 border-b border-slate-800 mb-3">
+                    <button onclick="toggleSidebarAzul()" id="btn-toggle-sidebar" class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-3 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-between shadow-md">
+                        <div class="flex items-center gap-1.5">
+                            <span id="icone-sidebar">🔼</span>
+                            <span id="texto-btn-sidebar">Recolher Contatos e Competências</span>
+                        </div>
+                        <span id="status-sidebar" class="text-[10px] bg-blue-800 px-2 py-0.5 rounded-full uppercase tracking-wider">Aberto</span>
                     </button>
                 </div>
 
-                <!-- CONTEÚDO DA BARRA AZUL (COMEÇA FECHADO NO CELULAR 'hidden', MAS ABERTO NO PC 'md:block') -->
-                <div id="conteudo-sidebar" class="hidden md:block space-y-6 pt-1">
+                <!-- CONTEÚDO DA BARRA AZUL -->
+                <div id="conteudo-sidebar" class="space-y-6">
                     
                     <!-- CONTACTOS -->
                     <div class="space-y-2 relative group">
@@ -299,7 +290,7 @@
                     </div>
 
                     <div class="pt-4 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                        Mariana Cruz • Protegido por Biometria
+                        Mariana Cruz • v9.0
                     </div>
 
                 </div>
@@ -344,7 +335,7 @@
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL COMPLETA -->
+                <!-- EXPERIÊNCIA PROFISSIONAL COMPLETA (TODAS AS 9 EMPRESAS) -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
@@ -739,8 +730,12 @@
         </div>
     </div>
 
-    <!-- BARRA INFERIOR FLUTUANTE ERGONÔMICA -->
+    <!-- BARRA INFERIOR FLUTUANTE ERGONÔMICA (COM ATALHO PARA A BARRA AZUL) -->
     <nav id="bottom-bar" class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex justify-around items-center max-w-xl mx-auto rounded-t-2xl shadow-2xl">
+        <button onclick="toggleSidebarAzul()" class="flex flex-col items-center gap-0.5 text-blue-600 font-bold">
+            <span class="text-lg">↕️</span>
+            <span class="text-[10px]">Azul ↕️</span>
+        </button>
         <button onclick="abrirModalVagas()" class="flex flex-col items-center gap-0.5 text-slate-600 dark:text-slate-300 active:text-blue-600">
             <span class="text-lg">📋</span>
             <span class="text-[10px] font-semibold">Vagas</span>
@@ -767,35 +762,38 @@
         </button>
     </nav>
 
-    <!-- SCRIPT CONTROLADOR COM SANFONA E BIOMETRIA -->
+    <!-- SCRIPT CONTROLADOR V9.0 (NOVA CHAVE DE MEMÓRIA) -->
     <script>
-        const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
-        const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key";
-        const CHAVE_AUTH = "curriculo_autenticado_biometria";
-        const CHAVE_BIO_ID = "mariana_bio_credential_id";
+        // CHAVE ATUALIZADA PARA V9.0: Não deixa o navegador carregar o layout velho da memória
+        const CHAVE_AUTOSAVE = "mariana_curriculo_v9_master_key";
+        const CHAVE_VERSOES = "mariana_curriculo_versoes_v9_master_key";
+        const CHAVE_AUTH = "curriculo_autenticado_biometria_v9";
+        const CHAVE_BIO_ID = "mariana_bio_credential_id_v9";
         let ultimoEditavelFocado = null;
         let formatoCopiado = null;
         const mesesNomes = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
-        /* CONTROLE DA SANFONA DA PARTE AZUL ESCURA NO CELULAR */
-        function toggleSidebarMobile() {
-            const c = document.getElementById('conteudo-sidebar');
-            const seta = document.getElementById('seta-sidebar');
-            const textoBtn = document.getElementById('texto-btn-sidebar');
-            const badge = document.getElementById('badge-sidebar-status');
+        /* FUNÇÃO PRINCIPAL: ABRIR E RECOLHER A PARTE AZUL ESCURA */
+        function toggleSidebarAzul() {
+            const conteudo = document.getElementById('conteudo-sidebar');
+            const icone = document.getElementById('icone-sidebar');
+            const texto = document.getElementById('texto-btn-sidebar');
+            const status = document.getElementById('status-sidebar');
 
-            if (c.classList.contains('hidden')) {
-                c.classList.remove('hidden');
-                seta.innerText = '▲';
-                textoBtn.innerText = 'Recolher';
-                badge.innerText = 'Aberto';
-                badge.className = "text-[10px] bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded-full font-bold";
+            if (conteudo.classList.contains('hidden')) {
+                // Abrir
+                conteudo.classList.remove('hidden');
+                icone.innerText = '🔼';
+                texto.innerText = 'Recolher Contatos e Competências';
+                status.innerText = 'Aberto';
+                status.className = 'text-[10px] bg-blue-800 text-white px-2 py-0.5 rounded-full uppercase tracking-wider';
             } else {
-                c.classList.add('hidden');
-                seta.innerText = '▼';
-                textoBtn.innerText = 'Expandir';
-                badge.innerText = 'Toque p/ Abrir';
-                badge.className = "text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full font-bold";
+                // Recolher
+                conteudo.classList.add('hidden');
+                icone.innerText = '🔽';
+                texto.innerText = 'Abrir Contatos e Competências';
+                status.innerText = 'Recolhido';
+                status.className = 'text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full uppercase tracking-wider';
             }
         }
 
@@ -1177,13 +1175,11 @@
             fecharModalVagas();
         }
 
-        /* EXPORTAÇÃO PARA WORD COM COLUNAS PERFEITAS (GARANTE A BARRA AZUL COMPLETA) */
         function exportarWord() {
             const folhaEl = document.getElementById('curriculo-folha');
             const clone = folhaEl.cloneNode(true);
             clone.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
             
-            // Garante que o conteúdo da barra azul vá aberto no Word
             const conteudoSidebar = clone.querySelector('#conteudo-sidebar');
             if (conteudoSidebar) {
                 conteudoSidebar.classList.remove('hidden');
@@ -1226,60 +1222,6 @@
             a.click();
         }
 
-        function exportarVersaoWord(val) {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            let dados = versoes[val];
-            if(dados && dados.folhaHtml) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = dados.folhaHtml;
-                tempDiv.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
-
-                const conteudoSidebar = tempDiv.querySelector('#conteudo-sidebar');
-                if (conteudoSidebar) {
-                    conteudoSidebar.classList.remove('hidden');
-                }
-
-                const sidebar = tempDiv.querySelector('.sidebar-print') || tempDiv.querySelector('[class*="col-span-5"]');
-                const main = tempDiv.querySelector('.main-print') || tempDiv.querySelector('[class*="col-span-7"]');
-                
-                const sidebarHtml = sidebar ? sidebar.innerHTML : '';
-                const mainHtml = main ? main.innerHTML : '';
-
-                const htmlWord = `
-                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                    <head><meta charset='utf-8'><title>Currículo ${val}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; background-color: #f8fafc; }
-                        .page-table { width: 100%; border-collapse: collapse; border: 2px solid #1e3a8a; background: #ffffff; }
-                        .sidebar-cell { width: 35%; background-color: #0f172a; color: #ffffff; padding: 20px; vertical-align: top; }
-                        .main-cell { width: 65%; background-color: #ffffff; color: #0f172a; padding: 25px; vertical-align: top; }
-                        h1 { color: #1d4ed8; font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
-                        h2 { color: #2563eb; font-size: 13px; font-weight: 800; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-top: 15px; }
-                        p, span, div { font-size: 11px; line-height: 1.4; color: #334155; }
-                        .sidebar-cell p, .sidebar-cell span, .sidebar-cell div, .sidebar-cell h3 { color: #f8fafc !important; font-size: 11px; }
-                        .sidebar-cell h3 { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #94a3b8 !important; }
-                    </style>
-                    </head>
-                    <body>
-                        <table class="page-table">
-                            <tr>
-                                <td class="sidebar-cell">${sidebarHtml}</td>
-                                <td class="main-cell">${mainHtml}</td>
-                            </tr>
-                        </table>
-                    </body>
-                    </html>
-                `;
-
-                const blob = new Blob(['\ufeff' + htmlWord], { type: 'application/msword' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `Curriculo_Mariana_${val.replace(/[^a-zA-Z0-9]/g, '_')}.doc`;
-                a.click();
-            }
-        }
-
         function salvarVersao() {
             let nome = prompt("Nome da versão (ex: Mariana - Foco Confiabilidade):", "Versão " + new Date().toLocaleDateString());
             if (!nome) return;
@@ -1305,7 +1247,6 @@
                     <div class="font-bold text-xs text-slate-800 dark:text-white truncate">📄 ${k}</div>
                     <div class="flex gap-1.5 pt-1">
                         <button onclick="carregarVersao('${k}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold">Carregar</button>
-                        <button onclick="exportarVersaoWord('${k}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-[10px] text-[10px] font-bold">📥 Word</button>
                         <button onclick="apagarVersao('${k}')" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded-[10px] text-[10px] font-bold">✕</button>
                     </div>
                 `;
