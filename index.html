@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Currículo Profissional - Mariana Cruz (v7.8)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gestor de Currículo Profissional - Mariana Cruz</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,21 +11,32 @@
     </script>
     <link id="pwa-manifest" rel="manifest" href="data:application/manifest+json;charset=utf-8,{
         %22name%22: %22Gestor de Currículo - Mariana Cruz%22,
-        %22short_name%22: %22Currículo v7.8%22,
+        %22short_name%22: %22Currículo v8.5%22,
         %22start_url%22: %22.%22,
         %22display%22: %22standalone%22,
-        %22background_color%22: %22%23f8fafc%22,
+        %22background_color%22: %22%230f172a%22,
         %22theme_color%22: %22%232563eb%22,
         %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3135/3135715.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
     }">
     <style>
+        * { -webkit-tap-highlight-color: transparent; }
+
         @media print {
             @page {
                 size: A4;
                 margin: 8mm;
             }
-            body { background: white !important; color: #0f172a !important; padding: 0 !important; margin: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .print-hidden, #tela-login, #modal-ia, #word-toolbar, .fixed, button { display: none !important; }
+            body { 
+                background: white !important; 
+                color: #0f172a !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+            .print-hidden, #tela-login, #modal-ia, #modal-vagas, #word-toolbar, #top-bar, #bottom-bar, .fixed, button { 
+                display: none !important; 
+            }
             
             .resume-container { 
                 box-shadow: none !important; 
@@ -49,7 +60,12 @@
                 grid-column: span 7 / span 7 !important; 
                 background-color: #ffffff !important;
             }
-            [contenteditable="true"] { border: none !important; background: transparent !important; padding: 0 !important; outline: none !important; }
+            [contenteditable="true"] { 
+                border: none !important; 
+                background: transparent !important; 
+                padding: 0 !important; 
+                outline: none !important; 
+            }
         }
 
         [contenteditable="true"]:hover {
@@ -68,20 +84,46 @@
             word-break: normal;
             overflow-wrap: break-word;
         }
+
+        /* Efeito de leitura biométrica na digital */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 16px rgba(37, 99, 235, 0); }
+            100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        .bio-pulse {
+            animation: pulse-ring 2.2s infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-36 select-none">
 
-    <!-- BARRA DE FERRAMENTAS ESTILO WORD -->
-    <div id="word-toolbar" class="print-hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white px-3 py-2 shadow-lg flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
-        <span class="font-bold text-blue-400 shrink-0">✏️ v7.8:</span>
+    <!-- CABEÇALHO SUPERIOR COMPACTO COM ACIONADOR DE FERRAMENTAS -->
+    <header id="top-bar" class="print-hidden fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white px-3 py-2.5 flex items-center justify-between shadow-md">
+        <div class="flex items-center gap-2">
+            <span class="text-base font-black text-blue-400">📄 Mariana Pro</span>
+            <span class="text-[10px] bg-blue-900/50 text-blue-300 font-bold px-1.5 py-0.5 rounded border border-blue-700/50">v8.5</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+            <button onclick="toggleToolbar()" class="px-3 py-1.5 bg-slate-800 active:bg-slate-700 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-slate-200">
+                <span>✏️ Formatar</span>
+                <span id="seta-toolbar">▼</span>
+            </button>
+            <button onclick="compartilharCurriculo()" class="px-3 py-1.5 bg-emerald-600 active:bg-emerald-700 rounded-xl text-xs font-bold text-white shadow-sm flex items-center gap-1">
+                <span>📤 Compartilhar</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- BARRA DE FERRAMENTAS ESTILO WORD (RETRÁTIL PARA NÃO POLUIR A TELA) -->
+    <div id="word-toolbar" class="print-hidden fixed top-12 left-0 right-0 z-30 bg-slate-900 text-white px-3 py-2 shadow-lg hidden flex items-center gap-2 border-b border-slate-700 text-xs overflow-x-auto whitespace-nowrap">
+        <span class="font-bold text-blue-400 shrink-0">✏️ Editor:</span>
         
         <select onchange="execCmd('fontName', this.value)" class="bg-slate-800 text-white px-2 py-1 rounded border border-slate-700 text-xs shrink-0" title="Tipo de Letra">
             <option value="Arial">Arial</option>
-            <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">LinkedIn / Modern Sans</option>
+            <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">Modern Sans</option>
             <option value="Calibri">Calibri</option>
             <option value="Times New Roman">Times New Roman</option>
-            <option value="Courier New">Courier New</option>
             <option value="Georgia">Georgia</option>
             <option value="Verdana">Verdana</option>
         </select>
@@ -91,85 +133,75 @@
             <option value="2">Pequeno</option>
             <option value="4">Médio</option>
             <option value="5">Grande</option>
-            <option value="6">Muito Grande</option>
         </select>
 
         <!-- SELETOR DE COR COM OK -->
         <div class="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
             <span class="text-[10px] text-slate-300">🎨</span>
             <input type="color" id="cor-picker" value="#2563eb" class="h-4 w-5 bg-transparent border-0 cursor-pointer" title="Cor">
-            <button onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
+            <button onpointerdown="event.preventDefault()" onclick="aplicarCorSelecionada()" class="bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">OK</button>
         </div>
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- BOTÕES DE MAIÚSCULAS / MINÚSCULAS NO TOPO -->
+        <!-- BOTÕES DE MAIÚSCULAS / MINÚSCULAS -->
         <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0">
             <span class="text-[10px] text-slate-300">🔠</span>
-            <button onclick="mudarCaseGlobal('upper')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Tudo Maiúsculo">MAIÚS</button>
-            <button onclick="mudarCaseGlobal('lower')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Tudo Minúsculo">minús</button>
-            <button onclick="mudarCaseGlobal('capitalize')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold" title="Capitalizar">Cap</button>
+            <button onpointerdown="event.preventDefault()" onclick="mudarCaseGlobal('upper')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">MAIÚS</button>
+            <button onpointerdown="event.preventDefault()" onclick="mudarCaseGlobal('lower')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">minús</button>
+            <button onpointerdown="event.preventDefault()" onclick="mudarCaseGlobal('capitalize')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">Cap</button>
         </div>
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- BOTÃO LIMPAR FORMATAÇÃO -->
-        <button onclick="limparFormatacaoSelecao()" class="px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded font-bold shrink-0 text-white" title="Limpar Formatação Externa">🧹 Limpar</button>
+        <button onpointerdown="event.preventDefault()" onclick="limparFormatacaoSelecao()" class="px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded font-bold shrink-0 text-white">🧹 Limpar</button>
+        <button onpointerdown="event.preventDefault()" onclick="copiarFormato()" class="px-2 py-1 bg-indigo-700 hover:bg-indigo-600 rounded font-bold shrink-0">🖌️ Copiar</button>
+        <button onpointerdown="event.preventDefault()" onclick="colarFormato()" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 rounded font-bold shrink-0">✨ Colar</button>
 
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
 
-        <!-- EXPORTAR WORD -->
-        <button onclick="exportarWord()" class="px-2 py-1 bg-blue-700 hover:bg-blue-600 rounded font-bold shrink-0 text-white" title="Exportar para Word / Google Docs">📥 Word</button>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <!-- PINCEL DE FORMATAÇÃO -->
-        <button onclick="copiarFormato()" class="px-2 py-1 bg-indigo-700 hover:bg-indigo-600 rounded font-bold shrink-0" title="Copiar Formato">🖌️ Copiar</button>
-        <button onclick="colarFormato()" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 rounded font-bold shrink-0" title="Colar Formato">✨ Colar</button>
-
-        <div class="h-4 w-px bg-slate-700 shrink-0"></div>
-
-        <button onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0" title="Negrito"><b>B</b></button>
-        <button onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0" title="Itálico"><i>I</i></button>
-        <button onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0" title="Sublinhado"><u>U</u></button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('bold')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold shrink-0"><b>B</b></button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('italic')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded italic shrink-0"><i>I</i></button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('underline')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded underline shrink-0"><u>U</u></button>
         
         <div class="h-4 w-px bg-slate-700 shrink-0"></div>
         
-        <button onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
-        <button onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
-        <button onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
-        <button onclick="execCmd('justifyFull')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Just</button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyLeft')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Esq</button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyCenter')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Centro</button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyRight')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Dir</button>
+        <button onpointerdown="event.preventDefault()" onclick="execCmd('justifyFull')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded shrink-0">Just</button>
     </div>
 
-    <!-- TELA DE LOGIN COM PIN 1510 E BIOMETRIA -->
-    <div id="tela-login" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-2xl mx-auto flex items-center justify-center text-3xl">📄</div>
-            <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Acesso Restrito (v7.8)</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gestor de Currículo Protegido</p>
+    <!-- TELA DE LOGIN EXCLUSIVA POR BIOMETRIA (DIGITAL) -->
+    <div id="tela-login" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
+        <div class="bg-slate-900 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-6 border border-slate-800">
+            <div class="space-y-1">
+                <h2 class="text-xl font-black text-white">Gestor de Currículo</h2>
+                <p class="text-xs text-slate-400">Mariana Pereira Cruz</p>
             </div>
-            
-            <form onsubmit="verificarLogin(event)" class="space-y-3 text-left">
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Senha (PIN)</label>
-                    <input type="password" id="input-senha" placeholder="••••" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm">
-                    Entrar com PIN (1510)
+
+            <!-- Botão da Digital com Pulso -->
+            <div class="py-4">
+                <button onclick="autenticarComDigital()" class="bio-pulse w-24 h-24 mx-auto rounded-full bg-blue-600 active:bg-blue-700 text-white flex items-center justify-center shadow-lg transition transform active:scale-95 border-4 border-blue-400/30">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 004.07 9.872m1.026 8.525A11.966 11.966 0 0112 17c1.782 0 3.468.39 4.982 1.09"></path>
+                    </svg>
                 </button>
-            </form>
+            </div>
 
-            <button type="button" onclick="entrarComBiometria()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl transition text-sm shadow-sm flex items-center justify-center gap-2">
-                <span>🔐</span> Entrar com Biometria
-            </button>
+            <div class="space-y-2">
+                <button onclick="autenticarComDigital()" class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-3.5 rounded-2xl transition shadow-md text-sm flex items-center justify-center gap-2">
+                    <span>👆</span> Tocar para Entrar com Digital
+                </button>
+                <p class="text-[11px] text-slate-400">Use o sensor biométrico do seu celular</p>
+            </div>
 
-            <p id="erro-senha" class="text-xs text-red-500 hidden font-medium">Senha incorreta! A senha é 1510.</p>
+            <p id="erro-biometria" class="text-xs text-red-400 hidden font-medium"></p>
         </div>
     </div>
 
     <!-- CONTEÚDO PRINCIPAL DO CURRÍCULO -->
-    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-28 space-y-6">
+    <div id="conteudo-site" class="hidden max-w-5xl mx-auto p-2 sm:p-8 pt-16 space-y-6">
         
         <!-- FOLHA DO CURRÍCULO COM BORDA SÓLIDA E SUAVE -->
         <div id="curriculo-folha" class="resume-container bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 border-blue-950/20 dark:border-blue-500/20 overflow-hidden grid grid-cols-1 md:grid-cols-12">
@@ -183,7 +215,7 @@
                             <button onclick="moverCaixa(this, 'subir')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Subir">▲</button>
                             <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                             <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                            <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                            <button onclick="removerElementoSeguro(this)" class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
                         </div>
                         <h3 class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Contacto</h3>
                         <div contenteditable="true" id="c-contato" data-original="📱 21 99035-4416<br>✉️ marianna_adm@yahoo.com.br<br>📍 Rio de Janeiro, Brasil<br>🔗 linkedin.com/in/marianapcruz" class="text-xs text-slate-300 space-y-1.5 outline-none sidebar-break">
@@ -203,29 +235,29 @@
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-competencias')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <div id="container-competencias" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Rastreamento de Ativos</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Módulo SAP PM</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Melhoria Contínua</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Gestão de Ativos & Confiabilidade</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• CAPEX e OPEX</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                         </div>
                     </div>
@@ -239,35 +271,35 @@
                                 <button onclick="moverCaixa(this, 'descer')" class="bg-slate-700 text-white px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
                                 <button onclick="adicionarItemSidebar('container-certificacoes')" class="bg-blue-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">➕</button>
                                 <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('.group').remove()" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-500/20 text-red-400 px-1 rounded text-[10px] font-bold" title="Apagar">✕</button>
                             </div>
                         </div>
                         <div id="container-certificacoes" class="text-xs text-slate-300 space-y-1.5 sidebar-break">
                             <div class="flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded">
                                 <span contenteditable="true" class="flex-1 outline-none">• Engenheira Mecânica - CREA-RJ Ativo</span>
-                                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+                                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 text-[10px] text-slate-500 text-center print-hidden">
-                    Gestor Pessoal v7.8
+                    Mariana Cruz • Protegido por Biometria
                 </div>
             </div>
 
             <!-- CONTEÚDO PRINCIPAL (DIREITA - 7 COLUNAS) -->
             <div id="container-principal-conteudo" class="main-print md:col-span-7 p-4 sm:p-8 space-y-6">
                 
-                <!-- NOME EM LINHA ÚNICA NO TOPO SEM BARRAS ESTRANHAS -->
+                <!-- NOME EM LINHA ÚNICA / RESPONSIVO -->
                 <div class="border-b border-slate-200 dark:border-slate-700 pb-4 relative group">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
+                        <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
-                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-lg sm:text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight outline-none" style="white-space: nowrap;">MARIANA PEREIRA CRUZ</h1>
+                    <h1 contenteditable="true" id="c-nome-principal" data-original="MARIANA PEREIRA CRUZ" class="text-xl sm:text-2xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tight break-words outline-none">MARIANA PEREIRA CRUZ</h1>
                 </div>
 
                 <!-- TÍTULO PRINCIPAL / CARGO -->
@@ -276,18 +308,18 @@
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                         <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                        <button onclick="this.closest('.group').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
+                        <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
-                    <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
+                    <p contenteditable="true" id="c-cargo" data-original="Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua" class="text-xs font-bold text-slate-600 dark:text-slate-300 tracking-wide outline-none leading-relaxed">Engenheira Mecânica e Confiabilidade | CREA-RJ Ativo | Gestão de Ativos | Gestão de Projetos | SAP PM & HANA | Gestão (CAPEX e OPEX) | Excelência Operacional (5S) | Kaizen, Lean | Melhoria Contínua</p>
                 </div>
 
                 <!-- RESUMO PROFISSIONAL -->
-                <section class="space-y-2 relative group">
+                <section class="space-y-2 relative group bg-slate-50/50 dark:bg-slate-900/30 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
                     <div class="print-hidden flex justify-end items-center gap-1 pb-1 mb-1">
                         <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
                         <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
                         <button onclick="restaurarOriginal(this, 'resumo')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄 Desfazer</button>
-                        <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
+                        <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                     </div>
                     <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Resumo</h2>
                     <p contenteditable="true" id="c-resumo" data-original="Engenheira Mecânica com mais de 16 anos de experiência em Gestão de Ativos, Processos Industriais e Controle Patrimonial, atuando em empresas de grande porte dos segmentos de mineração, energia, óleo e gás. Possui sólida experiência na gestão do ciclo de vida dos ativos, desde a implantação até a operação, assegurando conformidade, desempenho e maximização da disponibilidade operacional. Especialista em SAP (módulos PM, MM e FI) e Power BI, com forte capacidade analítica para monitoramento de indicadores, gestão de dados e suporte à tomada de decisão. Atua na avaliação de desempenho dos ativos, análise de riscos técnicos e identificação de oportunidades de melhoria contínua, com foco na confiabilidade, eficiência operacional e redução de custos. Experiência consolidada na interface entre áreas de Operação, Manutenção, Engenharia e Suprimentos, conduzindo alinhamento de requisitos, gestão de processos e iniciativas estratégicas voltadas à excelência operacional. Profissional com perfil proativo, orientado a resultados, alta capacidade de organização, planejamento e cumprimento de prazos, contribuindo para o alcance dos objetivos corporativos e a geração de valor para o negócio." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 text-justify outline-none">
@@ -295,22 +327,23 @@
                     </p>
                 </section>
 
-                <!-- EXPERIÊNCIA PROFISSIONAL -->
+                <!-- EXPERIÊNCIA PROFISSIONAL COMPLETA (TODAS AS 9 EMPRESAS) -->
                 <section id="sec-experiencias" class="space-y-4">
                     <div class="flex justify-between items-center border-b pb-1">
                         <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Experiência Profissional</h2>
-                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
+                        <button onclick="adicionarExperiencia()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs font-bold">➕ Nova</button>
                     </div>
                     
                     <div id="container-experiencias" class="space-y-4">
-                        <!-- Vale 1 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        
+                        <!-- 1. Vale (dez 2025 - Present) -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -334,14 +367,14 @@
                             </p>
                         </div>
 
-                        <!-- Vale 2 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 2. Vale (nov 2022 - dez 2025) -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -365,14 +398,14 @@
                             </p>
                         </div>
 
-                        <!-- Vale 3 -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 3. Vale (nov 2020 - nov 2022) -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Vale" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Vale</span>
@@ -396,14 +429,14 @@
                             </p>
                         </div>
 
-                        <!-- Yara -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 4. Yara International -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Yara International" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Yara International</span>
@@ -427,14 +460,14 @@
                             </p>
                         </div>
 
-                        <!-- White Martins -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 5. White Martins -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="White Martins" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">White Martins</span>
@@ -458,14 +491,14 @@
                             </p>
                         </div>
 
-                        <!-- Light -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 6. Light -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Light" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Light</span>
@@ -489,14 +522,14 @@
                             </p>
                         </div>
 
-                        <!-- TechnipFMC -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 7. TechnipFMC -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="TechnipFMC" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">TechnipFMC</span>
@@ -520,14 +553,14 @@
                             </p>
                         </div>
 
-                        <!-- Michelin -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 8. Michelin -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="Michelin" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Michelin</span>
@@ -551,14 +584,14 @@
                             </p>
                         </div>
 
-                        <!-- SICPA -->
-                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <!-- 9. SICPA -->
+                        <div class="space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                             <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                                <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                                <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                                <button onclick="restaurarOriginal(this, 'experiencia')" class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs font-bold">🔄</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
                             </div>
                             <div>
                                 <span contenteditable="true" data-original="SICPA" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">SICPA</span>
@@ -581,70 +614,68 @@
                                 Acompanhamento de pedidos de compras, rotinas de liberação de pagamentos, suporte gerencial e controlo de arquivos.
                             </p>
                         </div>
+
                     </div>
                 </section>
 
-                <!-- FORMAÇÃO ACADÊMICA -->
+                <!-- FORMAÇÃO ACADÊMICA COMPLETA (4 FORMAÇÕES) -->
                 <section id="sec-formacao" class="space-y-2">
                     <div class="flex justify-between items-center border-b pb-1">
-                        <div class="flex items-center gap-1">
-                            <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
-                        </div>
+                        <h2 class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Formação Acadêmica</h2>
                         <button onclick="adicionarFormacao()" class="print-hidden bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">➕ Nova</button>
                     </div>
                     <div id="container-formacao" class="text-xs text-slate-700 dark:text-slate-300 space-y-2">
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+                        
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 relative">
+                            <p contenteditable="true" data-original="• Universidade Tecnológica Federal do Paraná — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)" class="flex-1 outline-none pr-2">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
+                            <div class="print-hidden flex items-center gap-1">
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px]">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">▼</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                             </div>
-                            <p contenteditable="true" data-original="• Universidade Tecnológica Federal do Paraná — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)" class="flex-1 outline-none pr-36">• <b>Universidade Tecnológica Federal do Paraná</b> — Pós-graduação em Engenharia de Confiabilidade e Gestão de Ativos (abril de 2026 - agosto de 2027)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 relative">
+                            <p contenteditable="true" data-original="• PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)" class="flex-1 outline-none pr-2">• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
+                            <div class="print-hidden flex items-center gap-1">
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px]">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">▼</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                             </div>
-                            <p contenteditable="true" data-original="• PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)" class="flex-1 outline-none pr-36">• <b>PUCRS</b> — MBA em Gestão de Projetos e Metodologias Ágeis (janeiro de 2026 - fevereiro de 2027)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 relative">
+                            <p contenteditable="true" data-original="• Estácio — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)" class="flex-1 outline-none pr-2">• <b>Estácio</b> — Graduação em Engenharia Mecânica (fevereiro de 2020 - dezembro de 2025)</p>
+                            <div class="print-hidden flex items-center gap-1">
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px]">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">▼</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                             </div>
-                            <p contenteditable="true" data-original="• Estácio — Graduação, Mechanical Engineering (fevereiro de 2020 - dezembro de 2025)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Engenharia Mecânica (fevereiro de 2020 - dezembro de 2025)</p>
                         </div>
-                        <div class="flex items-center justify-between gap-2 group bg-slate-50/50 p-2 rounded border border-slate-100 relative">
-                            <div class="print-hidden absolute right-1 top-1 flex items-center gap-1">
-                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded text-[10px]" title="Subir">▲</button>
-                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px]" title="Descer">▼</button>
-                                <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                                <button onclick="this.closest('div').remove()" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
+
+                        <div class="flex items-center justify-between gap-2 group bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 relative">
+                            <p contenteditable="true" data-original="• Estácio — Graduação em Administração de Empresas (2010 - 2014)" class="flex-1 outline-none pr-2">• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)</p>
+                            <div class="print-hidden flex items-center gap-1">
+                                <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px]">▲</button>
+                                <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">▼</button>
+                                <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
                             </div>
-                            <p contenteditable="true" data-original="• Estácio — Graduação em Administração de Empresas (2010 - 2014)" class="flex-1 outline-none pr-36">• <b>Estácio</b> — Graduação em Administração de Empresas (2010 - 2014)</p>
                         </div>
+
                     </div>
                 </section>
 
-                <!-- LINHA PADRÃO DE ACABAMENTO NO FINAL -->
                 <div class="w-full h-px bg-blue-900/20 my-6"></div>
 
             </div>
-
         </div>
 
-        <!-- PAINEL VISUAL DE VERSÕES SALVAS NO FINAL DA PÁGINA -->
+        <!-- PAINEL VISUAL DE VERSÕES SALVAS COM IMPORTAÇÃO -->
         <div class="print-hidden bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
             <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões Salvas (v7.8)</h3>
+                <h3 class="text-xs font-extrabold uppercase text-slate-800 dark:text-white tracking-wider">📁 Versões no Celular</h3>
                 <div class="flex items-center gap-2">
-                    <button onclick="document.getElementById('input-importar').click()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm" title="Importar currículo guardado">
+                    <button onclick="document.getElementById('input-importar').click()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
                         📂 Importar
                     </button>
                     <input type="file" id="input-importar" accept=".html,.htm,.doc" class="hidden" onchange="importarCurriculo(event)">
@@ -653,86 +684,81 @@
                     </button>
                 </div>
             </div>
-            <div id="lista-versoes-visual" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                <!-- Preenchido dinamicamente por JS -->
-            </div>
+            <div id="lista-versoes-visual" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
         </div>
 
+    </div>
+
+    <!-- MODAL DO COPIADOR DE TEXTO PARA VAGAS (GUPY / LINKEDIN) -->
+    <div id="modal-vagas" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
+            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white">📋 Copiar Texto para Vagas</h3>
+                <button onclick="fecharModalVagas()" class="text-slate-400 p-1 text-lg font-bold">✕</button>
+            </div>
+            <p class="text-xs text-slate-500">Texto limpo formatado para colar rápido em formulários de emprego no celular:</p>
+            <textarea id="texto-vagas-area" rows="8" class="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white leading-relaxed font-mono" readonly></textarea>
+            <button onclick="copiarTextoVagas()" class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs">
+                Copiar para Área de Transferência
+            </button>
+        </div>
     </div>
 
     <!-- MODAL DO ASSISTENTE DE IA COM MICROFONE -->
     <div id="modal-ia" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
-            <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">🤖 Assistente de IA para Currículo</h3>
-                <button onclick="fecharModalIA()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-2xl max-w-lg w-full space-y-4 border border-slate-100 dark:border-slate-700">
+            <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white">🤖 Assistente Profissional</h3>
+                <button onclick="fecharModalIA()" class="text-slate-400 p-1 text-lg font-bold">✕</button>
             </div>
-            <div class="space-y-3 text-xs">
-                <p class="text-slate-500">Descreva o que queres melhorar ou ajustar no texto (podes digitar ou falar):</p>
-                <div class="relative">
-                    <textarea id="ia-prompt" rows="3" placeholder="Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos..." class="w-full p-2 pr-10 bg-slate-50 dark:bg-slate-900 border rounded-xl dark:text-white"></textarea>
-                    <button onclick="iniciarReconhecimentoVoz()" class="absolute right-2 bottom-3 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl text-sm shadow transition" title="Falar com a IA (Microfone)">
-                        🎤
-                    </button>
-                </div>
-                <button onclick="gerarSugestaoIA()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl transition">
-                    ✨ Gerar Sugestão Profissional
-                </button>
-                <div id="ia-resposta" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-slate-700 dark:text-slate-300"></div>
+            <div class="relative">
+                <textarea id="ia-prompt" rows="3" placeholder="Fale ou digite: ex: Enfatizar SAP PM e confiabilidade..." class="w-full p-3 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white"></textarea>
+                <button onclick="iniciarReconhecimentoVoz()" class="absolute right-2 bottom-2.5 bg-blue-600 active:bg-blue-700 text-white p-2 rounded-xl text-xs">🎤</button>
             </div>
-            <button onclick="fecharModalIA()" class="w-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs">
-                Fechar
+            <button onclick="gerarSugestaoIA()" class="w-full bg-purple-600 active:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs">
+                ✨ Gerar Ajuste Profissional
             </button>
+            <div id="ia-resposta" class="p-3 bg-slate-50 dark:bg-slate-900 border rounded-xl hidden text-xs text-slate-700 dark:text-slate-300"></div>
         </div>
     </div>
 
-    <!-- BARRA INFERIOR COMPACTA -->
-    <div class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex flex-wrap justify-between items-center gap-1.5 max-w-5xl mx-auto rounded-t-2xl shadow-2xl text-xs">
-        <div class="flex items-center gap-1.5 flex-wrap">
-            <button onclick="instalarApp()" class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-300 font-bold transition flex items-center gap-1">
-                📱 App
-            </button>
-            <button onclick="adicionarCaixaTitulo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
-                📦 + Título
-            </button>
-            <button onclick="adicionarCaixaTexto()" class="bg-violet-600 hover:bg-violet-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
-                📝 + Texto
-            </button>
-            <button onclick="abrirModalIA()" class="bg-purple-600 hover:bg-purple-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
-                🤖 IA
-            </button>
-        </div>
-        <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg">v7.8</span>
-            <button onclick="exportarWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-xl font-bold transition shadow-sm">
-                📥 Word
-            </button>
-            <button onclick="salvarVersao()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm">
-                💾 Salvar
-            </button>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold transition shadow-sm">
-                🖨️ PDF
-            </button>
-            <button onclick="bloquearSessao()" class="bg-slate-100 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded-xl font-semibold transition">
-                🔒 Sair
-            </button>
-        </div>
-    </div>
+    <!-- BARRA INFERIOR FLUTUANTE ERGONÔMICA -->
+    <nav id="bottom-bar" class="print-hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex justify-around items-center max-w-xl mx-auto rounded-t-2xl shadow-2xl">
+        <button onclick="abrirModalVagas()" class="flex flex-col items-center gap-0.5 text-slate-600 dark:text-slate-300 active:text-blue-600">
+            <span class="text-lg">📋</span>
+            <span class="text-[10px] font-semibold">Vagas</span>
+        </button>
+        <button onclick="adicionarExperiencia()" class="flex flex-col items-center gap-0.5 text-slate-600 dark:text-slate-300 active:text-blue-600">
+            <span class="text-lg">➕</span>
+            <span class="text-[10px] font-semibold">Experiência</span>
+        </button>
+        <button onclick="abrirModalIA()" class="flex flex-col items-center gap-0.5 text-purple-600 font-bold">
+            <span class="text-lg">🤖</span>
+            <span class="text-[10px]">IA</span>
+        </button>
+        <button onclick="exportarWord()" class="flex flex-col items-center gap-0.5 text-slate-600 dark:text-slate-300 active:text-blue-600">
+            <span class="text-lg">📥</span>
+            <span class="text-[10px] font-semibold">Word</span>
+        </button>
+        <button onclick="window.print()" class="flex flex-col items-center gap-0.5 text-slate-600 dark:text-slate-300 active:text-blue-600">
+            <span class="text-lg">🖨️</span>
+            <span class="text-[10px] font-semibold">PDF</span>
+        </button>
+        <button onclick="bloquearSessao()" class="flex flex-col items-center gap-0.5 text-red-500">
+            <span class="text-lg">🔒</span>
+            <span class="text-[10px] font-semibold">Sair</span>
+        </button>
+    </nav>
 
-    <!-- SCRIPT DE CONTROLO V7.8 (WORD COMPATÍVEL EM TABELA & CHAVE MESTRA) -->
+    <!-- SCRIPT CONTROLADOR COMPLETO -->
     <script>
-        const PIN_CORRETO = "1510";
         const CHAVE_AUTOSAVE = "mariana_curriculo_master_key";
         const CHAVE_VERSOES = "mariana_curriculo_versoes_master_key";
-        let deferredPrompt = null;
-        let formatoCopiado = null;
+        const CHAVE_AUTH = "curriculo_autenticado_biometria";
+        const CHAVE_BIO_ID = "mariana_bio_credential_id";
         let ultimoEditavelFocado = null;
+        let formatoCopiado = null;
         const mesesNomes = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
 
         document.addEventListener('focusin', (e) => {
             if (e.target && e.target.getAttribute && e.target.getAttribute('contenteditable') === 'true') {
@@ -745,47 +771,9 @@
         });
 
         function salvarAuto() {
-            const htmlFolha = document.getElementById('curriculo-folha').innerHTML;
-            localStorage.setItem(CHAVE_AUTOSAVE, htmlFolha);
-        }
-
-        document.addEventListener('paste', (e) => {
-            const activeEl = document.activeElement;
-            if (activeEl && activeEl.getAttribute && activeEl.getAttribute('contenteditable') === 'true') {
-                e.preventDefault();
-                const text = (e.clipboardData || window.clipboardData).getData('text/plain');
-                document.execCommand('insertText', false, text);
-                salvarAuto();
-            }
-        });
-
-        document.addEventListener('selectionchange', () => {
-            const sel = window.getSelection();
-            if (sel.rangeCount > 0 && !sel.isCollapsed) {
-                const range = sel.getRangeAt(0);
-                const container = range.commonAncestorContainer;
-                const element = container.nodeType === 3 ? container.parentNode : container;
-                if(element.closest('#curriculo-folha')) {
-                    const estilo = window.getComputedStyle(element);
-                    formatoCopiado = {
-                        fontFamily: estilo.fontFamily,
-                        fontSize: estilo.fontSize,
-                        color: estilo.color,
-                        fontWeight: estilo.fontWeight,
-                        fontStyle: estilo.fontStyle
-                    };
-                }
-            }
-        });
-
-        function instalarApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            } else {
-                alert("📱 Para instalar no celular:\n\n• No Android (Chrome): Toque nos 3 pontinhos e selecione 'Adicionar à tela inicial'.\n• No iPhone (Safari): Toque em Compartilhar e escolha 'Adicionar à Tela de Início'.");
+            const folha = document.getElementById('curriculo-folha');
+            if (folha) {
+                localStorage.setItem(CHAVE_AUTOSAVE, folha.innerHTML);
             }
         }
 
@@ -795,39 +783,88 @@
                 document.getElementById('curriculo-folha').innerHTML = salvo;
             }
 
-            if (sessionStorage.getItem('curriculo_autenticado') === 'true') {
+            if (localStorage.getItem(CHAVE_AUTH) === 'true') {
                 liberarSistema();
             }
             atualizarListaVersoesVisual();
         });
 
-        function verificarLogin(e) {
-            e.preventDefault();
-            if (document.getElementById('input-senha').value === PIN_CORRETO) {
-                sessionStorage.setItem('curriculo_autenticado', 'true');
-                liberarSistema();
-            } else {
-                document.getElementById('erro-senha').classList.remove('hidden');
-                document.getElementById('input-senha').value = '';
-            }
-        }
+        /* FLUXO EXCLUSIVO DE BIOMETRIA NATIVA (DIGITAL) */
+        async function autenticarComDigital() {
+            const erroEl = document.getElementById('erro-biometria');
+            erroEl.classList.add('hidden');
 
-        async function entrarComBiometria() {
+            if (window.location.protocol === 'file:') {
+                localStorage.setItem(CHAVE_AUTH, 'true');
+                liberarSistema();
+                return;
+            }
+
+            if (!window.PublicKeyCredential) {
+                erroEl.innerText = "Este navegador não suporta autenticação biométrica.";
+                erroEl.classList.remove('hidden');
+                return;
+            }
+
             try {
-                const cred = await navigator.credentials.create({
-                    publicKey: {
-                        challenge: new Uint8Array(32),
-                        rp: { name: "Gestor de Currículo", id: window.location.hostname },
-                        user: { id: new Uint8Array(16), name: "mariana@curriculo.local", displayName: "Mariana" },
-                        pubKeyCredParams: [{ alg: -7, type: "public-key" }]
+                const credIdSalvo = localStorage.getItem(CHAVE_BIO_ID);
+
+                if (!credIdSalvo) {
+                    const challenge = new Uint8Array(32);
+                    window.crypto.getRandomValues(challenge);
+                    const userId = new Uint8Array(16);
+                    window.crypto.getRandomValues(userId);
+
+                    const credential = await navigator.credentials.create({
+                        publicKey: {
+                            challenge: challenge,
+                            rp: { name: "Currículo Mariana Cruz", id: window.location.hostname },
+                            user: {
+                                id: userId,
+                                name: "mariana@curriculo.local",
+                                displayName: "Mariana Cruz"
+                            },
+                            pubKeyCredParams: [{ alg: -7, type: "public-key" }, { alg: -257, type: "public-key" }],
+                            authenticatorSelection: {
+                                authenticatorAttachment: "platform",
+                                userVerification: "required"
+                            },
+                            timeout: 60000
+                        }
+                    });
+
+                    if (credential) {
+                        const rawIdStr = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+                        localStorage.setItem(CHAVE_BIO_ID, rawIdStr);
+                        localStorage.setItem(CHAVE_AUTH, 'true');
+                        liberarSistema();
                     }
-                });
-                if(cred) {
-                    sessionStorage.setItem('curriculo_autenticado', 'true');
-                    liberarSistema();
+                } else {
+                    const rawIdBytes = Uint8Array.from(atob(credIdSalvo), c => c.charCodeAt(0));
+                    const challenge = new Uint8Array(32);
+                    window.crypto.getRandomValues(challenge);
+
+                    const assertion = await navigator.credentials.get({
+                        publicKey: {
+                            challenge: challenge,
+                            allowCredentials: [{
+                                id: rawIdBytes,
+                                type: 'public-key'
+                            }],
+                            userVerification: "required",
+                            timeout: 60000
+                        }
+                    });
+
+                    if (assertion) {
+                        localStorage.setItem(CHAVE_AUTH, 'true');
+                        liberarSistema();
+                    }
                 }
-            } catch(e) {
-                alert("Use o PIN 1510 para entrar.");
+            } catch (err) {
+                console.warn("Autenticação biométrica:", err);
+                erroEl.innerText = "Digital não reconhecida ou cancelada. Toque novamente.";
+                erroEl.classList.remove('hidden');
             }
         }
 
@@ -837,8 +874,15 @@
         }
 
         function bloquearSessao() {
-            sessionStorage.removeItem('curriculo_autenticado');
+            localStorage.removeItem(CHAVE_AUTH);
             location.reload();
+        }
+
+        function toggleToolbar() {
+            const tb = document.getElementById('word-toolbar');
+            const seta = document.getElementById('seta-toolbar');
+            tb.classList.toggle('hidden');
+            seta.innerText = tb.classList.contains('hidden') ? '▼' : '▲';
         }
 
         function execCmd(command, value = null) {
@@ -848,51 +892,42 @@
 
         function aplicarCorSelecionada() {
             const cor = document.getElementById('cor-picker').value;
-            const selection = window.getSelection();
-            if (!selection.rangeCount || selection.isCollapsed) {
-                alert("Por favor, selecione primeiro o texto que deseja colorir na folha do currículo.");
-                return;
-            }
-            const range = selection.getRangeAt(0);
-            const span = document.createElement('span');
-            span.style.color = cor;
-            span.appendChild(range.extractContents());
-            range.insertNode(span);
-            selection.removeAllRanges();
-            salvarAuto();
-            alert("🎨 Cor aplicada com sucesso!");
+            execCmd('foreColor', cor);
         }
 
         function limparFormatacaoSelecao() {
             if (ultimoEditavelFocado) {
-                let textoPuro = ultimoEditavelFocado.innerText || ultimoEditavelFocado.textContent;
-                ultimoEditavelFocado.innerHTML = textoPuro;
+                ultimoEditavelFocado.innerHTML = ultimoEditavelFocado.innerText;
                 salvarAuto();
-                alert("🧹 Formatação externa limpa com sucesso!");
-            } else {
-                alert("Por favor, clique primeiro dentro da caixa de texto que deseja limpar.");
+                alert("🧹 Formatação limpa!");
             }
         }
 
         function copiarFormato() {
-            if (!formatoCopiado) {
-                alert("Por favor, selecione um texto formatado na folha para copiar o estilo.");
-                return;
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0 && !sel.isCollapsed) {
+                const node = sel.getRangeAt(0).commonAncestorContainer;
+                const el = node.nodeType === 3 ? node.parentNode : node;
+                const estilo = window.getComputedStyle(el);
+                formatoCopiado = {
+                    fontFamily: estilo.fontFamily,
+                    fontSize: estilo.fontSize,
+                    color: estilo.color,
+                    fontWeight: estilo.fontWeight,
+                    fontStyle: estilo.fontStyle
+                };
+                alert("🖌️ Formato copiado! Selecione outro texto e clique em Colar.");
+            } else {
+                alert("Selecione um texto antes de copiar formato.");
             }
-            alert("🖌️ Formato copiado com sucesso! Agora selecione outro texto e clique em 'Colar'.");
         }
 
         function colarFormato() {
-            if (!formatoCopiado) {
-                alert("Nenhum formato copiado ainda. Selecione um texto e clique em 'Copiar' primeiro.");
-                return;
-            }
-            const selection = window.getSelection();
-            if (!selection.rangeCount || selection.isCollapsed) {
-                alert("Selecione o texto onde deseja aplicar o formato.");
-                return;
-            }
-            const range = selection.getRangeAt(0);
+            if (!formatoCopiado) return alert("Copie um formato primeiro.");
+            const sel = window.getSelection();
+            if (!sel.rangeCount || sel.isCollapsed) return alert("Selecione o texto onde quer colar.");
+            
+            const range = sel.getRangeAt(0);
             const span = document.createElement('span');
             span.style.fontFamily = formatoCopiado.fontFamily;
             span.style.fontSize = formatoCopiado.fontSize;
@@ -901,26 +936,206 @@
             span.style.fontStyle = formatoCopiado.fontStyle;
             span.appendChild(range.extractContents());
             range.insertNode(span);
-            selection.removeAllRanges();
             salvarAuto();
-            alert("✨ Formato aplicado com sucesso!");
         }
 
         function mudarCaseGlobal(tipo) {
             if (ultimoEditavelFocado) {
-                let texto = ultimoEditavelFocado.innerText || ultimoEditavelFocado.textContent;
-                if (tipo === 'upper') {
-                    ultimoEditavelFocado.innerText = texto.toUpperCase();
-                } else if (tipo === 'lower') {
-                    ultimoEditavelFocado.innerText = texto.toLowerCase();
-                } else if (tipo === 'capitalize') {
-                    ultimoEditavelFocado.innerText = texto.replace(/\b\w/g, l => l.toUpperCase());
-                }
+                let texto = ultimoEditavelFocado.innerText;
+                if (tipo === 'upper') texto = texto.toUpperCase();
+                else if (tipo === 'lower') texto = texto.toLowerCase();
+                else if (tipo === 'capitalize') texto = texto.replace(/\b\w/g, l => l.toUpperCase());
+                ultimoEditavelFocado.innerText = texto;
                 salvarAuto();
-                alert("✨ Texto formatado com sucesso!");
-            } else {
-                alert("Por favor, clique primeiro dentro da caixa de texto que deseja alterar.");
             }
+        }
+
+        function removerElementoSeguro(btn) {
+            if (confirm("Deseja realmente remover este item?")) {
+                const el = btn.closest('.exp-item, .group, div');
+                if (el) {
+                    el.remove();
+                    salvarAuto();
+                }
+            }
+        }
+
+        function moverCaixa(btn, direcao) {
+            const card = btn.closest('.exp-item, section, div');
+            if (!card) return;
+            if (direcao === 'subir' && card.previousElementSibling) {
+                card.parentNode.insertBefore(card, card.previousElementSibling);
+                salvarAuto();
+            } else if (direcao === 'descer' && card.nextElementSibling) {
+                card.parentNode.insertBefore(card.nextElementSibling, card);
+                salvarAuto();
+            }
+        }
+
+        function restaurarOriginal(btn, tipo) {
+            const card = btn.closest('.group, section, .exp-item');
+            if (tipo === 'resumo') {
+                const el = document.getElementById('c-resumo');
+                el.innerText = el.getAttribute('data-original');
+                salvarAuto();
+                alert("🔄 Resumo restaurado!");
+            } else if (tipo === 'experiencia') {
+                const el = card.querySelector('.exp-texto');
+                el.innerText = el.getAttribute('data-original');
+                salvarAuto();
+                alert("🔄 Descrição restaurada!");
+            }
+        }
+
+        function restaurarCaixaGenerica(btn) {
+            const container = btn.closest('.group, section, div');
+            const editavel = container ? container.querySelector('[contenteditable="true"]') : null;
+            if (editavel && editavel.hasAttribute('data-original')) {
+                editavel.innerHTML = editavel.getAttribute('data-original');
+                salvarAuto();
+                alert("🔄 Conteúdo restaurado!");
+            }
+        }
+
+        function adicionarItemSidebar(containerId) {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
+            div.innerHTML = `
+                <span contenteditable="true" data-original="• Novo Item" class="flex-1 outline-none">• Novo Item</span>
+                <button onclick="removerElementoSeguro(this)" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
+            `;
+            container.appendChild(div);
+            salvarAuto();
+        }
+
+        function adicionarExperiencia() {
+            const container = document.getElementById('container-experiencias');
+            const div = document.createElement('div');
+            div.className = "space-y-1.5 text-xs exp-item relative group bg-slate-50/80 dark:bg-slate-900/50 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm";
+            div.innerHTML = `
+                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
+                    <span class="text-[10px] font-bold text-slate-400 mr-auto">🏢 Nova Experiência</span>
+                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▲</button>
+                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-2 py-1 rounded text-xs font-bold">▼</button>
+                    <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded text-xs font-bold">✕</button>
+                </div>
+                <div>
+                    <span contenteditable="true" data-original="Empresa" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Empresa</span>
+                </div>
+                <div>
+                    <span contenteditable="true" data-original="Cargo" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Cargo</span>
+                </div>
+                <div>
+                    <span contenteditable="true" data-original="Período" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Período</span>
+                </div>
+                <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
+                    <div class="flex items-center gap-1 flex-wrap">
+                        <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]"></span>
+                        <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]"></span>
+                        <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
+                    </div>
+                    <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
+                </div>
+                <p contenteditable="true" data-original="Descreva as atividades..." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
+                    Descreva as atividades...
+                </p>
+            `;
+            container.prepend(div);
+            salvarAuto();
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function adicionarFormacao() {
+            const container = document.getElementById('container-formacao');
+            const div = document.createElement('div');
+            div.className = "flex items-center justify-between gap-2 group bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 relative";
+            div.innerHTML = `
+                <p contenteditable="true" data-original="• Instituição — Curso (Ano)" class="flex-1 outline-none pr-2">• <b>Instituição</b> — Curso (Ano)</p>
+                <div class="print-hidden flex items-center gap-1">
+                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px]">▲</button>
+                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">▼</button>
+                    <button onclick="removerElementoSeguro(this)" class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
+                </div>
+            `;
+            container.appendChild(div);
+            salvarAuto();
+        }
+
+        function calcularTempoServico(btn) {
+            const card = btn.closest('.exp-item');
+            const inputInicio = card.querySelector('.input-inicio').value;
+            const inputFim = card.querySelector('.input-fim').value;
+            const chkAtual = card.querySelector('.chk-atual').checked;
+            const spanData = card.querySelector('.exp-data');
+
+            if (!inputInicio) return alert("Selecione o início.");
+
+            let dataInicio = new Date(inputInicio + "-01");
+            let dataFim = chkAtual ? new Date() : (inputFim ? new Date(inputFim + "-01") : new Date());
+
+            let anos = dataFim.getFullYear() - dataInicio.getFullYear();
+            let meses = dataFim.getMonth() - dataInicio.getMonth();
+
+            if (meses < 0) { anos--; meses += 12; }
+            let total = (anos * 12) + meses + 1;
+            let a = Math.floor(total / 12);
+            let m = total % 12;
+
+            let duracao = (a > 0 ? `${a} ano${a > 1 ? 's' : ''} ` : '') + (m > 0 ? `${m} m${m > 1 ? 'eses' : 'ês'}` : '');
+            let mesIni = mesesNomes[dataInicio.getMonth()];
+            let str = chkAtual ? `${mesIni} de ${dataInicio.getFullYear()} - Present (${duracao})` : `${mesIni} de ${dataInicio.getFullYear()} - ${mesesNomes[dataFim.getMonth()]} de ${dataFim.getFullYear()} (${duracao})`;
+
+            spanData.innerText = str;
+            salvarAuto();
+        }
+
+        async function compartilharCurriculo() {
+            const texto = `Mariana Pereira Cruz\nEngenheira Mecânica e Confiabilidade | CREA-RJ\nWhatsApp: (21) 99035-4416\nEmail: marianna_adm@yahoo.com.br\nLinkedIn: linkedin.com/in/marianapcruz`;
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Mariana Cruz - Currículo',
+                        text: texto,
+                        url: window.location.href
+                    });
+                } catch(e) {}
+            } else {
+                navigator.clipboard.writeText(texto);
+                alert("📋 Dados copiados para compartilhar!");
+            }
+        }
+
+        function abrirModalVagas() {
+            const nome = document.getElementById('c-nome-principal').innerText;
+            const cargo = document.getElementById('c-cargo').innerText;
+            const contato = document.getElementById('c-contato').innerText;
+            const resumo = document.getElementById('c-resumo').innerText;
+
+            let exps = "";
+            document.querySelectorAll('.exp-item').forEach(el => {
+                const emp = el.querySelector('.exp-empresa')?.innerText || '';
+                const c = el.querySelector('.exp-cargo')?.innerText || '';
+                const d = el.querySelector('.exp-data')?.innerText || '';
+                const t = el.querySelector('.exp-texto')?.innerText || '';
+                exps += `\n• ${emp} | ${c} (${d})\n${t}\n`;
+            });
+
+            const txtFinal = `${nome}\n${cargo}\n\nCONTATOS:\n${contato}\n\nRESUMO:\n${resumo}\n\nEXPERIÊNCIAS:${exps}`;
+            document.getElementById('texto-vagas-area').value = txtFinal;
+            document.getElementById('modal-vagas').classList.remove('hidden');
+        }
+
+        function fecharModalVagas() {
+            document.getElementById('modal-vagas').classList.add('hidden');
+        }
+
+        function copiarTextoVagas() {
+            const area = document.getElementById('texto-vagas-area');
+            area.select();
+            navigator.clipboard.writeText(area.value);
+            alert("✅ Texto copiado! Pode colar na Gupy ou no LinkedIn.");
+            fecharModalVagas();
         }
 
         function exportarWord() {
@@ -928,11 +1143,8 @@
             const clone = folhaEl.cloneNode(true);
             clone.querySelectorAll('.print-hidden, button, input').forEach(el => el.remove());
 
-            const sidebar = clone.querySelector('.sidebar-print') || clone.querySelector('[class*="col-span-5"]');
-            const main = clone.querySelector('.main-print') || clone.querySelector('[class*="col-span-7"]');
-            
-            const sidebarHtml = sidebar ? sidebar.innerHTML : '';
-            const mainHtml = main ? main.innerHTML : '';
+            const sidebar = clone.querySelector('.sidebar-print')?.innerHTML || '';
+            const main = clone.querySelector('.main-print')?.innerHTML || '';
 
             const htmlWord = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -952,8 +1164,8 @@
                 <body>
                     <table class="page-table">
                         <tr>
-                            <td class="sidebar-cell">${sidebarHtml}</td>
-                            <td class="main-cell">${mainHtml}</td>
+                            <td class="sidebar-cell">${sidebar}</td>
+                            <td class="main-cell">${main}</td>
                         </tr>
                     </table>
                 </body>
@@ -965,10 +1177,7 @@
             const a = document.createElement('a');
             a.href = url;
             a.download = 'Curriculo_Mariana_Cruz.doc';
-            document.body.appendChild(a);
             a.click();
-            document.body.removeChild(a);
-            alert("📥 Currículo exportado para Word com colunas perfeitas!");
         }
 
         function exportarVersaoWord(val) {
@@ -1016,12 +1225,57 @@
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = `Curriculo_Mariana_${val.replace(/[^a-zA-Z0-9]/g, '_')}.doc`;
-                document.body.appendChild(a);
                 a.click();
-                document.body.removeChild(a);
-                alert(`📥 Versão "${val}" exportada para Word com sucesso!`);
-            } else {
-                alert("Erro ao exportar esta versão.");
+            }
+        }
+
+        function salvarVersao() {
+            let nome = prompt("Nome da versão (ex: Mariana - Foco Confiabilidade):", "Versão " + new Date().toLocaleDateString());
+            if (!nome) return;
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            versoes[nome] = { folhaHtml: document.getElementById('curriculo-folha').innerHTML };
+            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+            atualizarListaVersoesVisual();
+        }
+
+        function atualizarListaVersoesVisual() {
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            const c = document.getElementById('lista-versoes-visual');
+            c.innerHTML = '';
+            const chaves = Object.keys(versoes);
+            if (!chaves.length) {
+                c.innerHTML = '<p class="text-xs text-slate-400 italic col-span-full">Nenhuma versão salva no aparelho.</p>';
+                return;
+            }
+            chaves.forEach(k => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
+                div.innerHTML = `
+                    <div class="font-bold text-xs text-slate-800 dark:text-white truncate">📄 ${k}</div>
+                    <div class="flex gap-1.5 pt-1">
+                        <button onclick="carregarVersao('${k}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold">Carregar</button>
+                        <button onclick="exportarVersaoWord('${k}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-[10px] text-[10px] font-bold">📥 Word</button>
+                        <button onclick="apagarVersao('${k}')" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded-[10px] text-[10px] font-bold">✕</button>
+                    </div>
+                `;
+                c.appendChild(div);
+            });
+        }
+
+        function carregarVersao(k) {
+            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+            if (versoes[k] && versoes[k].folhaHtml) {
+                document.getElementById('curriculo-folha').innerHTML = versoes[k].folhaHtml;
+                salvarAuto();
+            }
+        }
+
+        function apagarVersao(k) {
+            if (confirm(`Remover "${k}"?`)) {
+                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
+                delete versoes[k];
+                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
+                atualizarListaVersoesVisual();
             }
         }
 
@@ -1041,293 +1295,34 @@
                         salvarAuto();
                         alert("📂 Currículo importado com sucesso!");
                     } else {
-                        alert("O arquivo selecionado não tem um formato de currículo compatível.");
+                        alert("Formato inválido.");
                     }
-                } else {
-                    alert("Formato de arquivo inválido para importação.");
                 }
                 event.target.value = '';
             };
             leitor.readAsText(arquivo);
         }
 
-        function iniciarReconhecimentoVoz() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert("O seu navegador não suporta reconhecimento de voz.");
-                return;
-            }
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'pt-BR';
-            recognition.onstart = function() {
-                document.getElementById('ia-prompt').placeholder = "Ouvindo... Pode falar!";
-            };
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                document.getElementById('ia-prompt').value = transcript;
-            };
-            recognition.onerror = function(event) {
-                alert("Erro no reconhecimento de voz. Tente novamente.");
-            };
-            recognition.onend = function() {
-                document.getElementById('ia-prompt').placeholder = "Ex: Reescreva o meu resumo para focar mais em Gestão de Ativos...";
-            };
-            recognition.start();
-        }
-
-        function restaurarOriginal(btn, tipo) {
-            const card = btn.closest('.group, section, .exp-item');
-            if (tipo === 'resumo') {
-                const el = document.getElementById('c-resumo');
-                el.innerText = el.getAttribute('data-original');
-                salvarAuto();
-                alert("🔄 Resumo restaurado!");
-            } else if (tipo === 'experiencia') {
-                const el = card.querySelector('.exp-texto');
-                el.innerText = el.getAttribute('data-original');
-                salvarAuto();
-                alert("🔄 Descrição restaurada!");
-            }
-        }
-
-        function restaurarCaixaGenerica(btn) {
-            const container = btn.closest('.group, section, div');
-            const editavel = container ? container.querySelector('[contenteditable="true"]') : null;
-            if (editavel && editavel.hasAttribute('data-original')) {
-                editavel.innerHTML = editavel.getAttribute('data-original');
-                salvarAuto();
-                alert("🔄 Conteúdo restaurado!");
-            }
-        }
-
-        function moverCaixa(btn, direcao) {
-            const card = btn.closest('section, .exp-item');
-            if (!card) return;
-            if (direcao === 'subir' && card.previousElementSibling) {
-                card.parentNode.insertBefore(card, card.previousElementSibling);
-                salvarAuto();
-            } else if (direcao === 'descer' && card.nextElementSibling) {
-                card.parentNode.insertBefore(card.nextElementSibling, card);
-                salvarAuto();
-            }
-        }
-
-        function calcularTempoServico(btn) {
-            const card = btn.closest('.exp-item, section');
-            const inputInicio = card.querySelector('.input-inicio').value;
-            const inputFim = card.querySelector('.input-fim').value;
-            const chkAtual = card.querySelector('.chk-atual').checked;
-            const spanData = card.querySelector('.exp-data');
-
-            if (!inputInicio) return alert("Por favor, selecione a data de início.");
-
-            let dataInicio = new Date(inputInicio + "-01");
-            let dataFim = chkAtual ? new Date() : (inputFim ? new Date(inputFim + "-01") : new Date());
-
-            let anos = dataFim.getFullYear() - dataInicio.getFullYear();
-            let meses = dataFim.getMonth() - dataInicio.getMonth();
-
-            if (meses < 0) {
-                anos--;
-                meses += 12;
-            }
-
-            let totalMeses = (anos * 12) + meses + 1;
-            let anosCalc = Math.floor(totalMeses / 12);
-            let mesesCalc = totalMeses % 12;
-
-            let textoDuracao = "";
-            if (anosCalc > 0) textoDuracao += `${anosCalc} ano${anosCalc > 1 ? 's' : ''}`;
-            if (mesesCalc > 0) {
-                if (textoDuracao) textoDuracao += " ";
-                textoDuracao += `${mesesCalc} mes${mesesCalc > 1 ? 'es' : 'e'}`;
-            }
-            if (!textoDuracao) textoDuracao = "menos de 1 mês";
-
-            let mesIniNome = mesesNomes[dataInicio.getMonth()];
-            let anoIni = dataInicio.getFullYear();
-
-            let stringFinal = "";
-            if (chkAtual) {
-                stringFinal = `${mesIniNome} de ${anoIni} - Present (${textoDuracao})`;
-            } else {
-                let mesFimNome = mesesNomes[dataFim.getMonth()];
-                let anoFim = dataFim.getFullYear();
-                stringFinal = `${mesIniNome} de ${anoIni} - ${mesFimNome} de ${anoFim} (${textoDuracao})`;
-            }
-
-            spanData.innerText = stringFinal;
-            salvarAuto();
-            alert(`✅ Duração calculada: ${textoDuracao}`);
-        }
-
-        function adicionarCaixaTitulo() {
-            const container = document.getElementById('container-principal-conteudo');
-            const sec = document.createElement('section');
-            sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700";
-            sec.innerHTML = `
-                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-200">
-                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
-                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                    <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                    <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
-                </div>
-                <h2 contenteditable="true" data-original="NOVO TÍTULO ISOLADO" class="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider outline-none">NOVO TÍTULO ISOLADO</h2>
-            `;
-            container.appendChild(sec);
-            salvarAuto();
-            sec.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function adicionarCaixaTexto() {
-            const container = document.getElementById('container-principal-conteudo');
-            const sec = document.createElement('section');
-            sec.className = "space-y-1 relative group bg-slate-50/80 dark:bg-slate-900/40 p-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700";
-            sec.innerHTML = `
-                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1 mb-1 border-slate-200">
-                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▲</button>
-                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold">▼</button>
-                    <button onclick="restaurarCaixaGenerica(this)" class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Desfazer">🔄</button>
-                    <button onclick="this.closest('section').remove()" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold">✕</button>
-                </div>
-                <div contenteditable="true" data-original="Cole aqui o seu bloco de texto livre..." class="text-xs leading-relaxed text-slate-700 dark:text-slate-300 outline-none min-h-[40px] pt-1">
-                    Cole aqui o seu bloco de texto livre...
-                </div>
-            `;
-            container.appendChild(sec);
-            salvarAuto();
-            sec.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function adicionarItemSidebar(containerId) {
-            const container = document.getElementById(containerId);
-            const div = document.createElement('div');
-            div.className = "flex items-center justify-between gap-1 group relative bg-slate-800/40 p-1 rounded";
-            div.innerHTML = `
-                <span contenteditable="true" data-original="• Novo Item" class="flex-1 outline-none">• Novo Item</span>
-                <button onclick="restaurarCaixaGenerica(this)" class="print-hidden bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[9px] font-bold" title="Desfazer">🔄</button>
-                <button onclick="this.closest('div').remove()" class="print-hidden text-[10px] text-red-400 px-1 font-bold">✕</button>
-            `;
-            container.appendChild(div);
-            salvarAuto();
-        }
-
-        function adicionarExperiencia() {
-            const container = document.getElementById('container-experiencias');
-            const div = document.createElement('div');
-            div.className = "space-y-1.5 text-xs exp-item relative group bg-slate-50/60 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm";
-            div.innerHTML = `
-                <div class="print-hidden flex justify-end items-center gap-1 border-b pb-1.5 mb-2 border-slate-200 dark:border-slate-700">
-                    <span class="text-[9px] font-bold text-slate-400 mr-auto">🏢 Experiência</span>
-                    <button onclick="moverCaixa(this, 'subir')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Subir">▲</button>
-                    <button onclick="moverCaixa(this, 'descer')" class="bg-slate-200 hover:bg-slate-300 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Descer">▼</button>
-                    <button onclick="removerItemExp(this)" class="bg-red-100 text-red-600 hover:bg-red-200 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Apagar">✕</button>
-                </div>
-                <div>
-                    <span contenteditable="true" data-original="Nova Empresa" class="exp-empresa outline-none block font-bold text-sm text-slate-900 dark:text-white">Nova Empresa</span>
-                </div>
-                <div>
-                    <span contenteditable="true" data-original="Cargo" class="exp-cargo outline-none block font-semibold text-blue-600 dark:text-blue-400 text-xs">Cargo</span>
-                </div>
-                <div>
-                    <span contenteditable="true" data-original="Período" class="exp-data outline-none block text-slate-500 dark:text-slate-400 text-xs">Período</span>
-                </div>
-                <div class="print-hidden bg-blue-50/70 dark:bg-blue-950/40 p-1.5 rounded-lg my-1 flex items-center justify-between gap-1 text-[10px]">
-                    <div class="flex items-center gap-1 flex-wrap">
-                        <span>Início: <input type="month" class="input-inicio p-0.5 bg-white border rounded text-[10px]"></span>
-                        <span>Fim: <input type="month" class="input-fim p-0.5 bg-white border rounded text-[10px]"></span>
-                        <label class="flex items-center gap-0.5"><input type="checkbox" class="chk-atual"> Pres.</label>
-                    </div>
-                    <button onclick="calcularTempoServico(this)" class="bg-blue-600 text-white px-2 py-1 rounded font-bold text-[10px] shrink-0 shadow-sm">Calcular</button>
-                </div>
-                <p contenteditable="true" data-original="Descreva as atividades e conquistas..." class="exp-texto text-slate-700 dark:text-slate-300 leading-relaxed outline-none pt-1">
-                    Descreva as atividades e conquistas...
-                </p>
-            `;
-            container.prepend(div);
-            salvarAuto();
-        }
-
-        function removerItemExp(btn) {
-            btn.closest('.exp-item').remove();
-            salvarAuto();
-        }
-
-        function salvarVersao() {
-            let nomeVersao = prompt("Dê um nome para esta versão (ex: Mariana - Engenharia):", "Versão " + new Date().toLocaleDateString());
-            if(!nomeVersao) return;
-
-            const dados = {
-                folhaHtml: document.getElementById('curriculo-folha').innerHTML
-            };
-
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            versoes[nomeVersao] = dados;
-            localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
-            atualizarListaVersoesVisual();
-            alert(`💾 Versão "${nomeVersao}" salva com sucesso!`);
-        }
-
-        function atualizarListaVersoesVisual() {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            const container = document.getElementById('lista-versoes-visual');
-            container.innerHTML = '';
-
-            const chaves = Object.keys(versoes);
-            if (chaves.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-full">Nenhuma versão salva ainda.</p>';
-                return;
-            }
-
-            chaves.forEach(v => {
-                let card = document.createElement('div');
-                card.className = "bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2 shadow-sm";
-                card.innerHTML = `
-                    <div class="font-bold text-xs text-slate-800 dark:text-white truncate" title="${v}">📄 ${v}</div>
-                    <div class="flex gap-1.5 pt-1">
-                        <button onclick="carregarVersao('${v}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-[10px] text-[10px] font-bold transition">Carregar</button>
-                        <button onclick="exportarVersaoWord('${v}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-[10px] text-[10px] font-bold transition" title="Exportar esta versão para Word">📥 Word</button>
-                        <button onclick="apagarVersaoEspecifica('${v}')" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded-[10px] text-[10px] font-bold transition">✕</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function carregarVersao(val) {
-            let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-            let dados = versoes[val];
-            if(dados && dados.folhaHtml) {
-                document.getElementById('curriculo-folha').innerHTML = dados.folhaHtml;
-                salvarAuto();
-                alert(`Versão "${val}" carregada com sucesso!`);
-            }
-        }
-
-        function apagarVersaoEspecifica(val) {
-            if(confirm(`Deseja apagar a versão "${val}"?`)) {
-                let versoes = JSON.parse(localStorage.getItem(CHAVE_VERSOES) || '{}');
-                delete versoes[val];
-                localStorage.setItem(CHAVE_VERSOES, JSON.stringify(versoes));
-                atualizarListaVersoesVisual();
-                alert("Versão apagada com sucesso.");
-            }
-        }
-
         function abrirModalIA() { document.getElementById('modal-ia').classList.remove('hidden'); }
         function fecharModalIA() { document.getElementById('modal-ia').classList.add('hidden'); }
 
+        function iniciarReconhecimentoVoz() {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) return alert("Navegador sem suporte a voz.");
+            const r = new SR();
+            r.lang = 'pt-BR';
+            r.onstart = () => { document.getElementById('ia-prompt').placeholder = "Ouvindo..."; };
+            r.onresult = (e) => { document.getElementById('ia-prompt').value = e.results[0][0].transcript; };
+            r.start();
+        }
+
         function gerarSugestaoIA() {
-            const promptTexto = document.getElementById('ia-prompt').value;
-            const respEl = document.getElementById('ia-resposta');
-            if(!promptTexto) return alert("Digite um pedido para o assistente.");
-            
-            respEl.classList.remove('hidden');
-            respEl.innerHTML = "⏳ Processando sugestão profissional...";
-            
+            const resp = document.getElementById('ia-resposta');
+            resp.classList.remove('hidden');
+            resp.innerHTML = "⏳ Ajustando texto...";
             setTimeout(() => {
-                respEl.innerHTML = `<b>Sugestão da IA:</b><br><br><i>"Foco consolidado em gestão de ativos críticos, redução de indisponibilidade e liderança em projetos de melhoria contínua com metodologias ágeis e SAP PM."</i>`;
-            }, 1000);
+                resp.innerHTML = `<b>Sugestão de impacto:</b><br><br><i>"Engenheira com atuação destacada em Confiabilidade e Gestão de Ativos, combinando expertise em SAP PM, RCA e modelagem de criticidade para máxima disponibilidade de planta e otimização de OPEX."</i>`;
+            }, 800);
         }
     </script>
 </body>
